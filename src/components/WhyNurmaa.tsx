@@ -1,168 +1,299 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { GiPlantSeed, GiFarmTractor, GiLipstick, GiTreeGrowth } from 'react-icons/gi';
 
-const WhyNurmaa: React.FC = () => {
+const WhyChooseUs = () => {
   const features = [
     {
-      icon: '🧼',
-      title: 'Handmade',
-      description: 'Each product is carefully crafted by hand with attention to detail and quality.',
+      icon: <GiPlantSeed className="w-8 h-8" color="#EBEBD3" />, // Skincare
+      title: "Homemade Skincare",
+      description: "Crafted with natural ingredients for radiant skin",
+      color: "linear-gradient(135deg, #121769 0%, #67246A 100%)" // Deep navy gradient
     },
     {
-      icon: '🍃',
-      title: 'Natural',
-      description: 'We use only natural, organic ingredients sourced from trusted suppliers.',
+      icon: <GiFarmTractor className="w-8 h-8" color="#EBEBD3" />, // Food
+      title: "Organic Food",
+      description: "Sourced from local farms for pure nourishment",
+      color: "linear-gradient(135deg, #121769 0%, #67246A 100%)"  // Royal blue
     },
     {
-      icon: '💚',
-      title: 'Ethical',
-      description: 'Our sustainable practices ensure minimal environmental impact.',
+      icon: <GiLipstick className="w-8 h-8" color="#EBEBD3" />, // Makeup
+      title: "Natural Makeup",
+      description: "Enhance your beauty with eco-friendly cosmetics",
+      color: "linear-gradient(135deg, #121769 0%, #67246A 100%)"  // Gold
+    },
+    {
+      icon: <GiTreeGrowth className="w-8 h-8" color="#EBEBD3" />, // Sustainability
+      title: "Sustainable Legacy",
+      description: "Committed to preserving nature and heritage",
+      color:"linear-gradient(135deg, #121769 0%, #67246A 100%)" // Ochre
     }
   ];
 
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
-  };
-
-  const staggerContainer = {
+  const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.2,
+        delayChildren: 0.3
       }
     }
   };
 
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const hoverVariants = {
+    hover: {
+      y: -10,
+      transition: {
+        type: "spring",
+        stiffness: 300
+      }
+    }
+  };
+
+  // Hieroglyphic grid background component
+  const GridBackground = () => (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Major grid lines */}
+      <div className="absolute inset-0" style={{
+        backgroundImage: `
+          linear-gradient(to right, rgba(212, 175, 55, 0.1) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(212, 175, 55, 0.1) 1px, transparent 1px)
+        `,
+        backgroundSize: '80px 80px'
+      }}></div>
+      
+      {/* Minor grid lines */}
+      <div className="absolute inset-0" style={{
+        backgroundImage: `
+          linear-gradient(to right, rgba(212, 175, 55, 0.05) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(212, 175, 55, 0.05) 1px, transparent 1px)
+        `,
+        backgroundSize: '20px 20px'
+      }}></div>
+      
+      {/* Floating hieroglyphs */}
+      {[...Array(40)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute text-xl opacity-10"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            color: ['#D4AF37', '#3A4E7A', '#8B2323'][Math.floor(Math.random() * 3)]
+          }}
+          animate={{
+            y: [0, Math.random() * 10 - 5],
+            x: [0, Math.random() * 10 - 5],
+            rotate: [0, Math.random() * 10 - 5]
+          }}
+          transition={{
+            duration: 10 + Math.random() * 20,
+            repeat: Infinity,
+            repeatType: 'reverse'
+          }}
+        >
+          {['𓀀', '𓁟', '𓂀','𓃭','𓃙', '𓅓', '𓆣', '𓇋','𓃘','𓃗','𓃙','𓃙', '𓃠', '𓄿','𓃗','𓃗','𓃙','𓃘','𓃭','𓃘',
+][Math.floor(Math.random() * 20)]}
+        </motion.div>
+      ))}
+    </div>
+  );
+
   return (
-    <section className="py-16 bg-white relative overflow-hidden">
-      {/* Doodle background pattern */}
-      <div className="absolute inset-0 opacity-10 z-0">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <pattern 
-            id="doodle-pattern" 
-            x="0" 
-            y="0" 
-            width="100" 
-            height="100" 
-            patternUnits="userSpaceOnUse"
-            patternTransform="rotate(15)"
-          >
-            <path 
-              d="M20,20 Q30,10 40,20 T60,20 T80,20" 
-              fill="none" 
-              stroke="#3a7a68" 
-              strokeWidth="2"
-            />
-            <circle cx="50" cy="50" r="3" fill="#3a7a68" />
-            <path 
-              d="M10,80 Q20,70 30,80 T50,80 T70,80" 
-              fill="none" 
-              stroke="#3a7a68" 
-              strokeWidth="2"
-            />
-            <rect x="80" y="80" width="10" height="10" fill="#3a7a68" opacity="0.5" />
-          </pattern>
-          <rect x="0" y="0" width="100%" height="100%" fill="url(#doodle-pattern)" />
+    <section 
+      className="py-20 px-4 relative overflow-hidden"
+      style={{ 
+        backgroundColor: "#F0EDE5", // Papyrus color
+        backgroundImage: `
+          linear-gradient(to bottom, rgba(210,180,140,0.1) 1px, transparent 1px),
+          linear-gradient(to right, rgba(210,180,140,0.1) 1px, transparent 1px)
+        `,
+        backgroundSize: '40px 40px'
+      }}
+    >
+      <GridBackground />
+      
+      {/* Pyramid silhouette decoration */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-5">
+        <svg viewBox="0 0 1000 500" className="w-full h-full" preserveAspectRatio="none">
+          <polygon points="0,500 500,100 1000,500" fill="#3A4E7A"/>
+          {/* Place hieroglyph icons in a grid pattern inside the pyramid */}
+          {(() => {
+            const icons = ['𓀀', '𓁟', '𓂀', '𓃠', '𓄿', '𓅓', '𓆣', '𓇋' ,'𓆣', '𓇋','𓃘','𓃗','𓃙','𓃙', '𓃠', '𓄿','𓃗','𓃗','𓃙','𓃘','𓃭','𓃘'];
+            const rows = 10;
+            const cols = 16;
+            const iconSize = 32;
+            const startY = 120; // top Y of pyramid
+            const endY = 480; // bottom Y of pyramid
+            const iconsArr = [] as React.ReactNode[];
+            let iconIndex = 0;
+            for (let row = 0; row < rows; row++) {
+              const iconsInRow = cols - row * 2;
+              const y = startY + ((endY - startY) / (rows - 1)) * row;
+              const xStart = 500 - ((iconsInRow - 1) * iconSize) / 2;
+              for (let col = 0; col < iconsInRow; col++) {
+                const x = xStart + col * iconSize;
+                iconsArr.push(
+                  <text
+                    key={`pyramid-icon-${row}-${col}`}
+                    x={x}
+                    y={y}
+                    fontSize="32"
+                    textAnchor="middle"
+                    alignmentBaseline="middle"
+                    fill="#F0EDE5"
+                    opacity="0.92"
+                    style={{
+                      fontFamily: 'Noto Sans Egyptian Hieroglyphs, Arial Unicode MS, sans-serif',
+                      filter: 'drop-shadow(0 1px 4px #121769AA) drop-shadow(0 0px 8px #FE49AF55)'
+                    }}
+                  >
+                    {icons[iconIndex % icons.length]}
+                  </text>
+                );
+                iconIndex++;
+              }
+            }
+            return iconsArr;
+          })()}
         </svg>
       </div>
 
-      <div className="nurmaa-container relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Animated title section */}
         <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeInUp}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-16"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-nurmaa-green to-nurmaa-dark">
-            Why Choose Nurmaa?
+          <h2 
+            className="text-4xl md:text-5xl font-bold mb-6 tracking-tight"
+            style={{ 
+              color: '#0C1446',
+              fontFamily: "'EB Garamond', serif",
+              fontWeight: 700
+            }}
+          >
+            <span className="block">Why Choose NUR-MAA</span>
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Our commitment to quality, sustainability, and natural ingredients sets us apart.
+          
+          <p 
+            className="max-w-2xl mx-auto text-lg leading-relaxed"
+            style={{ 
+              color: '#3A4E7A',
+              fontFamily: "'Cormorant Garamond', serif"
+            }}
+          >
+            Where the sacred beauty rituals of ancient Egypt meet cutting-edge cosmetic science
           </p>
         </motion.div>
-        
+
+        {/* Features grid */}
         <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
           {features.map((feature, index) => (
-            <motion.div 
+            <motion.div
               key={index}
-              variants={fadeInUp}
-              transition={{ duration: 0.5 }}
-              whileHover={{ y: -5 }}
-              className="bg-white rounded-2xl p-8 text-center hover:shadow-lg transition-all duration-300 border border-opacity-10 border-nurmaa-green relative overflow-hidden"
+              className="relative overflow-hidden rounded-xl p-8 shadow-lg border border-opacity-20"
+              style={{ 
+                backgroundImage: feature.color.startsWith('linear-gradient') ? feature.color : undefined,
+                backgroundColor: feature.color.startsWith('linear-gradient') ? undefined : feature.color,
+                borderColor: '#D4AF37',
+                boxShadow: '0 8px 32px rgba(12, 20, 70, 0.2)'
+              }}
+              variants={itemVariants}
+              whileHover="hover"
             >
-              <div className="absolute inset-0 bg-nurmaa-mint bg-opacity-5 -z-10"></div>
-              <motion.div 
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full mb-6 shadow-sm text-4xl mx-auto"
+              {/* Cartouche shape effect */}
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-16 bg-[#D4AF37] rounded-full opacity-10"></div>
+              
+              <motion.div
+                className="relative z-10"
+                variants={hoverVariants}
               >
-                {feature.icon}
+                <div className="flex items-center justify-center w-16 h-16 rounded-full mb-6 mx-auto"
+                  style={{ 
+                    backgroundColor: "rgba(255,255,255,0.15)",
+                    border: '2px solid rgba(212, 175, 55, 0.5)'
+                  }}
+                >
+                  {feature.icon}
+                </div>
+                
+                <h3 
+                  className="text-2xl font-bold mb-3 text-center"
+                  style={{ 
+                    color: '#F0EDE5',
+                    fontFamily: "'EB Garamond', serif",
+                    textShadow: '1px 1px 3px rgba(0,0,0,0.3)'
+                  }}
+                >
+                  {feature.title}
+                </h3>
+                
+                <p 
+                  className="opacity-90 text-center"
+                  style={{ 
+                    color: '#F0EDE5',
+                    fontFamily: "'Cormorant Garamond', serif"
+                  }}
+                >
+                  {feature.description}
+                </p>
               </motion.div>
-              <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
             </motion.div>
           ))}
         </motion.div>
-        
+
+        {/* CTA section with Egyptian border */}
         <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          className="mt-20 text-center relative"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="mt-16 bg-white rounded-2xl p-8 md:p-12 relative overflow-hidden border border-nurmaa-green border-opacity-20 shadow-sm"
+          transition={{ delay: 0.8 }}
         >
-          <div className="absolute inset-0 bg-nurmaa-green bg-opacity-5 -z-10"></div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h3 className="text-2xl md:text-3xl font-semibold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-nurmaa-green to-nurmaa-dark">
-                Our Promise to You
-              </h3>
-              <p className="text-gray-700 mb-6">
-                We believe in transparency and quality. Each Nurmaa product is made with carefully selected ingredients, 
-                free from harmful chemicals, and packaged with the environment in mind.
-              </p>
-              <ul className="space-y-3">
-                {['No artificial preservatives', 'Cruelty-free', 'Eco-friendly packaging'].map((item, idx) => (
-                  <motion.li 
-                    key={idx} 
-                    className="flex items-center"
-                    whileHover={{ x: 5 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      className="h-5 w-5 text-nurmaa-green mr-3 flex-shrink-0" 
-                      viewBox="0 0 20 20" 
-                      fill="currentColor"
-                    >
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>{item}</span>
-                  </motion.li>
-                ))}
-              </ul>
+          {/* Decorative border */}
+          <div className="absolute top-0 left-0 right-0 h-2 overflow-hidden">
+            <div className="flex justify-center space-x-4">
+              {[...Array(20)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="text-xl text-[#3A4E7A]"
+                  animate={{
+                    y: [0, -3, 0],
+                    rotate: [0, 5, -5, 0],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{
+                    duration: 3 + Math.random() * 4,
+                    repeat: Infinity
+                  }}
+                >
+                  {/* Only use icons not in the removed list */}
+                </motion.div>
+              ))}
             </div>
-            <motion.div 
-              className="relative h-64 md:h-96 rounded-xl overflow-hidden shadow-lg"
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 400 }}
-            >
-              <img 
-                src="https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=1000" 
-                alt="Natural ingredients" 
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-nurmaa-dark to-transparent opacity-30"></div>
-            </motion.div>
           </div>
         </motion.div>
       </div>
@@ -170,4 +301,4 @@ const WhyNurmaa: React.FC = () => {
   );
 };
 
-export default WhyNurmaa;
+export default WhyChooseUs;

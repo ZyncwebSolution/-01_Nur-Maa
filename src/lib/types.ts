@@ -10,6 +10,8 @@ export interface Product {
   rating?: number;
   featured?: boolean;
   tags?: string[];
+  bgImage?: string;
+  fgImage?: string;
 }
 
 export interface CartItem {

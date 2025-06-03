@@ -76,7 +76,6 @@ body {
 /* Slider Mechanics */
 .slider {
   display: flex;
-  gap: 40px;
   padding: 30px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -99,9 +98,9 @@ body {
 /* Product Card Container */
 .product-container {
   position: relative;
-  width: 380px;
-  height: 500px;
-  perspective: 1200px;
+  width: 450px;
+  height: 460px;
+  perspective: 800px;
   flex: 0 0 auto;
   scroll-snap-align: start;
   display: flex;
@@ -121,8 +120,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: rgba(103, 36, 106, 0.3);
-  border-radius: 20px;
+  background: transparent !important;
+  /* border-radius: 20px; */
   padding: 2rem;
   /* box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); */
   overflow: hidden;
@@ -143,8 +142,8 @@ body {
 
 /* Main Product Image */
 .product-main-image {
-  width: 380px;
-  height: 460px;
+  width: 280px;
+  height: 360px;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -164,9 +163,10 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   opacity: 0;
+  margin-right: 120px;
   transform: translate(80px, -80px) scale(0.8) rotate(15deg);
   transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  z-index: 1;
+  z-index: 2;
   filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.4));
 }
 
@@ -174,6 +174,7 @@ body {
   position: absolute;
   width: 200px;
   height: 320px;
+  margin-left: 180px;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -209,6 +210,16 @@ body {
    filter: drop-shadow(0 20px 30px rgba(254, 73, 175, 0.3)); 
 }
 */
+/* Remove border and shadow on hover for product card */
+.product-card:hover {
+  /* Remove border and shadow */
+  box-shadow: none !important;
+  border: none !important;
+  /* Keep any other hover effects you want */
+  /* transform: translateY(-20px) scale(1.02); */
+  /* background, color, etc. can remain if needed */
+}
+
 .product-card:hover .product-bg-image {
   opacity: 0.9;
   transform: translate(-50px, -50px) scale(1) rotate(-5deg);
