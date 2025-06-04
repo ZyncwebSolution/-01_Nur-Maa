@@ -32,8 +32,8 @@ const App = () => (
           <main className="min-h-screen">
             <Routes>
               <Route path="/" element={<Index />} />
-              {/* <Route path="/products" element={<Products />} /> */}
-              {/* <Route path="/product/:id" element={<ProductDetail />} /> */}
+              <Route path="/products" element={<Products />} />
+              <Route path="/product/:id" element={<ProductDetail />} />
               {/* <Route path="/cart" element={<Cart />} /> */}
               {/* <Route path="/checkout" element={<Checkout />} />
               <Route path="/checkout/success" element={<CheckoutSuccess />} />
@@ -43,7 +43,7 @@ const App = () => (
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
-          {/* <CartSidebar /> */}
+          <CartSidebar />
           <Footer />
         </BrowserRouter>
       </TooltipProvider>
