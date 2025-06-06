@@ -3,7 +3,7 @@ import Hero from '@/components/Hero';
 import FeaturedProducts from '@/components/FeaturedProducts';
 import WhyNurmaa from '@/components/WhyNurmaa';
 import Testimonials from '@/components/Testimonials';
-// import QuickPurchaseModal from '@/components/QuickPurchaseModal';
+import QuickPurchaseModal from '@/components/QuickPurchaseModal';
 import BrisbaneGinSlider from '../components/ProductKinds';
 
 import { Product } from '@/lib/types';
@@ -30,12 +30,12 @@ const Index: React.FC = () => {
       <WhyNurmaa />
       <Testimonials />
      
-{/*       
+      
       <QuickPurchaseModal 
         isOpen={isModalOpen} 
         onClose={closeModal} 
         product={selectedProduct}
-      /> */}
+      />
     </>
   );
 };

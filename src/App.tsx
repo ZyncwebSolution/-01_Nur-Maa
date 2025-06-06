@@ -34,8 +34,13 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/products" element={<Products />} />
               <Route path="/product/:id" element={<ProductDetail />} />
+<<<<<<< HEAD
               <Route path="/cart" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} />
+=======
+              {/* <Route path="/cart" element={<Cart />} /> */}
+              {/* <Route path="/checkout" element={<Checkout />} />
+>>>>>>> afbbdc57cef7238c4d662b6b7e83a50c22284216
               <Route path="/checkout/success" element={<CheckoutSuccess />} />
               <Route path="/about" element={<About />} />
               <Route path="/testimonials" element={<Testimonials />} />

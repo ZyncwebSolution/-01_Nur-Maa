@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { motion, AnimatePresence } from 'framer-motion';
+import client from '@/assets/images/client.png';
 
 const Testimonials: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
@@ -16,7 +17,7 @@ const Testimonials: React.FC = () => {
       category: 'clients',
       content: 'Working with this team transformed our digital presence. Our sales increased by 140% within just three months of launching our new platform!',
       rating: 5,
-      image: '/images/testimonials/sarah.jpg',
+      image: client, // <-- FIX: assign the imported client image here
       highlight: '140% sales growth'
     },
     {
@@ -271,11 +272,21 @@ const Testimonials: React.FC = () => {
                           >
                             <div className="relative group">
                               <div className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-2xl relative">
-                                <div className="w-full h-full bg-gradient-to-br from-[#EBEBD3] to-[#EBEBD3]/80 flex items-center justify-center">
-                                  <span className="text-6xl font-bold text-[#67246a]/50">
-                                    {testimonial.name.charAt(0)}
-                                  </span>
-                                </div>
+                                {testimonial.image === client ? (
+                                  // Show imported client.png for id:1
+                                  <img
+                                    src={client}
+                                    alt={testimonial.name}
+                                    className="w-full h-full object-cover"
+                                  />
+                                ) : (
+                                  // Show string image path for others
+                                  <img
+                                    src={testimonial.image}
+                                    alt={testimonial.name}
+                                    className="w-full h-full object-cover"
+                                  />
+                                )}
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                               </div>
                               <div className="absolute -bottom-6 -right-6 bg-gradient-to-r from-[#FE49AF] to-[#67246a] text-white px-4 py-2 rounded-full shadow-lg group-hover:scale-105 transition-transform duration-300">
@@ -486,31 +497,33 @@ const Testimonials: React.FC = () => {
         </section>
       </div>
 
-      <style jsx global>{`
-        @keyframes blob {
-          0% {
-            transform: translate(0px, 0px) scale(1);
+      <style>
+        {`
+          @keyframes blob {
+            0% {
+              transform: translate(0px, 0px) scale(1);
+            }
+            33% {
+              transform: translate(30px, -50px) scale(1.1);
+            }
+            66% {
+              transform: translate(-20px, 20px) scale(0.9);
+            }
+            100% {
+              transform: translate(0px, 0px) scale(1);
+            }
           }
-          33% {
-            transform: translate(30px, -50px) scale(1.1);
+          .animate-blob {
+            animation: blob 7s infinite;
           }
-          66% {
-            transform: translate(-20px, 20px) scale(0.9);
+          .animation-delay-2000 {
+            animation-delay: 2s;
           }
-          100% {
-            transform: translate(0px, 0px) scale(1);
+          .animation-delay-4000 {
+            animation-delay: 4s;
           }
-        }
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-      `}</style>
+        `}
+      </style>
     </>
   );
 };
