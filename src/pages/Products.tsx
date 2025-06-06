@@ -2,7 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ProductCard from '@/components/ProductCard';
 import QuickPurchaseModal from '@/components/QuickPurchaseModal';
-import { Product, ProductCategory } from '@/lib/types';
+import { Product as BaseProduct, ProductCategory } from '@/lib/types';
+
+// Extend Product type to include formattedPrice, ingredients, and stock
+type Product = BaseProduct & { 
+  formattedPrice: string;
+  ingredients?: string[];
+  stock: number;
+};
 import product2 from '@/assets/images/product2.png';
 import product3 from '@/assets/images/product3.png';
 
@@ -23,7 +30,7 @@ const allProducts: Product[] = [
   {
     id: '1',
     name: 'Sacred Ankh Oil',
-    category: 'skincare',
+    category: 'skincare' as ProductCategory,
     description: 'A luxurious blend of ancient Egyptian oils for skin rejuvenation, inspired by Cleopatra\'s beauty secrets. Contains rare botanicals from the Nile delta.',
     price: 34.99,
     image: product2,
@@ -36,7 +43,7 @@ const allProducts: Product[] = [
   {
     id: '2',
     name: 'Nile Delta Honey',
-    category: 'food',
+    category: 'food' as ProductCategory,
     description: 'Pure honey harvested from the banks of the Nile, used by pharaohs for its healing properties. Unprocessed and raw with natural enzymes intact.',
     price: 22.99,
     image: product3,
@@ -49,10 +56,10 @@ const allProducts: Product[] = [
   {
     id: '3',
     name: 'Eye of Horus Cream',
-    category: 'skincare',
+    category: 'skincare' as ProductCategory,
     description: 'A restorative eye cream based on ancient temple recipes, formulated to reduce puffiness and dark circles like the protective eye of Horus.',
     price: 42.50,
-    // image: product4,
+    image: product2,
     rating: 4.7,
     featured: false,
     stock: 12,
@@ -62,10 +69,10 @@ const allProducts: Product[] = [
   {
     id: '4',
     name: 'Pharaoh\'s Incense Set',
-    category: 'wellness',
+    category: 'wellness' as ProductCategory,
     description: 'Authentic resin incense blends used in Egyptian temples for meditation and spiritual connection. Comes with hand-carved brass holder.',
     price: 29.99,
-    // image: product5,
+    image: product3,
     rating: 4.8,
     featured: true,
     stock: 5,
@@ -75,10 +82,10 @@ const allProducts: Product[] = [
   {
     id: '5',
     name: 'Nefertiti Hair Serum',
-    category: 'skincare',
+    category: 'skincare' as ProductCategory,
     description: 'Royal hair treatment inspired by Queen Nefertiti\'s legendary locks. Promotes growth and shine with ancient oil blends.',
     price: 38.75,
-    // image: product6,
+    image: product2,
     rating: 4.9,
     featured: true,
     stock: 10,
@@ -88,10 +95,10 @@ const allProducts: Product[] = [
   {
     id: '6',
     name: 'Sacred Papyrus Tea',
-    category: 'food',
+    category: 'food' as ProductCategory,
     description: 'Rare herbal tea blend made from Nile papyrus and other sacred plants used by Egyptian healers for mental clarity and digestion.',
     price: 18.99,
-    // image: product7,
+    image: product3,
     rating: 4.5,
     featured: false,
     stock: 20,
@@ -101,10 +108,10 @@ const allProducts: Product[] = [
   {
     id: '7',
     name: 'Golden Sand Scrub',
-    category: 'skincare',
+    category: 'skincare' as ProductCategory,
     description: 'Exfoliating body scrub with fine golden sand from the Red Sea and nourishing oils used by ancient Egyptian beauties.',
     price: 32.00,
-    // image: product8,
+    image: product2,
     rating: 4.6,
     featured: true,
     stock: 7,
@@ -114,10 +121,10 @@ const allProducts: Product[] = [
   {
     id: '8',
     name: 'Osiris Body Oil',
-    category: 'skincare',
+    category: 'skincare' as ProductCategory,
     description: 'Ritual anointing oil blend said to be used in the resurrection myth of Osiris. Deeply nourishing for dry skin.',
     price: 45.99,
-    // image: product4,
+    image: product3,
     rating: 4.8,
     featured: true,
     stock: 9,
@@ -367,8 +374,6 @@ const Products: React.FC = () => {
                       key={product.id} 
                       product={product} 
                       onQuickPurchase={handleQuickPurchase}
-                      theme="egyptian"
-                      currency="₹"
                     />
                   ))}
                 </div>
@@ -446,8 +451,6 @@ const Products: React.FC = () => {
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
         product={selectedProduct}
-        theme="egyptian"
-        currency="₹"
       />
     </div>
   );
