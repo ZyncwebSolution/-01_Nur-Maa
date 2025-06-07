@@ -107,7 +107,7 @@ const QuickPurchaseModal: React.FC<QuickPurchaseModalProps> = ({ isOpen, onClose
                 />
                 <div>
                   <h3 className="font-medium text-[#121769] line-clamp-1">{product.name}</h3>
-                  <p className="text-[#67246A]">${product.price.toFixed(2)}</p>
+                  <p className="text-[#67246A]">₹{product.price.toFixed(2)}</p>
                 </div>
               </div>
             )}

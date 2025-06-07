@@ -19,11 +19,12 @@ const Header: React.FC = () => {
 
   const navLinks = [
     { label: 'Home', path: '/' },
+      { label: 'About', path: '/about' },
     { label: 'Products', path: '/products' },
-    { label: 'About', path: '/about' },
+  { label: 'Testimonials', path: '/testimonials' },
     { label: 'Cart', path: '/cart' },
     { label: 'Contact', path: '/contact' },
-    { label: 'Testimonials', path: '/testimonials' },
+    
   ];
 
   return (
