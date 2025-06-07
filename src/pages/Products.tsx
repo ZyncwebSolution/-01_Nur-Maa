@@ -432,7 +432,7 @@ const Products: React.FC = () => {
     { id: 'all', name: 'All Products', symbol: '𓃭' },
     { id: 'skincare', name: 'Skincare', symbol: '𓍯' },
     { id: 'food', name: 'Food & Herbs', symbol: '𓇬' },
-    { id: 'wellness', name: 'Wellness', symbol: '𓂀' }
+    // { id: 'wellness', name: 'Wellness', symbol: '𓂀' }
   ];
 
   return (
