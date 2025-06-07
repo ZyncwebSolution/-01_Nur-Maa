@@ -92,152 +92,209 @@ const About: React.FC = () => {
       </motion.div>
 
       <div className="nurmaa-container max-w-6xl mx-auto py-20">
-        {/* Vision Section - image left, content right */}
+
+        {/* Vision & Mission Section */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20"
+          className="relative flex flex-col gap-12 md:gap-20 mb-28"
           variants={fadeInUp}
           custom={5}
         >
-          {/* Image first */}
-          <div className="order-1 md:order-1">
-            <NurmaaCard className="h-80 md:h-auto flex items-center justify-center p-0 overflow-hidden">
+          {/* Vision */}
+          <NurmaaCard className="relative overflow-hidden flex flex-col md:flex-row items-stretch shadow-2xl border-0 p-0">
+            {/* Artistic background */}
+            <div className="absolute -top-16 -left-16 w-72 h-72 bg-[#FE49AF]/20 rounded-full blur-2xl z-0"></div>
+            <div className="flex-1 flex flex-col justify-center items-start z-10 p-8 md:p-12">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="inline-block w-2 h-10 bg-gradient-to-b from-[#FE49AF] to-[#67246a] rounded"></span>
+                <h2 className="text-3xl md:text-4xl font-extrabold text-[#FE49AF] font-serif tracking-tight drop-shadow">Our Vision</h2>
+              </div>
+              <p className="text-[#121769] text-lg md:text-xl font-semibold mb-2">
+                To inspire a world where wellness is rooted in nature, tradition, and conscious living.
+              </p>
+              <p className="text-[#67246a] text-base md:text-lg">
+                We envision a future where every home embraces the healing power of natural ingredients, and every person feels empowered to live sustainably and mindfully.
+              </p>
+            </div>
+            <div className="flex-1 flex items-center justify-center z-10 p-4 md:p-8">
               <img
                 src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80"
                 alt="Vision"
-                className="rounded-2xl w-full h-80 object-cover"
+                className="rounded-2xl w-full h-56 md:h-80 object-cover shadow-lg border-4 border-[#FE49AF]/20"
               />
-            </NurmaaCard>
-          </div>
-          {/* Content second */}
-          <NurmaaCard className="order-2 md:order-2 flex flex-col justify-center h-full">
-            <h2 className="text-3xl font-bold mb-6 text-[#FE49AF] font-serif">
-              Our Vision
-            </h2>
-            <div className="w-16 h-1 bg-gradient-to-r from-[#67246a] to-[#FE49AF] mb-6"></div>
-            <p className="text-[#121769] mb-4">
-              We strive to redefine wellness by making natural, sustainable living a joyful and accessible choice for everyone.
-            </p>
-            <p className="text-[#121769] mb-4">
-              Our vision is to blend ancient wisdom with modern innovation, creating products that honor the earth and empower individuals to live consciously.
-            </p>
-            <p className="text-[#121769]">
-              By fostering community and education, we aim to inspire a movement toward mindful, holistic well-being for generations to come.
-            </p>
+            </div>
           </NurmaaCard>
-        </motion.div>
-
-        {/* Mission Section - swapped image and content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Content first */}
-          <NurmaaCard className="order-2 md:order-1 flex flex-col justify-center h-full">
-            <h2 className="text-3xl font-bold mb-6 text-[#67246a] font-serif">
-              Our Mission
-            </h2>
-            <div className="w-16 h-1 bg-gradient-to-r from-[#FE49AF] to-[#121769] mb-6"></div>
-            <p className="text-[#121769] mb-4">
-              At Nurmaa, we are dedicated to creating handmade, natural products that nurture both your body and the environment.
-              We believe in the power of nature's ingredients and traditional craftsmanship.
-            </p>
-            <p className="text-[#121769] mb-4">
-              Each Nurmaa product is crafted with care and attention to detail, using only the finest natural ingredients
-              sourced from trusted suppliers who share our commitment to sustainability and ethical practices.
-            </p>
-            <p className="text-[#121769]">
-              Our mission is to bring the healing power of nature into your daily routine through simple, effective,
-              and beautifully crafted products that celebrate traditional knowledge and modern wellness.
-            </p>
-          </NurmaaCard>
-          {/* Image second */}
-          <div className="order-1 md:order-2">
-            <NurmaaCard className="h-80 md:h-auto flex items-center justify-center p-0 overflow-hidden">
+          {/* Mission */}
+          <NurmaaCard className="relative overflow-hidden flex flex-col md:flex-row-reverse items-stretch shadow-2xl border-0 p-0">
+            {/* Artistic background */}
+            <div className="absolute -bottom-16 -right-16 w-72 h-72 bg-[#67246a]/20 rounded-full blur-2xl z-0"></div>
+            <div className="flex-1 flex flex-col justify-center items-start z-10 p-8 md:p-12">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="inline-block w-2 h-10 bg-gradient-to-b from-[#67246a] to-[#FE49AF] rounded"></span>
+                <h2 className="text-3xl md:text-4xl font-extrabold text-[#67246a] font-serif tracking-tight drop-shadow">Our Mission</h2>
+              </div>
+              <p className="text-[#121769] text-lg md:text-xl font-semibold mb-2">
+                To craft pure, sustainable products that nurture both people and planet.
+              </p>
+              <p className="text-[#67246a] text-base md:text-lg">
+                We blend ancient wisdom with modern science, handmaking every Nurmaa product with care, transparency, and deep respect for nature.
+              </p>
+            </div>
+            <div className="flex-1 flex items-center justify-center z-10 p-4 md:p-8">
               <img
                 src="https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&q=80"
                 alt="Handmade products"
-                className="rounded-2xl w-full h-80 object-cover"
+                className="rounded-2xl w-full h-56 md:h-80 object-cover shadow-lg border-4 border-[#67246a]/20"
               />
-            </NurmaaCard>
-          </div>
-        </div>
-
-        {/* Modern Journey Timeline - Vertical Design with Animation */}
-        <motion.div className="mt-24" variants={fadeInUp} custom={8}>
-          <h2 className="text-3xl font-bold mb-12 text-center text-[#121769] font-serif">Our Journey</h2>
-          <div className="relative flex flex-col items-center gap-12">
-            {/* Timeline vertical line */}
-            <div className="absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-[#FE49AF] to-[#67246a] rounded-full -translate-x-1/2 z-0"></div>
-            {[
-              {
-                year: '2019',
-                title: 'From Kitchen to Community',
-                description: 'Nurmaa began as a personal project in a small home kitchen, creating natural remedies for family and friends.',
-                image: 'https://images.unsplash.com/photo-1616694555130-3e5466627a3f?auto=format&fit=crop&q=80'
-              },
-              {
-                year: '2020',
-                title: 'Growing Our Collection',
-                description: 'We expanded our product line to include a variety of skincare and food products, all made with locally sourced ingredients.',
-                image: 'https://images.unsplash.com/photo-1562158927-5359c91e4821?auto=format&fit=crop&q=80'
-              },
-              {
-                year: '2021',
-                title: 'Embracing Sustainability',
-                description: 'We committed to fully sustainable practices, from ingredient sourcing to packaging and delivery methods.',
-                image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80'
-              },
-              {
-                year: 'Today',
-                title: 'Sharing Our Passion',
-                description: 'We continue to grow while staying true to our roots, creating products that honor traditional techniques and natural ingredients.',
-                image: 'https://images.unsplash.com/photo-1599933310642-8f07bdea325a?auto=format&fit=crop&q=80'
-              }
-            ].map((step, index) => (
-              <motion.div
-                key={index}
-                className="relative z-10 flex flex-col items-center w-full"
-                variants={fadeInUp}
-                custom={9 + index}
-              >
-                {/* Timeline dot */}
-                <div className="flex flex-col items-center">
-                  <div className="w-6 h-6 rounded-full bg-[#FE49AF] border-4 border-white shadow-lg z-20"></div>
-                  {index !== 3 && (
-                    <div className="flex-1 w-1 h-12 bg-gradient-to-b from-[#FE49AF] to-[#67246a]"></div>
-                  )}
-                </div>
-                {/* Card */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8, y: 40 }}
-                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                  viewport={{ once: false, amount: 0.4 }}
-                  transition={{ delay: 0.1 * index, duration: 0.7, type: 'spring' }}
-                  className="w-full max-w-2xl mx-auto mt-4"
-                >
-                  <NurmaaCard className="gap-8 flex flex-col md:flex-row items-center">
-                    <div className="flex-shrink-0 w-full md:w-40">
-                      <img
-                        src={step.image}
-                        alt={step.title}
-                        className="rounded-lg w-full h-32 md:h-40 object-cover border-4 border-[#FE49AF]/40"
-                      />
-                    </div>
-                    <div className="flex-1 flex flex-col items-start">
-                      <div className="flex items-center mb-2">
-                        <div className="text-2xl font-bold text-[#FE49AF] mr-3">
-                          {step.year === 'Today' ? '★' : step.year}
-                        </div>
-                        <div className="h-1 w-12 bg-gradient-to-r from-[#FE49AF] to-[#67246a] rounded" />
-                      </div>
-                      <h3 className="text-2xl font-bold mb-2 text-[#121769]">{step.title}</h3>
-                      <p className="text-[#67246a]">{step.description}</p>
-                    </div>
-                  </NurmaaCard>
-                </motion.div>
-              </motion.div>
-            ))}
-          </div>
+            </div>
+          </NurmaaCard>
         </motion.div>
 
-        {/* Founder Section - Modern Glassmorphism Card */}
+       {/* Egyptian Vertical Timeline with Water Flow */}
+<motion.div className="mt-32" variants={fadeInUp} custom={8}>
+  <h2 className="text-4xl font-extrabold mb-16 text-center text-[#67246a] font-serif tracking-tight">
+    <span className="text-[#FE49AF]">𓋹𓍑𓎟</span> Our Journey <span className="text-[#FE49AF]">𓎟𓍑𓋹</span>
+  </h2>
+
+  <div className="relative flex justify-center">
+    {/* Animated Nile Water Line */}
+    <motion.div 
+      className="absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 z-0 overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+    >
+      {/* Water Flow Animation */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-b from-[#FE49AF] via-[#EBEBD3] to-[#67246a]"
+        initial={{ y: "-100%" }}
+        animate={{ y: "100%" }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+        style={{
+          maskImage: "linear-gradient(to bottom, transparent 5%, white 20%, white 80%, transparent 95%)"
+        }}
+      >
+        {/* Water texture */}
+        <div className="absolute inset-0 opacity-30 bg-[url('https://i.imgur.com/QZuQJfL.png')] bg-repeat bg-[length:40px]"></div>
+      </motion.div>
+      
+      {/* Floating hieroglyphics */}
+      <motion.div 
+        className="absolute inset-0 flex flex-col items-center justify-between py-4"
+        initial={{ y: "-100%" }}
+        animate={{ y: "100%" }}
+        transition={{
+          duration: 16,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+      >
+        {[...Array(5)].map((_, i) => (
+          <motion.span 
+            key={i}
+            className="text-[#67246a] text-lg opacity-70"
+            animate={{
+              rotate: [0, 5, -5, 0],
+              y: [0, -3, 3, 0]
+            }}
+            transition={{
+              duration: 8 + i*2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            {['𓆓', '𓃭', '𓁧', '𓋹', '𓆎'][i % 5]}
+          </motion.span>
+        ))}
+      </motion.div>
+    </motion.div>
+
+    {/* Timeline Items */}
+    <div className="relative z-10 w-full max-w-md space-y-24 py-12">
+      {[
+        {
+          year: '2019',
+          title: 'Sacred Beginnings',
+          description: 'Founded with ancient wisdom, like the first stones of the pyramids.',
+          symbol: '𓃭', // Ankh
+          color: '#FE49AF'
+        },
+        {
+          year: '2020',
+          title: 'Scroll of Growth',
+          description: 'Expanded our knowledge as scribes unfurl their papyrus.',
+          symbol: '𓆎', // Scroll
+          color: '#67246a'
+        },
+        {
+          year: '2021',
+          title: 'Balance of Ma\'at',
+          description: 'Embraced sustainability through sacred equilibrium.',
+          symbol: '𓁧', // Ma'at feather
+          color: '#FE49AF'
+        },
+        {
+          year: 'Now',
+          title: 'Eternal Horizon',
+          description: 'Building legacy as enduring as the monuments of old.',
+          symbol: '𓋹', // Life
+          color: '#67246a'
+        }
+      ].map((item, index) => (
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+          transition={{ delay: index * 0.15, duration: 0.7 }}
+          className="relative"
+        >
+          {/* Egyptian Symbol Above Year */}
+          <div className="absolute left-1/2 -top-10 -translate-x-1/2 z-10">
+            <motion.div
+              className={`text-4xl ${index % 2 === 0 ? 'text-[#FE49AF]' : 'text-[#67246a]'}`}
+              animate={{
+                y: [0, -5, 0],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{
+                duration: 4 + index,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              {item.symbol}
+            </motion.div>
+          </div>
+
+          {/* Year Badge */}
+          <div className="absolute left-1/2 -top-2 -translate-x-1/2 z-20">
+            <div className={`px-4 py-1 rounded-full text-sm font-bold ${index % 2 === 0 ? 'bg-[#FE49AF]' : 'bg-[#67246a]'} text-white shadow-md`}>
+              {item.year}
+            </div>
+          </div>
+
+          {/* Content Card */}
+          <div className={`bg-white/80 backdrop-blur-lg rounded-xl shadow-lg border-2 border-[#FE49AF]/15 p-6 mx-4 
+            ${index % 2 === 0 ? 'ml-0 mr-16' : 'ml-16 mr-0'}`}>
+            <h3 className={`text-xl font-bold mb-2 ${index % 2 === 0 ? 'text-[#FE49AF]' : 'text-[#67246a]'}`}>
+              {item.title}
+            </h3>
+            <p className="text-[#67246a]">{item.description}</p>
+            
+            {/* Water Drop Connector */}
+            <div className={`absolute top-8 ${index % 2 === 0 ? '-right-4' : '-left-4'} w-4 h-4 rounded-full ${item.color} shadow-md`}></div>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  </div>
+</motion.div>
+
+        {/* Founder Section */}
         <motion.div
           className="mt-24"
           variants={fadeInUp}
@@ -247,7 +304,7 @@ const About: React.FC = () => {
             {/* Decorative background shapes */}
             <div className="absolute -top-10 -right-10 w-48 h-48 bg-[#FE49AF]/20 rounded-full blur-2xl z-0"></div>
             <div className="absolute -bottom-10 -left-10 w-56 h-56 bg-[#67246a]/10 rounded-full blur-2xl z-0"></div>
-            {/* Founder Image on the right */}
+            {/* Founder Image */}
             <div className="relative flex-shrink-0 flex justify-center items-center w-full md:w-1/3 z-10 py-8 md:py-0">
               <img
                 src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&q=80"
@@ -255,7 +312,7 @@ const About: React.FC = () => {
                 className="rounded-2xl w-52 h-52 object-cover border-4 border-[#FE49AF]/30 shadow-xl"
               />
             </div>
-            {/* Founder Info Card */}
+            {/* Founder Info */}
             <div className="flex-1 flex flex-col justify-center items-start text-left z-10 px-8 py-8">
               <div className="mb-4 flex items-center gap-3">
                 <span className="inline-block w-2 h-8 bg-gradient-to-b from-[#FE49AF] to-[#67246a] rounded"></span>
@@ -310,11 +367,48 @@ const About: React.FC = () => {
                 description: 'The ankh symbolizes life; we honor vitality and holistic wellness in all we do.'
               }
             ].map((value, idx) => (
-              <NurmaaCard key={idx} className="flex flex-col items-center py-10">
-                <div className="text-5xl mb-4">{value.icon}</div>
-                <h3 className="text-xl font-bold mb-2 text-[#FE49AF]">{value.title}</h3>
-                <p className="text-[#121769]">{value.description}</p>
-              </NurmaaCard>
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 60, scale: 0.85, rotate: -8 + idx * 8 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{
+                  delay: 0.2 + idx * 0.18,
+                  duration: 0.8,
+                  type: 'spring',
+                  bounce: 0.35
+                }}
+              >
+                <NurmaaCard className="flex flex-col items-center py-10 group relative overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500">
+                  {/* Animated glowing background blob */}
+                  <span
+                    className={`
+                      absolute -top-10 -left-10 w-32 h-32 rounded-full
+                      ${idx === 0 ? 'bg-[#FE49AF]/20' : idx === 1 ? 'bg-[#67246a]/20' : 'bg-[#EBEBD3]/40'}
+                      blur-2xl z-0 animate-valueBlob
+                    `}
+                  ></span>
+                  {/* Icon with pulse */}
+                  <span className="relative z-10 mb-4">
+                    <motion.span
+                      initial={{ scale: 0.8, filter: 'blur(2px)' }}
+                      whileInView={{ scale: 1.1, filter: 'blur(0px)' }}
+                      transition={{
+                        repeat: Infinity,
+                        repeatType: 'reverse',
+                        duration: 2.2 + idx * 0.3,
+                        ease: 'easeInOut',
+                        delay: 0.5 + idx * 0.2
+                      }}
+                      className="inline-block"
+                    >
+                      <span className="text-5xl drop-shadow-lg">{value.icon}</span>
+                    </motion.span>
+                  </span>
+                  <h3 className="text-xl font-bold mb-2 text-[#FE49AF] z-10">{value.title}</h3>
+                  <p className="text-[#121769] z-10">{value.description}</p>
+                </NurmaaCard>
+              </motion.div>
             ))}
           </div>
         </motion.div>
@@ -324,3 +418,13 @@ const About: React.FC = () => {
 };
 
 export default About;
+
+/* Nurmaa orb pulse animation (add to your global CSS if not present):
+@keyframes nurmaaPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(254,73,175,0.18), 0 0 0 0 rgba(103,36,106,0.15);}
+  50% { box-shadow: 0 0 32px 12px rgba(254,73,175,0.22), 0 0 24px 8px rgba(103,36,106,0.18);}
+}
+.animate-nurmaaPulse {
+  animation: nurmaaPulse 2.8s cubic-bezier(0.4,0,0.2,1) infinite;
+}
+*/

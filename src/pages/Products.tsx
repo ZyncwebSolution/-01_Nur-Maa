@@ -4,7 +4,6 @@ import ProductCard from '@/components/ProductCard';
 import QuickPurchaseModal from '@/components/QuickPurchaseModal';
 import { Product as BaseProduct, ProductCategory } from '@/lib/types';
 
-// Extend Product type to include formattedPrice, ingredients, and stock
 type Product = BaseProduct & { 
   formattedPrice: string;
   ingredients?: string[];
@@ -59,7 +58,7 @@ const allProducts: Product[] = [
     category: 'skincare' as ProductCategory,
     description: 'A restorative eye cream based on ancient temple recipes, formulated to reduce puffiness and dark circles like the protective eye of Horus.',
     price: 42.50,
-    image: product2,
+    // image: product4,
     rating: 4.7,
     featured: false,
     stock: 12,
@@ -72,7 +71,7 @@ const allProducts: Product[] = [
     category: 'wellness' as ProductCategory,
     description: 'Authentic resin incense blends used in Egyptian temples for meditation and spiritual connection. Comes with hand-carved brass holder.',
     price: 29.99,
-    image: product3,
+    // image: product5,
     rating: 4.8,
     featured: true,
     stock: 5,
@@ -85,7 +84,7 @@ const allProducts: Product[] = [
     category: 'skincare' as ProductCategory,
     description: 'Royal hair treatment inspired by Queen Nefertiti\'s legendary locks. Promotes growth and shine with ancient oil blends.',
     price: 38.75,
-    image: product2,
+    // image: product6,
     rating: 4.9,
     featured: true,
     stock: 10,
@@ -98,7 +97,7 @@ const allProducts: Product[] = [
     category: 'food' as ProductCategory,
     description: 'Rare herbal tea blend made from Nile papyrus and other sacred plants used by Egyptian healers for mental clarity and digestion.',
     price: 18.99,
-    image: product3,
+    // image: product7,
     rating: 4.5,
     featured: false,
     stock: 20,
@@ -111,7 +110,7 @@ const allProducts: Product[] = [
     category: 'skincare' as ProductCategory,
     description: 'Exfoliating body scrub with fine golden sand from the Red Sea and nourishing oils used by ancient Egyptian beauties.',
     price: 32.00,
-    image: product2,
+    // image: product8,
     rating: 4.6,
     featured: true,
     stock: 7,
@@ -124,7 +123,7 @@ const allProducts: Product[] = [
     category: 'skincare' as ProductCategory,
     description: 'Ritual anointing oil blend said to be used in the resurrection myth of Osiris. Deeply nourishing for dry skin.',
     price: 45.99,
-    image: product3,
+    // image: product4,
     rating: 4.8,
     featured: true,
     stock: 9,
@@ -133,6 +132,7 @@ const allProducts: Product[] = [
   }
 ].map(product => ({
   ...product,
+  image: product.image ?? product2, // Use product2 as a placeholder if image is missing
   formattedPrice: formatPrice(product.price)
 }));
 
