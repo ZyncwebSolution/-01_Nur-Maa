@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
@@ -104,48 +103,64 @@ const Checkout: React.FC = () => {
   
   if (items.length === 0) {
     return (
-      <div className="pt-24 pb-16 nurmaa-container">
-        <div className="text-center py-12">
-          <svg 
-            className="mx-auto h-16 w-16 text-gray-400"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              strokeWidth={1.5} 
-              d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" 
-            />
-          </svg>
-          <h2 className="mt-6 text-2xl font-semibold">Your cart is empty</h2>
-          <p className="mt-4 text-gray-600">
-            Add some products to your cart before proceeding to checkout.
-          </p>
-          <button
-            onClick={() => navigate('/products')}
-            className="btn-primary mt-6 animate-scale-in-out hover:animate-none"
-          >
-            Browse Products
-          </button>
+      <div className="pt-24 pb-16 min-h-screen" style={{ backgroundColor: '#EBEBD3' }}>
+        <div className="nurmaa-container">
+          <div className="text-center py-16 px-4 rounded-xl" style={{ backgroundColor: 'rgba(254, 73, 175, 0.1)' }}>
+            <div className="flex justify-center">
+              <svg 
+                className="h-20 w-20"
+                fill="none"
+                viewBox="0 0 24 24"
+                style={{ color: '#67246A' }}
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={1.5} 
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" 
+                />
+              </svg>
+            </div>
+            <h2 className="mt-6 text-2xl font-bold" style={{ color: '#121769' }}>Your cart is empty</h2>
+            <p className="mt-4 text-lg" style={{ color: '#67246A' }}>
+              Add some products to your cart before proceeding to checkout.
+            </p>
+            <button
+              onClick={() => navigate('/products')}
+              className="inline-block mt-6 px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-lg"
+              style={{ 
+                backgroundColor: '#FE49AF',
+                color: '#EBEBD3',
+                boxShadow: '0 4px 6px rgba(254, 73, 175, 0.3)'
+              }}
+            >
+              Browse Products
+            </button>
+          </div>
         </div>
       </div>
     );
   }
   
   return (
-    <div className="pt-24 pb-16 lotus-bg">
+    <div className="pt-24 pb-16 min-h-screen" style={{ backgroundColor: '#EBEBD3' }}>
       <div className="nurmaa-container">
-        <h1 className="text-3xl font-bold text-center mb-8">Checkout</h1>
+        <h1 className="text-5xl p-2 font-bold text-center mb-8" style={{ color: '#121769' }}>Checkout</h1>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Customer Information Form */}
           <div>
-            <h2 className="text-xl font-semibold mb-6">Your Information</h2>
-            <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-xl shadow-sm">
+            <h2 className="text-xl font-semibold mb-6" style={{ color: '#121769' }}>Your Information</h2>
+            <form 
+              onSubmit={handleSubmit} 
+              className="space-y-6 p-6 rounded-xl"
+              style={{ 
+                backgroundColor: 'white',
+                boxShadow: '0 2px 10px rgba(103, 36, 106, 0.1)'
+              }}
+            >
               <div>
-                <label htmlFor="name" className="block font-medium mb-2">
+                <label htmlFor="name" className="block font-medium mb-2" style={{ color: '#67246A' }}>
                   Full Name
                 </label>
                 <input
@@ -155,13 +170,19 @@ const Checkout: React.FC = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="input-field"
+                  className="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:outline-none transition-all"
+                  style={{ 
+                    borderColor: '#EBEBD3',
+                    backgroundColor: '#EBEBD3',
+                    color: '#121769',
+                  
+                  }}
                   placeholder="Your full name"
                 />
               </div>
               
               <div>
-                <label htmlFor="email" className="block font-medium mb-2">
+                <label htmlFor="email" className="block font-medium mb-2" style={{ color: '#67246A' }}>
                   Email
                 </label>
                 <input
@@ -171,13 +192,19 @@ const Checkout: React.FC = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="input-field"
+                  className="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:outline-none transition-all"
+                  style={{ 
+                    borderColor: '#EBEBD3',
+                    backgroundColor: '#EBEBD3',
+                    color: '#121769',
+                  
+                  }}
                   placeholder="your.email@example.com"
                 />
               </div>
               
               <div>
-                <label htmlFor="phone" className="block font-medium mb-2">
+                <label htmlFor="phone" className="block font-medium mb-2" style={{ color: '#67246A' }}>
                   Phone Number
                 </label>
                 <input
@@ -187,13 +214,19 @@ const Checkout: React.FC = () => {
                   value={formData.phone}
                   onChange={handleChange}
                   required
-                  className="input-field"
+                  className="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:outline-none transition-all"
+                  style={{ 
+                    borderColor: '#EBEBD3',
+                    backgroundColor: '#EBEBD3',
+                    color: '#121769',
+                  
+                  }}
                   placeholder="Your phone number"
                 />
               </div>
               
               <div>
-                <label htmlFor="address" className="block font-medium mb-2">
+                <label htmlFor="address" className="block font-medium mb-2" style={{ color: '#67246A' }}>
                   Delivery Address
                 </label>
                 <textarea
@@ -203,13 +236,19 @@ const Checkout: React.FC = () => {
                   onChange={handleChange}
                   required
                   rows={3}
-                  className="input-field resize-none"
+                  className="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:outline-none transition-all resize-none"
+                  style={{ 
+                    borderColor: '#EBEBD3',
+                    backgroundColor: '#EBEBD3',
+                    color: '#121769',
+                  
+                  }}
                   placeholder="Your full address"
                 />
               </div>
               
               <div>
-                <label htmlFor="message" className="block font-medium mb-2">
+                <label htmlFor="message" className="block font-medium mb-2" style={{ color: '#67246A' }}>
                   Additional Notes (optional)
                 </label>
                 <textarea
@@ -218,7 +257,13 @@ const Checkout: React.FC = () => {
                   value={formData.message}
                   onChange={handleChange}
                   rows={3}
-                  className="input-field resize-none"
+                  className="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:outline-none transition-all resize-none"
+                  style={{ 
+                    borderColor: '#EBEBD3',
+                    backgroundColor: '#EBEBD3',
+                    color: '#121769',
+                  
+                  }}
                   placeholder="Any special instructions or requests?"
                 />
               </div>
@@ -226,12 +271,18 @@ const Checkout: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="btn-primary w-full flex items-center justify-center hover:scale-105 transition-transform"
+                className="w-full py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-lg flex items-center justify-center"
+                style={{ 
+                  backgroundColor: isSubmitting ? '#67246A' : '#FE49AF',
+                  color: '#EBEBD3',
+                  boxShadow: '0 4px 6px rgba(254, 73, 175, 0.3)'
+                }}
               >
                 {isSubmitting ? (
                   <>
                     <svg 
-                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" 
+                      className="animate-spin -ml-1 mr-3 h-5 w-5" 
+                      style={{ color: '#EBEBD3' }}
                       xmlns="http://www.w3.org/2000/svg" 
                       fill="none" 
                       viewBox="0 0 24 24"
@@ -258,16 +309,37 @@ const Checkout: React.FC = () => {
               </button>
             </form>
           </div>
-          
+        
           {/* Order Summary */}
           <div>
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-semibold mb-6 text-nurmaa-purple">Order Summary</h2>
+            <div 
+              className="rounded-xl p-6 mt-14"
+              style={{ 
+                backgroundColor: 'white',
+                boxShadow: '0 2px 10px rgba(103, 36, 106, 0.1)'
+              }}
+            >
+              <h2 className="text-xl font-semibold mb-6 pb-2 border-b" style={{ 
+                color: '#121769',
+                borderColor: '#EBEBD3'
+              }}>
+                Order Summary
+              </h2>
               
-              <div className="divide-y">
+              <div className="divide-y" style={{ borderColor: '#EBEBD3' }}>
                 {items.map(item => (
-                  <div key={item.product.id} className="py-4 flex items-center group transition-all hover:bg-gray-50 rounded-lg px-2">
-                    <div className="w-16 h-16 flex-shrink-0 bg-white rounded-lg overflow-hidden border border-gray-100">
+                  <div 
+                    key={item.product.id} 
+                    className="py-4 flex items-center group transition-all hover:bg-gray-50 rounded-lg px-2"
+                    style={{ backgroundColor: 'rgba(254, 73, 175, 0.05)' }}
+                  >
+                    <div 
+                      className="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden border"
+                      style={{ 
+                        backgroundColor: 'white',
+                        borderColor: '#EBEBD3'
+                      }}
+                    >
                       <img 
                         src={item.product.image} 
                         alt={item.product.name}
@@ -275,61 +347,80 @@ const Checkout: React.FC = () => {
                       />
                     </div>
                     <div className="ml-4 flex-grow">
-                      <h4 className="font-medium">{item.product.name}</h4>
-                      <div className="flex justify-between mt-1 text-sm text-gray-600">
-                        <span>{item.quantity} × ${item.product.price.toFixed(2)}</span>
-                        <span className="font-semibold">${(item.product.price * item.quantity).toFixed(2)}</span>
+                      <h4 className="font-medium" style={{ color: '#121769' }}>{item.product.name}</h4>
+                      <div className="flex justify-between mt-1 text-sm" style={{ color: '#67246A' }}>
+                        <span>{item.quantity} × ₹{item.product.price.toFixed(2)}</span>
+                        <span className="font-semibold">₹{(item.product.price * item.quantity).toFixed(2)}</span>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
               
-              <div className="border-t border-dashed border-gray-200 mt-6 pt-6 space-y-3">
+              <div 
+                className="border-t border-dashed mt-6 pt-6 space-y-3"
+                style={{ borderColor: '#EBEBD3' }}
+              >
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Subtotal</span>
-                  <span>${totalPrice.toFixed(2)}</span>
+                  <span style={{ color: '#67246A' }}>Subtotal</span>
+                  <span style={{ color: '#121769', fontWeight: '500' }}>₹{totalPrice.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Shipping</span>
-                  <span>Free</span>
+                  <span style={{ color: '#67246A' }}>Shipping</span>
+                  <span style={{ color: '#121769', fontWeight: '500' }}>Free</span>
                 </div>
-                <div className="flex justify-between font-semibold text-lg">
-                  <span>Total</span>
-                  <span className="text-nurmaa-purple">${totalPrice.toFixed(2)}</span>
+                <div className="flex justify-between font-semibold text-lg pt-3 mt-3 border-t" style={{ borderColor: '#EBEBD3' }}>
+                  <span style={{ color: '#121769' }}>Total</span>
+                  <span style={{ color: '#FE49AF' }}>₹{totalPrice.toFixed(2)}</span>
                 </div>
               </div>
             </div>
             
-            <div className="mt-8 bg-nurmaa-purple bg-opacity-10 rounded-xl p-5 border border-nurmaa-purple/20">
+            {/* Order Information */}
+            <div 
+              className="mt-6 rounded-xl p-5"
+              style={{ 
+                backgroundColor: 'rgba(254, 73, 175, 0.1)',
+                border: '1px solid rgba(254, 73, 175, 0.2)'
+              }}
+            >
               <div className="flex">
-                <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-nurmaa-purple/20">
+                <div 
+                  className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full"
+                  style={{ backgroundColor: 'rgba(254, 73, 175, 0.2)' }}
+                >
                   <svg 
-                    className="h-5 w-5 text-nurmaa-purple" 
+                    className="h-5 w-5" 
                     fill="none" 
-                    viewBox="0 0 24 24" 
-                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    style={{ color: '#FE49AF' }}
                   >
                     <path 
                       strokeLinecap="round" 
                       strokeLinejoin="round" 
                       strokeWidth={2} 
-                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" 
+                      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" 
                     />
                   </svg>
                 </div>
                 <div className="ml-4">
-                  <h3 className="font-medium text-nurmaa-dark">Order Information</h3>
-                  <p className="mt-2 text-sm text-gray-600">
+                  <h3 className="font-semibold" style={{ color: '#121769' }}>Order Information</h3>
+                  <p className="mt-2 text-sm" style={{ color: '#67246A' }}>
                     After placing your order, a confirmation email will be sent to Nurmaa's team at 
-                    <span className="font-medium text-nurmaa-purple"> deepacse51@gmail.com</span>. 
+                    <span className="font-medium" style={{ color: '#FE49AF' }}> deepacse51@gmail.com</span>. 
                     They will contact you to confirm delivery details.
                   </p>
                 </div>
               </div>
               
-              <div className="mt-4 bg-white p-3 rounded-lg border border-dashed border-nurmaa-purple/20">
-                <p className="text-sm text-gray-600 italic">
+              <div 
+                className="mt-4 p-3 rounded-lg border border-dashed"
+                style={{ 
+                  backgroundColor: 'white',
+                  borderColor: 'rgba(254, 73, 175, 0.2)'
+                }}
+              >
+                <p className="text-sm italic" style={{ color: '#67246A' }}>
                   "Thank you for choosing Nurmaa's natural products. We appreciate your support for our handcrafted items."
                 </p>
               </div>

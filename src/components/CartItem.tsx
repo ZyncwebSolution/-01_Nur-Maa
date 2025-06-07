@@ -54,7 +54,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
           </div>
           
           <div className="text-right">
-            <span className="font-semibold">${(product.price * quantity).toFixed(2)}</span>
+            <span className="font-semibold">₹{(product.price * quantity).toFixed(2)}</span>
             <button 
               onClick={() => removeItem(product.id)}
               className="ml-4 text-gray-400 hover:text-red-500"
