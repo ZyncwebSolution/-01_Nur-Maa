@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import Timeline from '../components/Timeline';
 
 // Consistent NurmaaCard for all cards on this page
 const NurmaaCard: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
@@ -148,151 +149,10 @@ const About: React.FC = () => {
             </div>
           </NurmaaCard>
         </motion.div>
+        <Timeline />
 
        {/* Egyptian Vertical Timeline with Water Flow */}
-<motion.div className="mt-32" variants={fadeInUp} custom={8}>
-  <h2 className="text-4xl font-extrabold mb-16 text-center text-[#67246a] font-serif tracking-tight">
-    <span className="text-[#FE49AF]">𓋹𓍑𓎟</span> Our Journey <span className="text-[#FE49AF]">𓎟𓍑𓋹</span>
-  </h2>
 
-  <div className="relative flex justify-center">
-    {/* Animated Nile Water Line */}
-    <motion.div 
-      className="absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 z-0 overflow-hidden"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-    >
-      {/* Water Flow Animation */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-b from-[#FE49AF] via-[#EBEBD3] to-[#67246a]"
-        initial={{ y: "-100%" }}
-        animate={{ y: "100%" }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-        style={{
-          maskImage: "linear-gradient(to bottom, transparent 5%, white 20%, white 80%, transparent 95%)"
-        }}
-      >
-        {/* Water texture */}
-        <div className="absolute inset-0 opacity-30 bg-[url('https://i.imgur.com/QZuQJfL.png')] bg-repeat bg-[length:40px]"></div>
-      </motion.div>
-      
-      {/* Floating hieroglyphics */}
-      <motion.div 
-        className="absolute inset-0 flex flex-col items-center justify-between py-4"
-        initial={{ y: "-100%" }}
-        animate={{ y: "100%" }}
-        transition={{
-          duration: 16,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-      >
-        {[...Array(5)].map((_, i) => (
-          <motion.span 
-            key={i}
-            className="text-[#67246a] text-lg opacity-70"
-            animate={{
-              rotate: [0, 5, -5, 0],
-              y: [0, -3, 3, 0]
-            }}
-            transition={{
-              duration: 8 + i*2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            {['𓆓', '𓃭', '𓁧', '𓋹', '𓆎'][i % 5]}
-          </motion.span>
-        ))}
-      </motion.div>
-    </motion.div>
-
-    {/* Timeline Items */}
-    <div className="relative z-10 w-full max-w-md space-y-24 py-12">
-      {[
-        {
-          year: '2019',
-          title: 'Sacred Beginnings',
-          description: 'Founded with ancient wisdom, like the first stones of the pyramids.',
-          symbol: '𓃭', // Ankh
-          color: '#FE49AF'
-        },
-        {
-          year: '2020',
-          title: 'Scroll of Growth',
-          description: 'Expanded our knowledge as scribes unfurl their papyrus.',
-          symbol: '𓆎', // Scroll
-          color: '#67246a'
-        },
-        {
-          year: '2021',
-          title: 'Balance of Ma\'at',
-          description: 'Embraced sustainability through sacred equilibrium.',
-          symbol: '𓁧', // Ma'at feather
-          color: '#FE49AF'
-        },
-        {
-          year: 'Now',
-          title: 'Eternal Horizon',
-          description: 'Building legacy as enduring as the monuments of old.',
-          symbol: '𓋹', // Life
-          color: '#67246a'
-        }
-      ].map((item, index) => (
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-          transition={{ delay: index * 0.15, duration: 0.7 }}
-          className="relative"
-        >
-          {/* Egyptian Symbol Above Year */}
-          <div className="absolute left-1/2 -top-10 -translate-x-1/2 z-10">
-            <motion.div
-              className={`text-4xl ${index % 2 === 0 ? 'text-[#FE49AF]' : 'text-[#67246a]'}`}
-              animate={{
-                y: [0, -5, 0],
-                scale: [1, 1.1, 1]
-              }}
-              transition={{
-                duration: 4 + index,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              {item.symbol}
-            </motion.div>
-          </div>
-
-          {/* Year Badge */}
-          <div className="absolute left-1/2 -top-2 -translate-x-1/2 z-20">
-            <div className={`px-4 py-1 rounded-full text-sm font-bold ${index % 2 === 0 ? 'bg-[#FE49AF]' : 'bg-[#67246a]'} text-white shadow-md`}>
-              {item.year}
-            </div>
-          </div>
-
-          {/* Content Card */}
-          <div className={`bg-white/80 backdrop-blur-lg rounded-xl shadow-lg border-2 border-[#FE49AF]/15 p-6 mx-4 
-            ${index % 2 === 0 ? 'ml-0 mr-16' : 'ml-16 mr-0'}`}>
-            <h3 className={`text-xl font-bold mb-2 ${index % 2 === 0 ? 'text-[#FE49AF]' : 'text-[#67246a]'}`}>
-              {item.title}
-            </h3>
-            <p className="text-[#67246a]">{item.description}</p>
-            
-            {/* Water Drop Connector */}
-            <div className={`absolute top-8 ${index % 2 === 0 ? '-right-4' : '-left-4'} w-4 h-4 rounded-full ${item.color} shadow-md`}></div>
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  </div>
-</motion.div>
 
         {/* Founder Section */}
         <motion.div
