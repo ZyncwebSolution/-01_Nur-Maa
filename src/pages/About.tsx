@@ -31,7 +31,7 @@ const fadeInUp = {
 const About: React.FC = () => {
   return (
     <motion.div
-      className="pt-24 pb-16 min-h-screen bg-[#EBEBD3]"
+      className="pb-16 min-h-screen bg-[#EBEBD3]"
       initial="hidden"
       animate="visible"
       variants={{

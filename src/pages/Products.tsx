@@ -86,7 +86,8 @@ const allProducts: Product[] = [
     image: 'https://c7.staticflickr.com/9/8637/29774838446_3e7f7ccc79_o.jpg',
     rating: 4.9,
     featured: true,
-    stock: 10,ingredients: ['Pearl Millet (Kambu)', 'Cardamom', 'Salt'],
+    stock: 10,
+    ingredients: ['Pearl Millet (Kambu)', 'Cardamom', 'Salt'],
     benefits: ['High in Iron & Calcium ', 'Gut-Friendly Grain', 'Helps Control Diabetes','Heart Health Support','Naturally Gluten-Free','Light & Cooling']
   },
   {
@@ -366,7 +367,6 @@ const allProducts: Product[] = [
   }
 ].map(product => ({
   ...product,
-  image: product.image ?? product2, // Use product2 as a placeholder if image is missing
   formattedPrice: formatPrice(product.price)
 }));
 
@@ -380,6 +380,7 @@ const Products: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(undefined);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeView, setActiveView] = useState<'grid' | 'list'>('grid');
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [hoveredSymbol, setHoveredSymbol] = useState<string | null>(null);
   
   // Filter and sort products
@@ -439,17 +440,17 @@ const Products: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#f8f9f0]">
       {/* Animated Hero Section */}
-      <div 
-        className="pt-32 pb-20 relative text-white bg-cover bg-center"
+      <div
+        className="pt-16 md:pt-32 pb-12 md:pb-20 relative text-white bg-cover bg-center"
         style={{
           backgroundImage: 'linear-gradient(rgba(18, 23, 105, 0.85), rgba(103, 36, 106, 0.85)), url("https://images.unsplash.com/photo-1541532713592-79a0317b6b77?auto=format&fit=crop&q=80")',
         }}
       >
-        <div className="container mx-auto px-6 text-center animate-fade-in">
-          <h1 className="text-5xl font-bold mb-6 font-serif text-[#FE49AF] drop-shadow-lg">
+        <div className="container mx-auto px-4 sm:px-6 text-center animate-fade-in">
+          <h1 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6 font-serif text-[#FE49AF] drop-shadow-lg">
             Ancient Egyptian Treasures
           </h1>
-          <p className="text-xl max-w-2xl mx-auto text-[#EBEBD3]">
+          <p className="text-base md:text-xl max-w-2xl mx-auto text-[#EBEBD3]">
             Discover authentic products inspired by the beauty secrets and sacred rituals of ancient Egypt.
           </p>
           
@@ -457,8 +458,8 @@ const Products: React.FC = () => {
           <div className="mt-8 max-w-md mx-auto relative">
             <input
               type="text"
-              placeholder="Search for sacred oils, herbs, artifacts..."
-              className="w-full py-3 px-6 rounded-full text-[#121769] focus:outline-none focus:ring-2 focus:ring-[#FE49AF] shadow-lg transition-all duration-300 hover:shadow-xl"
+              placeholder="Search products..."
+              className="w-full py-2 md:py-3 px-4 md:px-6 rounded-full text-[#121769] focus:outline-none focus:ring-2 focus:ring-[#FE49AF] shadow-lg transition-all duration-300 hover:shadow-xl text-sm md:text-base"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -473,9 +474,22 @@ const Products: React.FC = () => {
       
       {/* Main Content */}
       <div className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="flex flex-col md:flex-row gap-6 px-4 sm:px-0">
+          {/* Mobile Filters Button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsFiltersOpen(!isFiltersOpen)}
+              className="w-full py-2 px-4 bg-[#67246A] text-white rounded-lg flex items-center justify-between"
+            >
+              <span>{isFiltersOpen ? 'Hide Filters' : 'Show Filters'}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </button>
+          </div>
+          
           {/* Interactive Filters - Left Sidebar */}
-          <div className="md:col-span-1 space-y-8 sticky top-4 h-min">
+          <div className={`${isFiltersOpen ? 'block' : 'hidden'} md:block md:w-1/4 space-y-8 md:sticky md:top-4 md:h-min`}>
             {/* Categories */}
             <div className="bg-white p-6 rounded-lg shadow-lg border border-[#EBEBD3]">
               <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">
@@ -542,7 +556,7 @@ const Products: React.FC = () => {
           {/* Product Display Area */}
           <div className="md:col-span-3">
             {/* Results Header */}
-            <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#121769] p-4 rounded-lg shadow-lg">
+            <div className="mb-6 md:mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#121769] p-4 rounded-lg shadow-lg">
               <p className="text-[#EBEBD3]">
                 Showing <span className="font-bold text-[#FE49AF]">{filteredProducts.length}</span> sacred {filteredProducts.length === 1 ? 'artifact' : 'artifacts'}
               </p>
@@ -579,7 +593,7 @@ const Products: React.FC = () => {
             {/* Products Grid/List */}
             {filteredProducts.length > 0 ? (
               activeView === 'grid' ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
                   {filteredProducts.map(product => (
                     <ProductCard
                       key={product.id} 
@@ -636,7 +650,7 @@ const Products: React.FC = () => {
                 </div>
               )
             ) : (
-              <div className="text-center py-16 bg-white rounded-lg shadow-lg border border-[#EBEBD3]">
+              <div className="text-center py-8 md:py-16 bg-white rounded-lg shadow-lg border border-[#EBEBD3]">
                 <div className="mx-auto h-24 w-24 text-[#FE49AF] mb-6 animate-bounce">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
