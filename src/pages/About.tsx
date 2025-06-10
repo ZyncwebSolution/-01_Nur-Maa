@@ -30,7 +30,7 @@ const fadeInUp = {
 const About: React.FC = () => {
   return (
     <motion.div
-      className="pt-24 pb-16 min-h-screen bg-[#EBEBD3]"
+      className="pb-16 min-h-screen bg-[#EBEBD3]"
       initial="hidden"
       animate="visible"
       variants={{
@@ -156,53 +156,88 @@ const About: React.FC = () => {
   </h2>
 
   <div className="relative flex justify-center">
-    {/* Animated Nile Water Line */}
+    {/* Animated Nile River Line */}
     <motion.div 
-      className="absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 z-0 overflow-hidden"
+      className="absolute left-1/2 top-0 bottom-0 w-6 -translate-x-1/2 z-0 overflow-hidden rounded-full"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
+      style={{
+        height: 'calc(100% - 400px)',
+        background: 'linear-gradient(to bottom, #12176990, #EBEBD390)',
+        boxShadow: '0 0 30px rgba(18,23,105,0.6)'
+      }}
     >
-      {/* Water Flow Animation */}
+      {/* Nile Water Flow Animation */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-b from-[#FE49AF] via-[#EBEBD3] to-[#67246a]"
-        initial={{ y: "-100%" }}
-        animate={{ y: "100%" }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "linear"
-        }}
+        className="absolute inset-0"
         style={{
-          maskImage: "linear-gradient(to bottom, transparent 5%, white 20%, white 80%, transparent 95%)"
+          background: `
+            linear-gradient(180deg, 
+              rgba(18,23,105,0.8) 0%,
+              rgba(235,235,211,0.9) 50%,
+              rgba(18,23,105,0.8) 100%
+            )
+          `,
+          maskImage: "linear-gradient(to bottom, transparent 2%, white 15%, white 85%, transparent 98%)"
+        }}
+        animate={{
+          y: ["0%", "100%"]
+        }}
+        transition={{
+          y: {
+            repeat: Infinity,
+            repeatType: "loop",
+            duration: 10,
+            ease: "linear"
+          }
         }}
       >
-        {/* Water texture */}
-        <div className="absolute inset-0 opacity-30 bg-[url('https://i.imgur.com/QZuQJfL.png')] bg-repeat bg-[length:40px]"></div>
+        {/* Water Texture Overlay */}
+        <div 
+          className="absolute inset-0 opacity-80"
+          style={{
+            backgroundImage: `
+              repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(235,235,211,0.3) 10px,
+                rgba(235,235,211,0.3) 20px
+              )
+            `
+          }}
+        />
       </motion.div>
-      
-      {/* Floating hieroglyphics */}
+
+      {/* Floating Hieroglyphics */}
       <motion.div 
-        className="absolute inset-0 flex flex-col items-center justify-between py-4"
-        initial={{ y: "-100%" }}
-        animate={{ y: "100%" }}
+        className="absolute inset-0 flex flex-col items-center justify-between py-8"
+        animate={{
+          y: ["0%", "100%"]
+        }}
         transition={{
-          duration: 16,
-          repeat: Infinity,
-          ease: "linear"
+          y: {
+            repeat: Infinity,
+            repeatType: "loop",
+            duration: 15,
+            ease: "linear"
+          }
         }}
       >
         {[...Array(5)].map((_, i) => (
           <motion.span 
             key={i}
-            className="text-[#67246a] text-lg opacity-70"
+            className="text-[#121769] text-4xl opacity-90 drop-shadow-lg"
             animate={{
-              rotate: [0, 5, -5, 0],
-              y: [0, -3, 3, 0]
+              x: [0, 8, -8, 0],
+              rotate: [0, 10, -10, 0],
+              scale: [1, 1.1, 0.9, 1]
             }}
             transition={{
-              duration: 8 + i*2,
+              duration: 6 + i,
               repeat: Infinity,
+              repeatType: "reverse",
               ease: "easeInOut"
             }}
           >
@@ -210,83 +245,116 @@ const About: React.FC = () => {
           </motion.span>
         ))}
       </motion.div>
+
+      {/* Enhanced Shimmering Effect */}
+      <div 
+        className="absolute inset-0" 
+        style={{
+          background: 'linear-gradient(90deg, transparent 0%, rgba(18,23,105,0.6) 50%, transparent 100%)',
+          animation: 'shimmer 3s infinite linear',
+          boxShadow: 'inset 0 0 20px rgba(235,235,211,0.5)'
+        }}
+      />
     </motion.div>
 
     {/* Timeline Items */}
-    <div className="relative z-10 w-full max-w-md space-y-24 py-12">
+    <div className="relative z-10 w-full max-w-7xl mx-auto space-y-40 py-16">
       {[
         {
           year: '2019',
           title: 'Sacred Beginnings',
-          description: 'Founded with ancient wisdom, like the first stones of the pyramids.',
-          symbol: '𓃭', // Ankh
+          description: 'Founded in a small artisanal workshop, Nurmaa began its journey with just three signature products. Our first creation, the "Sacred Lotus Elixir," became an instant favorite among local wellness enthusiasts. Drawing from ancient Egyptian healing traditions, we established our core principles of purity, sustainability, and mindful creation.',
+          stats: {
+            products: '3 signature formulas',
+            achievement: 'Local Artisan Award Winner',
+            community: '100+ early supporters'
+          },
           color: '#FE49AF'
         },
         {
           year: '2020',
-          title: 'Scroll of Growth',
-          description: 'Expanded our knowledge as scribes unfurl their papyrus.',
-          symbol: '𓆎', // Scroll
+          title: 'Growth & Innovation',
+          description: 'A year of remarkable expansion saw our collection grow to include therapeutic oils, natural cosmetics, and wellness rituals. We established partnerships with organic farms across Egypt, ensuring sustainable sourcing of sacred herbs and botanical ingredients. Our commitment to traditional methods while embracing modern sustainability earned us recognition in the wellness community.',
+          stats: {
+            products: '15+ product lines',
+            achievement: 'Sustainable Business Award',
+            community: '1,000+ conscious customers'
+          },
           color: '#67246a'
         },
         {
           year: '2021',
-          title: 'Balance of Ma\'at',
-          description: 'Embraced sustainability through sacred equilibrium.',
-          symbol: '𓁧', // Ma'at feather
+          title: 'Embracing Balance',
+          description: 'Inspired by Ma\'at\'s principles of harmony and truth, we revolutionized our packaging to be 100% eco-friendly. Launched our "Wisdom of the Nile" collection, combining ancient Egyptian wellness practices with contemporary needs. Established our first wellness education center, sharing knowledge of natural healing traditions.',
+          stats: {
+            impact: 'Zero-waste packaging',
+            achievement: 'Environmental Excellence Award',
+            community: '10 wellness workshops monthly'
+          },
           color: '#FE49AF'
         },
         {
-          year: 'Now',
-          title: 'Eternal Horizon',
-          description: 'Building legacy as enduring as the monuments of old.',
-          symbol: '𓋹', // Life
+          year: 'Present',
+          title: 'Eternal Legacy',
+          description: 'Today, Nurmaa stands as a beacon of conscious beauty and wellness. Our products are now available in select locations worldwide, while maintaining the same dedication to quality and tradition that marked our beginnings. We\'ve launched our sustainability initiative, protecting the sources of our sacred ingredients while supporting local communities.',
+          stats: {
+            reach: 'Global presence',
+            impact: '5 conservation projects',
+            community: '50,000+ family strong'
+          },
           color: '#67246a'
         }
-      ].map((item, index) => (
+      ].map((item, index, array) => (
         <motion.div
           key={index}
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-          transition={{ delay: index * 0.15, duration: 0.7 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ delay: index * 0.2, duration: 0.8 }}
           className="relative"
         >
-          {/* Egyptian Symbol Above Year */}
-          <div className="absolute left-1/2 -top-10 -translate-x-1/2 z-10">
-            <motion.div
-              className={`text-4xl ${index % 2 === 0 ? 'text-[#FE49AF]' : 'text-[#67246a]'}`}
-              animate={{
-                y: [0, -5, 0],
-                scale: [1, 1.1, 1]
-              }}
-              transition={{
-                duration: 4 + index,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              {item.symbol}
-            </motion.div>
-          </div>
-
           {/* Year Badge */}
-          <div className="absolute left-1/2 -top-2 -translate-x-1/2 z-20">
-            <div className={`px-4 py-1 rounded-full text-sm font-bold ${index % 2 === 0 ? 'bg-[#FE49AF]' : 'bg-[#67246a]'} text-white shadow-md`}>
+          <div className="absolute left-1/2 -top-8 -translate-x-1/2 z-20">
+            <div className={`
+              px-12 py-4 rounded-full text-xl font-bold 
+              ${index % 2 === 0 ? 'bg-[#FE49AF]' : 'bg-[#67246a]'} 
+              text-white shadow-xl
+            `}>
               {item.year}
             </div>
           </div>
 
           {/* Content Card */}
-          <div className={`bg-white/80 backdrop-blur-lg rounded-xl shadow-lg border-2 border-[#FE49AF]/15 p-6 mx-4 
-            ${index % 2 === 0 ? 'ml-0 mr-16' : 'ml-16 mr-0'}`}>
-            <h3 className={`text-xl font-bold mb-2 ${index % 2 === 0 ? 'text-[#FE49AF]' : 'text-[#67246a]'}`}>
+          <div className={`
+            bg-white/90 backdrop-blur-xl rounded-3xl 
+            shadow-2xl border-2 border-[#FE49AF]/20 
+            p-12 mx-6 min-h-[400px]
+            ${index % 2 === 0 ? 'ml-0 mr-32' : 'ml-32 mr-0'}
+            ${index === array.length - 1 ? 'relative after:absolute after:top-0 after:left-1/2 after:-translate-x-1/2 after:w-1 after:h-8 after:bg-gradient-to-b after:from-[#67246a] after:to-transparent' : ''}
+          `}>
+            <h3 className={`
+              text-4xl font-bold mb-6 font-serif
+              ${index % 2 === 0 ? 'text-[#FE49AF]' : 'text-[#67246a]'}
+            `}>
               {item.title}
             </h3>
-            <p className="text-[#67246a]">{item.description}</p>
+            <p className="text-[#67246a] text-xl leading-relaxed mb-8">
+              {item.description}
+            </p>
             
-            {/* Water Drop Connector */}
-            <div className={`absolute top-8 ${index % 2 === 0 ? '-right-4' : '-left-4'} w-4 h-4 rounded-full ${item.color} shadow-md`}></div>
+            {/* Stats Section */}
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+              {Object.entries(item.stats).map(([key, value]) => (
+                <div key={key} className="bg-white/50 rounded-lg p-4 backdrop-blur-sm">
+                  <div className="text-sm uppercase tracking-wider text-[#121769]/70">
+                    {key}
+                  </div>
+                  <div className={`text-lg font-bold ${index % 2 === 0 ? 'text-[#FE49AF]' : 'text-[#67246a]'}`}>
+                    {value}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </motion.div>
       ))}

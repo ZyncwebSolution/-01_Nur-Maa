@@ -472,118 +472,114 @@ const Products: React.FC = () => {
       </div>
       
       {/* Main Content */}
-      <div className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Interactive Filters - Left Sidebar */}
-          <div className="md:col-span-1 space-y-8 sticky top-4 h-min">
-            {/* Categories */}
-            <div className="bg-white p-6 rounded-lg shadow-lg border border-[#EBEBD3]">
-              <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">
-                Categories
-              </h3>
-              <div className="space-y-2">
-                {categories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => setActiveCategory(cat.id as ProductCategory | 'all')}
-                    className={`flex items-center w-full text-left px-4 py-3 rounded-lg transition-all ${
-                      activeCategory === cat.id 
-                        ? 'bg-[#67246A] text-white shadow-inner' 
-                        : 'text-[#121769] hover:bg-[#EBEBD3] hover:text-[#67246A]'
-                    }`}
-                  >
-                    <span className="text-xl mr-2">{cat.symbol}</span>
-                    {cat.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-            
-            {/* Price Range */}
-            <div className="bg-white p-6 rounded-lg shadow-lg border border-[#EBEBD3]">
-              <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">
-                Price Range
-              </h3>
-              <div className="px-2">
-                <div className="mb-2 flex justify-between text-[#121769]">
-                  <span className="text-sm">₹ {priceRange[0]}</span>
-                  <span className="text-sm">₹ {priceRange[1]}</span>
+      <div className="container mx-auto px-4 py-12">
+        <div className="flex flex-col gap-8">
+          {/* Filters Section */}
+          <div className="w-full">
+            <div className="flex flex-col md:flex-row md:items-end gap-6 bg-white p-6 rounded-xl shadow-lg border border-[#EBEBD3]">
+              {/* Categories */}
+              <div className="flex-1 min-w-[180px]">
+                <h3 className="font-semibold text-lg mb-2 text-[#121769] border-b pb-1 border-[#67246A]">
+                  Categories
+                </h3>
+                <div className="flex gap-2 flex-wrap">
+                  {categories.map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => setActiveCategory(cat.id as ProductCategory | 'all')}
+                      className={`flex items-center px-4 py-2 rounded-lg transition-all ${
+                        activeCategory === cat.id
+                          ? 'bg-[#67246A] text-white shadow-inner'
+                          : 'text-[#121769] hover:bg-[#EBEBD3] hover:text-[#67246A]'
+                      }`}
+                    >
+                      <span className="text-xl mr-2">{cat.symbol}</span>
+                      {cat.name}
+                    </button>
+                  ))}
                 </div>
-                <input
-                  type="range"
-                  min="0"
-                  max="5000"
-                  step="500"
-                  value={priceRange[1]}
-                  onChange={(e) => setPriceRange([0, parseFloat(e.target.value)])}
-                  className="w-full h-2 bg-[#EBEBD3] rounded-lg appearance-none cursor-pointer accent-[#FE49AF]"
-                />
               </div>
-            </div>
-            
-            {/* Sort Options */}
-            <div className="bg-white p-6 rounded-lg shadow-lg border border-[#EBEBD3]">
-              <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">
-                Sort By
-              </h3>
-              <select
-                value={sortOption}
-                onChange={(e) => setSortOption(e.target.value)}
-                className="w-full px-4 py-3 border border-[#EBEBD3] rounded-lg focus:ring-2 focus:ring-[#FE49AF] focus:border-transparent text-[#121769]"
-              >
-                <option value="">Default</option>
-                <option value="price-low-high">Price: Low to High</option>
-                <option value="price-high-low">Price: High to Low</option>
-                <option value="rating">Highest Rating</option>
-              </select>
+              {/* Price Range */}
+              <div className="flex-1 min-w-[180px]">
+                <h3 className="font-semibold text-lg mb-2 text-[#121769] border-b pb-1 border-[#67246A]">
+                  Price Range
+                </h3>
+                <div className="w-full max-w-xs">
+                  <div className="mb-1 flex justify-between text-[#121769]">
+                    <span className="text-sm">₹ {priceRange[0]}</span>
+                    <span className="text-sm">₹ {priceRange[1]}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="5000"
+                    step="500"
+                    value={priceRange[1]}
+                    onChange={(e) => setPriceRange([0, parseFloat(e.target.value)])}
+                    className="w-full h-2 bg-[#EBEBD3] rounded-lg appearance-none cursor-pointer accent-[#FE49AF]"
+                  />
+                </div>
+              </div>
+              {/* Sort Options */}
+              <div className="flex-1 min-w-[180px]">
+                <h3 className="font-semibold text-lg mb-2 text-[#121769] border-b pb-1 border-[#67246A]">
+                  Sort By
+                </h3>
+                <select
+                  value={sortOption}
+                  onChange={(e) => setSortOption(e.target.value)}
+                  className="w-full max-w-xs px-4 py-2 border border-[#EBEBD3] rounded-lg focus:ring-2 focus:ring-[#FE49AF] focus:border-transparent text-[#121769]"
+                >
+                  <option value="">Default</option>
+                  <option value="price-low-high">Price: Low to High</option>
+                  <option value="price-high-low">Price: High to Low</option>
+                  <option value="rating">Highest Rating</option>
+                </select>
+              </div>
             </div>
           </div>
-          
-          {/* Product Display Area */}
-          <div className="md:col-span-3">
-            {/* Results Header */}
-            <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#121769] p-4 rounded-lg shadow-lg">
-              <p className="text-[#EBEBD3]">
-                Showing <span className="font-bold text-[#FE49AF]">{filteredProducts.length}</span> sacred {filteredProducts.length === 1 ? 'artifact' : 'artifacts'}
-              </p>
-              
-              <div className="flex items-center space-x-2 bg-[#67246A] p-2 rounded-lg">
-                <span className="text-[#EBEBD3] hidden sm:inline">View:</span>
-                <button 
-                  onClick={() => setActiveView('list')}
-                  className={`p-2 rounded-lg transition-colors ${
-                    activeView === 'list' 
-                      ? 'bg-[#FE49AF] text-white' 
-                      : 'bg-[#EBEBD3] text-[#67246A] hover:bg-[#FE49AF] hover:text-white'
-                  }`}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                </button>
-                <button 
-                  onClick={() => setActiveView('grid')}
-                  className={`p-2 rounded-lg transition-colors ${
-                    activeView === 'grid' 
-                      ? 'bg-[#FE49AF] text-white' 
-                      : 'bg-[#EBEBD3] text-[#67246A] hover:bg-[#FE49AF] hover:text-white'
-                  }`}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                  </svg>
-                </button>
-              </div>
+          {/* Results Header & View Switcher */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#121769] p-4 rounded-lg shadow-lg">
+            <p className="text-[#EBEBD3]">
+              Showing <span className="font-bold text-[#FE49AF]">{filteredProducts.length}</span> sacred {filteredProducts.length === 1 ? 'artifact' : 'artifacts'}
+            </p>
+            <div className="flex items-center space-x-2 bg-[#67246A] p-2 rounded-lg">
+              <span className="text-[#EBEBD3] hidden sm:inline">View:</span>
+              <button
+                onClick={() => setActiveView('list')}
+                className={`p-2 rounded-lg transition-colors ${
+                  activeView === 'list'
+                    ? 'bg-[#FE49AF] text-white'
+                    : 'bg-[#EBEBD3] text-[#67246A] hover:bg-[#FE49AF] hover:text-white'
+                }`}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+              <button
+                onClick={() => setActiveView('grid')}
+                className={`p-2 rounded-lg transition-colors ${
+                  activeView === 'grid'
+                    ? 'bg-[#FE49AF] text-white'
+                    : 'bg-[#EBEBD3] text-[#67246A] hover:bg-[#FE49AF] hover:text-white'
+                }`}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                </svg>
+              </button>
             </div>
-            
-            {/* Products Grid/List */}
+          </div>
+          {/* Products Grid/List */}
+          <div>
             {filteredProducts.length > 0 ? (
               activeView === 'grid' ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredProducts.map(product => (
                     <ProductCard
-                      key={product.id} 
-                      product={product} 
+                      key={product.id}
+                      product={product}
                       onQuickPurchase={handleQuickPurchase}
                     />
                   ))}
@@ -591,21 +587,23 @@ const Products: React.FC = () => {
               ) : (
                 <div className="space-y-6">
                   {filteredProducts.map(product => (
-                    <div key={product.id} className="bg-white p-6 rounded-lg shadow-md border border-[#EBEBD3] hover:shadow-lg transition-shadow flex flex-col sm:flex-row gap-6">
-                      <div className="w-full sm:w-1/3 h-48 bg-gray-100 rounded-lg overflow-hidden">
-                        <img 
-                          src={product.image} 
-                          alt={product.name} 
+                    <div
+                      key={product.id}
+                      className="bg-white p-6 rounded-lg shadow-md border border-[#EBEBD3] hover:shadow-lg transition-shadow flex flex-col sm:flex-row gap-6"
+                    >
+                      <div className="w-full sm:w-1/3 h-48 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                        <img
+                          src={product.image}
+                          alt={product.name}
                           className="w-full h-full object-cover hover:scale-105 transition-transform"
                         />
                       </div>
                       <div className="flex-1">
-                        <div className="flex justify-between items-start">
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
                           <h3 className="text-xl font-bold text-[#121769]">{product.name}</h3>
-                          <span className="text-[#FE49AF] font-bold">{product.formattedPrice}</span>
+                          <span className="text-[#FE49AF] font-bold mt-2 sm:mt-0">{product.formattedPrice}</span>
                         </div>
                         <p className="text-[#67246A] mt-2">{product.description}</p>
-                        
                         {/* Ingredients and Benefits */}
                         <div className="mt-4 flex flex-wrap gap-2">
                           {(product.ingredients || []).slice(0, 3).map(ingredient => (
@@ -614,8 +612,7 @@ const Products: React.FC = () => {
                             </span>
                           ))}
                         </div>
-                        
-                        <div className="mt-4 flex items-center justify-between">
+                        <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                           <div className="flex items-center">
                             <span className="text-yellow-500 mr-1">★</span>
                             <span className="text-[#67246A]">{product.rating}</span>
@@ -623,9 +620,9 @@ const Products: React.FC = () => {
                               {product.stock} in stock
                             </span>
                           </div>
-                          <button 
+                          <button
                             onClick={() => handleQuickPurchase(product)}
-                            className="px-4 py-2 bg-[#67246A] text-white rounded-lg hover:bg-[#121769] transition-colors"
+                            className="mt-2 sm:mt-0 px-4 py-2 bg-[#67246A] text-white rounded-lg hover:bg-[#121769] transition-colors"
                           >
                             Quick Purchase
                           </button>
@@ -646,7 +643,7 @@ const Products: React.FC = () => {
                 <p className="text-[#67246A] max-w-md mx-auto">
                   The sands have shifted and hidden what you seek. Try different filters.
                 </p>
-                <button 
+                <button
                   onClick={resetFilters}
                   className="mt-6 px-6 py-2 bg-[#FE49AF] text-white rounded-lg hover:bg-[#67246A] transition-colors"
                 >
