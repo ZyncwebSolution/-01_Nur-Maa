@@ -30,10 +30,11 @@ const Contact: React.FC = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          to: 'deepacse51@gmail.com',
+          to: 'diyweboffi@gmail.com',
           subject: `New Contact Form Submission: ${formData.subject}`,
           text: `\nName: ${formData.name}\nEmail: ${formData.email}\nSubject: ${formData.subject}\nMessage: ${formData.message}\n`,
-          formData
+          // Add a 'from' field for reply-to
+          from: formData.email
         }),
       });
 

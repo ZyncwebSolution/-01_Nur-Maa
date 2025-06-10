@@ -86,7 +86,8 @@ const allProducts: Product[] = [
     image: 'https://c7.staticflickr.com/9/8637/29774838446_3e7f7ccc79_o.jpg',
     rating: 4.9,
     featured: true,
-    stock: 10,ingredients: ['Pearl Millet (Kambu)', 'Cardamom', 'Salt'],
+    stock: 10,
+    ingredients: ['Pearl Millet (Kambu)', 'Cardamom', 'Salt'],
     benefits: ['High in Iron & Calcium ', 'Gut-Friendly Grain', 'Helps Control Diabetes','Heart Health Support','Naturally Gluten-Free','Light & Cooling']
   },
   {
@@ -366,7 +367,6 @@ const allProducts: Product[] = [
   }
 ].map(product => ({
   ...product,
-  image: product.image ?? product2, // Use product2 as a placeholder if image is missing
   formattedPrice: formatPrice(product.price)
 }));
 
@@ -380,6 +380,7 @@ const Products: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(undefined);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeView, setActiveView] = useState<'grid' | 'list'>('grid');
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [hoveredSymbol, setHoveredSymbol] = useState<string | null>(null);
   
   // Filter and sort products
@@ -439,17 +440,17 @@ const Products: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#f8f9f0]">
       {/* Animated Hero Section */}
-      <div 
-        className="pt-32 pb-20 relative text-white bg-cover bg-center"
+      <div
+        className="pt-16 md:pt-32 pb-12 md:pb-20 relative text-white bg-cover bg-center"
         style={{
           backgroundImage: 'linear-gradient(rgba(18, 23, 105, 0.85), rgba(103, 36, 106, 0.85)), url("https://images.unsplash.com/photo-1541532713592-79a0317b6b77?auto=format&fit=crop&q=80")',
         }}
       >
-        <div className="container mx-auto px-6 text-center animate-fade-in">
-          <h1 className="text-5xl font-bold mb-6 font-serif text-[#FE49AF] drop-shadow-lg">
+        <div className="container mx-auto px-4 sm:px-6 text-center animate-fade-in">
+          <h1 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6 font-serif text-[#FE49AF] drop-shadow-lg">
             Ancient Egyptian Treasures
           </h1>
-          <p className="text-xl max-w-2xl mx-auto text-[#EBEBD3]">
+          <p className="text-base md:text-xl max-w-2xl mx-auto text-[#EBEBD3]">
             Discover authentic products inspired by the beauty secrets and sacred rituals of ancient Egypt.
           </p>
           
@@ -457,8 +458,8 @@ const Products: React.FC = () => {
           <div className="mt-8 max-w-md mx-auto relative">
             <input
               type="text"
-              placeholder="Search for sacred oils, herbs, artifacts..."
-              className="w-full py-3 px-6 rounded-full text-[#121769] focus:outline-none focus:ring-2 focus:ring-[#FE49AF] shadow-lg transition-all duration-300 hover:shadow-xl"
+              placeholder="Search products..."
+              className="w-full py-2 md:py-3 px-4 md:px-6 rounded-full text-[#121769] focus:outline-none focus:ring-2 focus:ring-[#FE49AF] shadow-lg transition-all duration-300 hover:shadow-xl text-sm md:text-base"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -472,114 +473,131 @@ const Products: React.FC = () => {
       </div>
       
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-12">
-        <div className="flex flex-col gap-8">
-          {/* Filters Section */}
-          <div className="w-full">
-            <div className="flex flex-col md:flex-row md:items-end gap-6 bg-white p-6 rounded-xl shadow-lg border border-[#EBEBD3]">
-              {/* Categories */}
-              <div className="flex-1 min-w-[180px]">
-                <h3 className="font-semibold text-lg mb-2 text-[#121769] border-b pb-1 border-[#67246A]">
-                  Categories
-                </h3>
-                <div className="flex gap-2 flex-wrap">
-                  {categories.map((cat) => (
-                    <button
-                      key={cat.id}
-                      onClick={() => setActiveCategory(cat.id as ProductCategory | 'all')}
-                      className={`flex items-center px-4 py-2 rounded-lg transition-all ${
-                        activeCategory === cat.id
-                          ? 'bg-[#67246A] text-white shadow-inner'
-                          : 'text-[#121769] hover:bg-[#EBEBD3] hover:text-[#67246A]'
-                      }`}
-                    >
-                      <span className="text-xl mr-2">{cat.symbol}</span>
-                      {cat.name}
-                    </button>
-                  ))}
-                </div>
+      <div className="container mx-auto px-6 py-12">
+        <div className="flex flex-col md:flex-row gap-6 px-4 sm:px-0">
+          {/* Mobile Filters Button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsFiltersOpen(!isFiltersOpen)}
+              className="w-full py-2 px-4 bg-[#67246A] text-white rounded-lg flex items-center justify-between"
+            >
+              <span>{isFiltersOpen ? 'Hide Filters' : 'Show Filters'}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </button>
+          </div>
+          
+          {/* Interactive Filters - Left Sidebar */}
+          <div className={`${isFiltersOpen ? 'block' : 'hidden'} md:block md:w-1/4 space-y-8 md:sticky md:top-4 md:h-min`}>
+            {/* Categories */}
+            <div className="bg-white p-6 rounded-lg shadow-lg border border-[#EBEBD3]">
+              <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">
+                Categories
+              </h3>
+              <div className="space-y-2">
+                {categories.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveCategory(cat.id as ProductCategory | 'all')}
+                    className={`flex items-center w-full text-left px-4 py-3 rounded-lg transition-all ${
+                      activeCategory === cat.id 
+                        ? 'bg-[#67246A] text-white shadow-inner' 
+                        : 'text-[#121769] hover:bg-[#EBEBD3] hover:text-[#67246A]'
+                    }`}
+                  >
+                    <span className="text-xl mr-2">{cat.symbol}</span>
+                    {cat.name}
+                  </button>
+                ))}
               </div>
-              {/* Price Range */}
-              <div className="flex-1 min-w-[180px]">
-                <h3 className="font-semibold text-lg mb-2 text-[#121769] border-b pb-1 border-[#67246A]">
-                  Price Range
-                </h3>
-                <div className="w-full max-w-xs">
-                  <div className="mb-1 flex justify-between text-[#121769]">
-                    <span className="text-sm">₹ {priceRange[0]}</span>
-                    <span className="text-sm">₹ {priceRange[1]}</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="5000"
-                    step="500"
-                    value={priceRange[1]}
-                    onChange={(e) => setPriceRange([0, parseFloat(e.target.value)])}
-                    className="w-full h-2 bg-[#EBEBD3] rounded-lg appearance-none cursor-pointer accent-[#FE49AF]"
-                  />
+            </div>
+            
+            {/* Price Range */}
+            <div className="bg-white p-6 rounded-lg shadow-lg border border-[#EBEBD3]">
+              <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">
+                Price Range
+              </h3>
+              <div className="px-2">
+                <div className="mb-2 flex justify-between text-[#121769]">
+                  <span className="text-sm">₹ {priceRange[0]}</span>
+                  <span className="text-sm">₹ {priceRange[1]}</span>
                 </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="5000"
+                  step="500"
+                  value={priceRange[1]}
+                  onChange={(e) => setPriceRange([0, parseFloat(e.target.value)])}
+                  className="w-full h-2 bg-[#EBEBD3] rounded-lg appearance-none cursor-pointer accent-[#FE49AF]"
+                />
               </div>
-              {/* Sort Options */}
-              <div className="flex-1 min-w-[180px]">
-                <h3 className="font-semibold text-lg mb-2 text-[#121769] border-b pb-1 border-[#67246A]">
-                  Sort By
-                </h3>
-                <select
-                  value={sortOption}
-                  onChange={(e) => setSortOption(e.target.value)}
-                  className="w-full max-w-xs px-4 py-2 border border-[#EBEBD3] rounded-lg focus:ring-2 focus:ring-[#FE49AF] focus:border-transparent text-[#121769]"
+            </div>
+            
+            {/* Sort Options */}
+            <div className="bg-white p-6 rounded-lg shadow-lg border border-[#EBEBD3]">
+              <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">
+                Sort By
+              </h3>
+              <select
+                value={sortOption}
+                onChange={(e) => setSortOption(e.target.value)}
+                className="w-full px-4 py-3 border border-[#EBEBD3] rounded-lg focus:ring-2 focus:ring-[#FE49AF] focus:border-transparent text-[#121769]"
+              >
+                <option value="">Default</option>
+                <option value="price-low-high">Price: Low to High</option>
+                <option value="price-high-low">Price: High to Low</option>
+                <option value="rating">Highest Rating</option>
+              </select>
+            </div>
+          </div>
+          
+          {/* Product Display Area */}
+          <div className="md:col-span-3">
+            {/* Results Header */}
+            <div className="mb-6 md:mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#121769] p-4 rounded-lg shadow-lg">
+              <p className="text-[#EBEBD3]">
+                Showing <span className="font-bold text-[#FE49AF]">{filteredProducts.length}</span> sacred {filteredProducts.length === 1 ? 'artifact' : 'artifacts'}
+              </p>
+              
+              <div className="flex items-center space-x-2 bg-[#67246A] p-2 rounded-lg">
+                <span className="text-[#EBEBD3] hidden sm:inline">View:</span>
+                <button 
+                  onClick={() => setActiveView('list')}
+                  className={`p-2 rounded-lg transition-colors ${
+                    activeView === 'list' 
+                      ? 'bg-[#FE49AF] text-white' 
+                      : 'bg-[#EBEBD3] text-[#67246A] hover:bg-[#FE49AF] hover:text-white'
+                  }`}
                 >
-                  <option value="">Default</option>
-                  <option value="price-low-high">Price: Low to High</option>
-                  <option value="price-high-low">Price: High to Low</option>
-                  <option value="rating">Highest Rating</option>
-                </select>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                </button>
+                <button 
+                  onClick={() => setActiveView('grid')}
+                  className={`p-2 rounded-lg transition-colors ${
+                    activeView === 'grid' 
+                      ? 'bg-[#FE49AF] text-white' 
+                      : 'bg-[#EBEBD3] text-[#67246A] hover:bg-[#FE49AF] hover:text-white'
+                  }`}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                  </svg>
+                </button>
               </div>
             </div>
-          </div>
-          {/* Results Header & View Switcher */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#121769] p-4 rounded-lg shadow-lg">
-            <p className="text-[#EBEBD3]">
-              Showing <span className="font-bold text-[#FE49AF]">{filteredProducts.length}</span> sacred {filteredProducts.length === 1 ? 'artifact' : 'artifacts'}
-            </p>
-            <div className="flex items-center space-x-2 bg-[#67246A] p-2 rounded-lg">
-              <span className="text-[#EBEBD3] hidden sm:inline">View:</span>
-              <button
-                onClick={() => setActiveView('list')}
-                className={`p-2 rounded-lg transition-colors ${
-                  activeView === 'list'
-                    ? 'bg-[#FE49AF] text-white'
-                    : 'bg-[#EBEBD3] text-[#67246A] hover:bg-[#FE49AF] hover:text-white'
-                }`}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-              <button
-                onClick={() => setActiveView('grid')}
-                className={`p-2 rounded-lg transition-colors ${
-                  activeView === 'grid'
-                    ? 'bg-[#FE49AF] text-white'
-                    : 'bg-[#EBEBD3] text-[#67246A] hover:bg-[#FE49AF] hover:text-white'
-                }`}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                </svg>
-              </button>
-            </div>
-          </div>
-          {/* Products Grid/List */}
-          <div>
+            
+            {/* Products Grid/List */}
             {filteredProducts.length > 0 ? (
               activeView === 'grid' ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
                   {filteredProducts.map(product => (
                     <ProductCard
-                      key={product.id}
-                      product={product}
+                      key={product.id} 
+                      product={product} 
                       onQuickPurchase={handleQuickPurchase}
                     />
                   ))}
@@ -587,23 +605,21 @@ const Products: React.FC = () => {
               ) : (
                 <div className="space-y-6">
                   {filteredProducts.map(product => (
-                    <div
-                      key={product.id}
-                      className="bg-white p-6 rounded-lg shadow-md border border-[#EBEBD3] hover:shadow-lg transition-shadow flex flex-col sm:flex-row gap-6"
-                    >
-                      <div className="w-full sm:w-1/3 h-48 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                        <img
-                          src={product.image}
-                          alt={product.name}
+                    <div key={product.id} className="bg-white p-6 rounded-lg shadow-md border border-[#EBEBD3] hover:shadow-lg transition-shadow flex flex-col sm:flex-row gap-6">
+                      <div className="w-full sm:w-1/3 h-48 bg-gray-100 rounded-lg overflow-hidden">
+                        <img 
+                          src={product.image} 
+                          alt={product.name} 
                           className="w-full h-full object-cover hover:scale-105 transition-transform"
                         />
                       </div>
                       <div className="flex-1">
-                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                        <div className="flex justify-between items-start">
                           <h3 className="text-xl font-bold text-[#121769]">{product.name}</h3>
-                          <span className="text-[#FE49AF] font-bold mt-2 sm:mt-0">{product.formattedPrice}</span>
+                          <span className="text-[#FE49AF] font-bold">{product.formattedPrice}</span>
                         </div>
                         <p className="text-[#67246A] mt-2">{product.description}</p>
+                        
                         {/* Ingredients and Benefits */}
                         <div className="mt-4 flex flex-wrap gap-2">
                           {(product.ingredients || []).slice(0, 3).map(ingredient => (
@@ -612,7 +628,8 @@ const Products: React.FC = () => {
                             </span>
                           ))}
                         </div>
-                        <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                        
+                        <div className="mt-4 flex items-center justify-between">
                           <div className="flex items-center">
                             <span className="text-yellow-500 mr-1">★</span>
                             <span className="text-[#67246A]">{product.rating}</span>
@@ -620,9 +637,9 @@ const Products: React.FC = () => {
                               {product.stock} in stock
                             </span>
                           </div>
-                          <button
+                          <button 
                             onClick={() => handleQuickPurchase(product)}
-                            className="mt-2 sm:mt-0 px-4 py-2 bg-[#67246A] text-white rounded-lg hover:bg-[#121769] transition-colors"
+                            className="px-4 py-2 bg-[#67246A] text-white rounded-lg hover:bg-[#121769] transition-colors"
                           >
                             Quick Purchase
                           </button>
@@ -633,7 +650,7 @@ const Products: React.FC = () => {
                 </div>
               )
             ) : (
-              <div className="text-center py-16 bg-white rounded-lg shadow-lg border border-[#EBEBD3]">
+              <div className="text-center py-8 md:py-16 bg-white rounded-lg shadow-lg border border-[#EBEBD3]">
                 <div className="mx-auto h-24 w-24 text-[#FE49AF] mb-6 animate-bounce">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -643,7 +660,7 @@ const Products: React.FC = () => {
                 <p className="text-[#67246A] max-w-md mx-auto">
                   The sands have shifted and hidden what you seek. Try different filters.
                 </p>
-                <button
+                <button 
                   onClick={resetFilters}
                   className="mt-6 px-6 py-2 bg-[#FE49AF] text-white rounded-lg hover:bg-[#67246A] transition-colors"
                 >
