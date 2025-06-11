@@ -162,12 +162,13 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  opacity: 0;
+  opacity: 0; /* Start with opacity 0 */
   margin-right: 120px;
   transform: translate(80px, -80px) scale(0.8) rotate(15deg);
   transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
   z-index: 2;
   filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.4));
+  visibility: hidden; /* Hide by default */
 }
 
 .product-fg-image {
@@ -178,11 +179,28 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  opacity: 0;
+  opacity: 0; /* Start with opacity 0 */
   transform: translate(-80px, 80px) scale(0.8) rotate(-15deg);
   transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
   z-index: 3;
   filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.4));
+  visibility: hidden; /* Hide by default */
+}
+
+/* Show images on hover */
+.product-card:hover .product-bg-image,
+.product-card:hover .product-fg-image {
+  visibility: visible; /* Show on hover */
+  opacity: 0.9;
+}
+
+/* Update hover animations */
+.product-card:hover .product-bg-image {
+  transform: translate(-50px, -50px) scale(1) rotate(-5deg);
+}
+
+.product-card:hover .product-fg-image {
+  transform: translate(50px, 50px) scale(1) rotate(5deg);
 }
 
 /* Light Effects */
@@ -466,121 +484,131 @@ body {
 }
 
 @media (max-width: 768px) {
-  .slider-header {
-    font-size: 2rem;
+  /* Update slider container for vertical layout */
+  .slider.static-display {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1.5rem;
+    overflow: visible;
   }
-  
+
+  /* Adjust product container for vertical stack */
   .product-container {
-    width: 280px;
-    height: 500px;
+    width: 100%;
+    max-width: 380px;
+    height: 480px;
+    margin: 0 auto;
+    transform: none;
+    opacity: 0;
+    animation: slideUp 0.6s ease forwards;
   }
-  
+
+  /* Keep original card design but optimize for mobile */
+  .product-card {
+    height: 100%;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Adjust image wrapper for vertical layout */
+  .product-image-wrapper {
+    height: 60%;
+    margin-bottom: 1.5rem;
+  }
+
   .product-main-image {
-    width: 180px;
-    height: 360px;
+    width: 200px;
+    height: 280px;
   }
-  
+
   .product-bg-image,
   .product-fg-image {
-    width: 140px;
+    width: 160px;
     height: 240px;
   }
-  
-  .slider {
-    gap: 20px;
-    padding: 20px;
-  }
-  
-  .slider-controls {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  
-  .slider-subheader {
-    font-size: 1rem;
+
+  /* Adjust text content */
+  .product-info {
+    opacity: 1;
+    transform: none;
     padding: 0 1rem;
   }
-}
 
-@media (max-width: 480px) {
-  .slider-wrapper {
-    padding: 1rem;
-  }
-  
-  .slider-header {
-    font-size: 1.8rem;
-  }
-  
-  .product-container {
-    width: 260px;
-    height: 480px;
-  }
-  
-  .product-main-image {
-    width: 160px;
-    height: 320px;
-  }
-  
   .product-name {
     font-size: 1.5rem;
+    margin-bottom: 0.5rem;
   }
-  
+
   .product-description {
-    font-size: 0.9rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  /* Add slide-up animation */
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Preserve hover animations */
+  .product-card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
+  }
+
+  .product-card:hover .product-bg-image {
+    opacity: 0.9;
+    transform: translate(-30px, -30px) scale(0.95) rotate(-5deg);
+  }
+
+  .product-card:hover .product-fg-image {
+    opacity: 0.9;
+    transform: translate(30px, 30px) scale(0.95) rotate(5deg);
+  }
+
+  .product-card:hover .product-main-image {
+    transform: translateY(-5px);
   }
 }
 
-/* Animation Classes */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+/* Optimize for touch devices */
+@media (hover: none) and (max-width: 768px) {
+  .product-container {
+    animation: fadeIn 0.6s ease forwards;
+  }
 
-.fade-in {
-  animation: fadeIn 0.8s ease forwards;
-}
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
-/* Auto-slide Indicator */
-.auto-slide-indicator {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #cbd5e1;
-  font-size: 0.8rem;
-}
+  .product-card:hover {
+    transform: none;
+  }
 
-.auto-slide-toggle {
-  width: 40px;
-  height: 20px;
-  background: #334155;
-  border-radius: 20px;
-  position: relative;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+  .product-bg-image,
+  .product-fg-image {
+    opacity: 0.6;
+    transform: none;
+  }
 
-.auto-slide-toggle::after {
-  content: '';
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  background: #fe49af;
-  border-radius: 50%;
-  top: 2px;
-  left: 2px;
-  transition: all 0.3s ease;
-}
-
-.auto-slide-toggle.active {
-  background: rgba(254, 73, 175, 0.2);
-}
-
-.auto-slide-toggle.active::after {
-  left: 22px;
-  background: #fe49af;
-  box-shadow: 0 0 5px rgba(254, 73, 175, 0.8);
+  .product-info {
+    opacity: 1;
+    transform: none;
+  }
 }

@@ -101,15 +101,15 @@ const Contact: React.FC = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className="min-h-screen bg-gradient-to-br from-[#ebebd3] to-[#fff] py-16 px-4 sm:px-6 lg:px-8 mt-[60px]"
+        className="min-h-screen bg-gradient-to-br from-[#ebebd3] to-[#fff] py-12 md:py-16 px-4 sm:px-6 lg:px-8 mt-[60px]"
       >
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12 md:mb-16">
             <motion.h1
               initial={{ y: -20 }}
               animate={{ y: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-4xl md:text-5xl font-bold text-[#121769] mb-4"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#121769] mb-4"
             >
               Get in Touch
             </motion.h1>
@@ -117,7 +117,7 @@ const Contact: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="text-lg text-[#67246a] max-w-2xl mx-auto"
+              className="text-base md:text-lg text-[#67246a] max-w-2xl mx-auto"
             >
               Have questions or want to work together? We'd love to hear from you.
             </motion.p>
