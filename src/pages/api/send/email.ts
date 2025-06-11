@@ -1,56 +1,85 @@
+// pages/api/send-email.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
-import nodemailer from 'nodemailer';
+import emailjs from '@emailjs/nodejs';
 
-type Data = {
-  message: string;
-};
+interface CartItem {
+  name: string;
+  quantity: number;
+  price: number;
+}
+
+interface CheckoutForm {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  message?: string;
+}
+
+const TEMPLATE_ID = 'template_cpoou7s';
+const SERVICE_ID = process.env.EMAILJS_SERVICE_ID; // Remove NEXT_PUBLIC_ prefix
+const PUBLIC_KEY = process.env.EMAILJS_PUBLIC_KEY; // Remove NEXT_PUBLIC_ prefix
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse
 ) {
   if (req.method !== 'POST') {
-    res.setHeader('Allow', ['POST']);
-    return res.status(405).json({ message: `Method ${req.method} Not Allowed` });
+    return res.status(405).json({ message: 'Method not allowed' });
   }
-
-  const { to, subject, text, from } = req.body;
-
-  if (!to || !subject || !text) {
-    return res.status(400).json({ message: 'Missing required fields' });
-  }
-
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST || 'smtp.gmail.com',
-    port: Number(process.env.SMTP_PORT) || 587,
-    secure: false,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
-    },
-  });
 
   try {
-    await transporter.verify();
-    console.log('SMTP connection verified.');
+    const { formData, cartItems, totalAmount } = req.body;
 
-    await transporter.sendMail({
-      from: from ? `${req.body.name || 'Website User'} <${from}>` : `Nurmaa Mailer <${process.env.SMTP_USER}>`,
-      to,
-      subject,
-      text,
-      replyTo: from || undefined,
+    const orderSummary = cartItems
+      .map((item: CartItem) => 
+        `${item.name} - Quantity: ${item.quantity} - Price: ₹${item.price} = ₹${item.price * item.quantity}`
+      )
+      .join('\n');
+
+    const templateParams = {
+      to_name: formData.name,
+      from_name: 'Nur-Maa Store',
+      to_email: formData.email,
+      reply_to: formData.email, // Add this for reply-to functionality
+      phone: formData.phone,
+      address: formData.address,
+      message: formData.message || 'No additional notes',
+      order_summary: orderSummary,
+      total_amount: `₹${totalAmount.toFixed(2)}`,
+      order_id: `ORDER-${Date.now()}`,
+      order_date: new Date().toLocaleString('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        dateStyle: 'full',
+        timeStyle: 'short'
+      })
+    };
+
+    if (!SERVICE_ID || !PUBLIC_KEY) {
+      throw new Error('EmailJS configuration is missing');
+    }
+
+    const response = await emailjs.send(
+      SERVICE_ID,
+      TEMPLATE_ID,
+      templateParams,
+      {
+        publicKey: PUBLIC_KEY,
+        // Optionally add privateKey if you have one
+        // privateKey: process.env.EMAILJS_PRIVATE_KEY,
+      }
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: 'Order confirmation email sent successfully'
     });
 
-    return res.status(200).json({ message: 'Email sent successfully' });
-  } catch (error: any) {
-    console.error('Error sending email:', error?.message || error);
-    console.error('SMTP Config:', {
-      host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT,
-      user: process.env.SMTP_USER ? 'set' : 'not set',
-      pass: process.env.SMTP_PASS ? 'set' : 'not set',
+  } catch (error) {
+    console.error('Email error:', error);
+    return res.status(500).json({
+      success: false,
+      message: error instanceof Error ? error.message : 'Failed to send order confirmation email'
     });
-    return res.status(500).json({ message: error?.message || 'Failed to send email' });
   }
 }
