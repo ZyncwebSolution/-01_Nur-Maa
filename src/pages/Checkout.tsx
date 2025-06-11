@@ -148,229 +148,204 @@ const Checkout: React.FC = () => {
   // For the main checkout section, update the container structure
   return (
     <div className="min-h-screen bg-[#EBEBD3]">
-      <div className="pt-24 sm:pt-24 lg:pt-28 px-4 sm:px-6 lg:px-8">
+      <div className="pt-20 sm:pt-24 lg:pt-28 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto pb-12 sm:pb-16">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 lg:mb-10 text-[#121769]">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-8 sm:mb-12 text-[#121769]">
             Checkout
           </h1>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-            {/* Order Summary - Now First */}
-            <div className="order-1 lg:order-1">
-              <div className="sticky top-24 space-y-6">
-                <div className="rounded-xl p-4 sm:p-6 bg-white shadow-md">
-                  <h2 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 pb-2 border-b border-[#EBEBD3] text-[#121769]">
-                    Order Summary
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+            {/* Your Information Form */}
+            <div className="order-2 lg:order-1 lg:col-span-7">
+              <div className="bg-white rounded-2xl shadow-md overflow-hidden">
+                <div className="p-6 sm:p-8">
+                  <h2 className="text-xl font-semibold mb-6 text-[#121769]">
+                    Your Information
                   </h2>
-                  
-                  <div className="divide-y divide-[#EBEBD3]">
-                    {items.map(item => (
-                      <div 
-                        key={item.product.id} 
-                        className="py-4 flex items-center group transition-all hover:bg-gray-50 rounded-lg px-2"
-                        style={{ backgroundColor: 'rgba(254, 73, 175, 0.05)' }}
-                      >
-                        <div 
-                          className="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden border"
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Form Fields with Consistent Styling */}
+                    <div className="space-y-4">
+                      <div>
+                        <label htmlFor="name" className="block text-sm font-medium mb-2 text-[#67246A]">
+                          Full Name
+                        </label>
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          required
+                          className="w-full px-4 py-3 rounded-xl border-2 focus:ring-2 focus:ring-[#FE49AF]/20 focus:border-[#FE49AF] outline-none transition-all"
                           style={{ 
-                            backgroundColor: 'white',
-                            borderColor: '#EBEBD3'
+                            borderColor: '#EBEBD3',
+                            backgroundColor: '#EBEBD3',
+                            color: '#121769'
                           }}
+                          placeholder="Your full name"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="email" className="block text-sm font-medium mb-2 text-[#67246A]">
+                          Email
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          required
+                          className="w-full px-4 py-3 rounded-xl border-2 focus:ring-2 focus:ring-[#FE49AF]/20 focus:border-[#FE49AF] outline-none transition-all"
+                          style={{ 
+                            borderColor: '#EBEBD3',
+                            backgroundColor: '#EBEBD3',
+                            color: '#121769'
+                          }}
+                          placeholder="your.email@example.com"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="phone" className="block text-sm font-medium mb-2 text-[#67246A]">
+                          Phone Number
+                        </label>
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          required
+                          className="w-full px-4 py-3 rounded-xl border-2 focus:ring-2 focus:ring-[#FE49AF]/20 focus:border-[#FE49AF] outline-none transition-all"
+                          style={{ 
+                            borderColor: '#EBEBD3',
+                            backgroundColor: '#EBEBD3',
+                            color: '#121769'
+                          }}
+                          placeholder="Your phone number"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="address" className="block text-sm font-medium mb-2 text-[#67246A]">
+                          Delivery Address
+                        </label>
+                        <textarea
+                          id="address"
+                          name="address"
+                          value={formData.address}
+                          onChange={handleChange}
+                          required
+                          rows={3}
+                          className="w-full px-4 py-3 rounded-xl border-2 focus:ring-2 focus:ring-[#FE49AF]/20 focus:border-[#FE49AF] outline-none transition-all resize-none"
+                          style={{ 
+                            borderColor: '#EBEBD3',
+                            backgroundColor: '#EBEBD3',
+                            color: '#121769'
+                          }}
+                          placeholder="Your full address"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="message" className="block text-sm font-medium mb-2 text-[#67246A]">
+                          Additional Notes (optional)
+                        </label>
+                        <textarea
+                          id="message"
+                          name="message"
+                          value={formData.message}
+                          onChange={handleChange}
+                          rows={3}
+                          className="w-full px-4 py-3 rounded-xl border-2 focus:ring-2 focus:ring-[#FE49AF]/20 focus:border-[#FE49AF] outline-none transition-all resize-none"
+                          style={{ 
+                            borderColor: '#EBEBD3',
+                            backgroundColor: '#EBEBD3',
+                            color: '#121769'
+                          }}
+                          placeholder="Any special instructions or requests?"
+                        />
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full py-4 rounded-xl font-medium text-white transition-all duration-300 hover:shadow-lg disabled:opacity-70"
+                      style={{ 
+                        backgroundColor: isSubmitting ? '#67246A' : '#FE49AF',
+                        boxShadow: '0 4px 6px rgba(254, 73, 175, 0.3)'
+                      }}
+                    >
+                      {isSubmitting ? 'Processing...' : 'Place Order'}
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            {/* Order Summary */}
+            <div className="order-1 lg:order-2 lg:col-span-5">
+              <div className="sticky top-24 space-y-6">
+                <div className="bg-white rounded-2xl shadow-md overflow-hidden">
+                  <div className="p-6 sm:p-8">
+                    <h2 className="text-xl font-semibold mb-6 text-[#121769]">
+                      Order Summary
+                    </h2>
+                    
+                    <div className="space-y-4">
+                      {items.map(item => (
+                        <div 
+                          key={item.product.id} 
+                          className="flex items-center p-3 rounded-xl transition-all"
+                          style={{ backgroundColor: 'rgba(254, 73, 175, 0.05)' }}
                         >
-                          <img 
-                            src={item.product.image} 
-                            alt={item.product.name}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                          />
-                        </div>
-                        <div className="ml-4 flex-grow">
-                          <h4 className="font-medium" style={{ color: '#121769' }}>{item.product.name}</h4>
-                          <div className="flex justify-between mt-1 text-sm" style={{ color: '#67246A' }}>
-                            <span>{item.quantity} × ₹{item.product.price.toFixed(2)}</span>
-                            <span className="font-semibold">₹{(item.product.price * item.quantity).toFixed(2)}</span>
+                          <div className="w-20 h-20 rounded-xl border-2 border-[#EBEBD3] overflow-hidden">
+                            <img 
+                              src={item.product.image} 
+                              alt={item.product.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div className="ml-4 flex-1">
+                            <h4 className="font-medium text-[#121769]">{item.product.name}</h4>
+                            <div className="flex justify-between mt-2 text-sm">
+                              <span className="text-[#67246A]">
+                                {item.quantity} × ₹{item.product.price.toFixed(2)}
+                              </span>
+                              <span className="font-semibold text-[#121769]">
+                                ₹{(item.product.price * item.quantity).toFixed(2)}
+                              </span>
+                            </div>
                           </div>
                         </div>
+                      ))}
+                    </div>
+
+                    {/* Total Calculation */}
+                    <div className="mt-6 pt-6 border-t border-dashed border-[#EBEBD3]">
+                      <div className="space-y-3">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-[#67246A]">Subtotal</span>
+                          <span className="font-medium text-[#121769]">₹{totalPrice.toFixed(2)}</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-[#67246A]">Shipping</span>
+                          <span className="font-medium text-[#121769]">Free</span>
+                        </div>
+                        <div className="flex justify-between text-lg font-semibold pt-3 mt-3 border-t border-[#EBEBD3]">
+                          <span className="text-[#121769]">Total</span>
+                          <span className="text-[#FE49AF]">₹{totalPrice.toFixed(2)}</span>
+                        </div>
                       </div>
-                    ))}
-                  </div>
-                  
-                  <div className="border-t border-dashed mt-4 sm:mt-6 pt-4 sm:pt-6 space-y-3 border-[#EBEBD3]">
-                    <div className="flex justify-between">
-                      <span style={{ color: '#67246A' }}>Subtotal</span>
-                      <span style={{ color: '#121769', fontWeight: '500' }}>₹{totalPrice.toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span style={{ color: '#67246A' }}>Shipping</span>
-                      <span style={{ color: '#121769', fontWeight: '500' }}>Free</span>
-                    </div>
-                    <div className="flex justify-between font-semibold text-lg pt-3 mt-3 border-t" style={{ borderColor: '#EBEBD3' }}>
-                      <span style={{ color: '#121769' }}>Total</span>
-                      <span style={{ color: '#FE49AF' }}>₹{totalPrice.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
-                {/* Customer Information Form - Now Second */}
-            <div className="order-2 lg:order-2">
-              <h2 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-[#121769]">
-                Your Information
-              </h2>
-              <form 
-                onSubmit={handleSubmit} 
-                className="space-y-4 sm:space-y-6 p-4 sm:p-6 rounded-xl bg-white shadow-md"
-              >
-                <div>
-                  <label htmlFor="name" className="block font-medium mb-2" style={{ color: '#67246A' }}>
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:outline-none transition-all"
-                    style={{ 
-                      borderColor: '#EBEBD3',
-                      backgroundColor: '#EBEBD3',
-                      color: '#121769',
-                    
-                    }}
-                    placeholder="Your full name"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className="block font-medium mb-2" style={{ color: '#67246A' }}>
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:outline-none transition-all"
-                    style={{ 
-                      borderColor: '#EBEBD3',
-                      backgroundColor: '#EBEBD3',
-                      color: '#121769',
-                    
-                    }}
-                    placeholder="your.email@example.com"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="phone" className="block font-medium mb-2" style={{ color: '#67246A' }}>
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:outline-none transition-all"
-                    style={{ 
-                      borderColor: '#EBEBD3',
-                      backgroundColor: '#EBEBD3',
-                      color: '#121769',
-                    
-                    }}
-                    placeholder="Your phone number"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="address" className="block font-medium mb-2" style={{ color: '#67246A' }}>
-                    Delivery Address
-                  </label>
-                  <textarea
-                    id="address"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
-                    required
-                    rows={3}
-                    className="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:outline-none transition-all resize-none"
-                    style={{ 
-                      borderColor: '#EBEBD3',
-                      backgroundColor: '#EBEBD3',
-                      color: '#121769',
-                    
-                    }}
-                    placeholder="Your full address"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="message" className="block font-medium mb-2" style={{ color: '#67246A' }}>
-                    Additional Notes (optional)
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={3}
-                    className="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:outline-none transition-all resize-none"
-                    style={{ 
-                      borderColor: '#EBEBD3',
-                      backgroundColor: '#EBEBD3',
-                      color: '#121769',
-                    
-                    }}
-                    placeholder="Any special instructions or requests?"
-                  />
-                </div>
-                
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-lg flex items-center justify-center"
-                  style={{ 
-                    backgroundColor: isSubmitting ? '#67246A' : '#FE49AF',
-                    color: '#EBEBD3',
-                    boxShadow: '0 4px 6px rgba(254, 73, 175, 0.3)'
-                  }}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <svg 
-                        className="animate-spin -ml-1 mr-3 h-5 w-5" 
-                        style={{ color: '#EBEBD3' }}
-                        xmlns="http://www.w3.org/2000/svg" 
-                        fill="none" 
-                        viewBox="0 0 24 24"
-                      >
-                        <circle 
-                          className="opacity-25" 
-                          cx="12" 
-                          cy="12" 
-                          r="10" 
-                          stroke="currentColor" 
-                          strokeWidth="4"
-                        />
-                        <path 
-                          className="opacity-75" 
-                          fill="currentColor" 
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        />
-                      </svg>
-                      Processing Order...
-                    </>
-                  ) : (
-                    'Place Order'
-                  )}
-                </button>
-              </form>
-            </div>
-                
+
                 {/* Order Information Box */}
-                <div className="rounded-xl p-4 sm:p-5 bg-[#FE49AF]/10 border border-[#FE49AF]/20">
+                <div className="rounded-2xl p-6 bg-[#FE49AF]/10 border border-[#FE49AF]/20">
                   <div className="flex">
                     <div 
                       className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full"
