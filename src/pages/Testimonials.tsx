@@ -108,7 +108,7 @@ const Testimonials: React.FC = () => {
 
       <div className="min-h-screen bg-gradient-to-b from-[#EBEBD3] to-white">
         {/* Hero Section */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#67246a] via-[#FE49AF] to-[#121769] py-12 sm:py-16 md:py-24">
+        <section className="relative overflow-hidden bg-gradient-to-br from-[#67246a] via-[#FE49AF] to-[#121769] py-8 sm:py-12 md:py-24">
           {/* Background image for hero banner */}
           <div
             className="absolute inset-0 w-full h-full z-0"
@@ -116,7 +116,7 @@ const Testimonials: React.FC = () => {
               backgroundImage: "url('https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1200&q=80')",
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              opacity: 0.18,
+              opacity: 0.3,
               pointerEvents: 'none'
             }}
           ></div>
@@ -128,13 +128,13 @@ const Testimonials: React.FC = () => {
             <div className="absolute bottom-0 left-1/2 w-16 h-16 sm:w-24 sm:h-24 md:w-64 md:h-64 rounded-full bg-[#121769] mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
           </div>
           {/* Centered content */}
-          <div className="relative z-10 flex items-center justify-center min-h-[300px] sm:min-h-[400px] md:min-h-[500px]">
-            <div className="w-full max-w-xl sm:max-w-2xl md:max-w-4xl px-4 sm:px-6 lg:px-8 text-center mx-auto">
+          <div className="relative z-10 flex items-center justify-center h-full min-h-[300px] sm:min-h-[350px] md:min-h-[400px]">
+            <div className="w-full max-w-lg sm:max-w-2xl md:max-w-4xl px-4 sm:px-6 lg:px-8 text-center mx-auto">
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="text-xl sm:text-3xl md:text-5xl font-bold text-white mb-3 sm:mb-4 md:mb-6 leading-tight"
+                className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#67246a] tracking-wide mb-3 sm:mb-5 md:mb-7 font-serif drop-shadow-lg"
               >
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#EBEBD3] to-white">
                   Voices of Trust
@@ -144,7 +144,7 @@ const Testimonials: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-sm sm:text-lg md:text-2xl text-[#EBEBD3] max-w-xl mx-auto"
+                className="text-xs sm:text-lg md:text-2xl text-[#EBEBD3] max-w-xl mx-auto"
               >
                 Discover what our clients and partners say about their experiences working with us.
               </motion.p>
@@ -218,7 +218,7 @@ const Testimonials: React.FC = () => {
 
               {/* Testimonial Cards */}
               <div
-                className="relative h-[480px] sm:h-[420px] md:h-[400px]"
+                className="relative min-h-[400px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[500px] py-8"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
@@ -347,7 +347,7 @@ const Testimonials: React.FC = () => {
             >
               More <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FE49AF] to-[#67246a]">Testimonials</span>
             </motion.h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
               {testimonials.map((testimonial, index) => (
                 <motion.div
                   key={testimonial.id}

@@ -63,6 +63,7 @@ const Timeline: React.FC = () => {
 
   return (
     <div className="relative max-w-6xl mx-auto px-4 py-12">
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center mb-8 md:mb-12 text-transparent bg-clip-text bg-gradient-to-r from-[#67246A] to-[#FE49AF]">Our Journey</h2>
       {/* Animated Nile River flowing line */}
       <svg className="absolute inset-0 w-full h-full z-0" viewBox="0 0 800 2000" preserveAspectRatio="none">
         <path
@@ -100,7 +101,7 @@ const Timeline: React.FC = () => {
       </div>
 
       {timelineEvents.map((event, index) => {
-        const isLeft = index % 2 === 0;
+        const isLeft = index <= Math.floor(timelineEvents.length / 2);
         const typeColors = {
           1: { 
             bg: 'bg-[#121769]', 
@@ -135,59 +136,58 @@ const Timeline: React.FC = () => {
         return (
           <div
             key={index}
-            className={`relative mb-24 animate-fade-in`}
-            style={{ animationDelay: `${index * 0.15}s` }}
+            className={`relative mb-24`}
             onMouseEnter={() => setActiveEvent(index)}
             onMouseLeave={() => setActiveEvent(null)}
           >
             {/* Main container with flexible layout */}
-            <div className={`flex items-center gap-8 ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}>
-              
+            <div className={`flex flex-col md:flex-row items-center gap-4 md:gap-8 ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+               
               {/* Content Card - Papyrus style */}
-              <div 
-                className={`flex-1 max-w-md animate-scale-in transform transition-all duration-500 ${activeEvent === index ? 'scale-105' : 'scale-100'}`}
+              <div
+                className={`w-full md:max-w-md animate-scale-in transform transition-all duration-500 ${activeEvent === index ? 'scale-105' : 'scale-100'}`}
                 style={{ animationDelay: `${index * 0.15 + 0.2}s` }}
                 onClick={() => openModal(event)}
               >
-                <div className={`relative ${colors.cardBg} rounded-xl p-6 shadow-lg border-2 ${colors.border} ${colors.hover} transition-all duration-500 backdrop-blur-sm cursor-pointer group`}>
-                  
+                <div className={`relative ${colors.cardBg} rounded-xl p-4 md:p-6 shadow-lg border-2 ${colors.border} ${colors.hover} transition-all duration-500 backdrop-blur-sm cursor-pointer group`}>
+                   
                   {/* Image preview */}
                   {event.image && (
-                    <div className="relative h-40 mb-4 overflow-hidden rounded-lg">
-                      <img 
-                        src={event.image} 
+                    <div className="relative h-32 md:h-40 mb-4 overflow-hidden rounded-lg">
+                      <img
+                        src={event.image}
                         alt={event.title}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-black/20"></div>
                     </div>
                   )}
-                  
+                   
                   {/* Hieroglyphic corner decorations */}
-                  <div className="absolute top-2 left-2 text-xs opacity-30">𓀭</div>
-                  <div className="absolute top-2 right-2 text-xs opacity-30">𓂀</div>
-                  <div className="absolute bottom-2 left-2 text-xs opacity-30">𓊖</div>
-                  <div className="absolute bottom-2 right-2 text-xs opacity-30">𓇳</div>
-                  
+                  <div className="absolute top-2 left-2 text-xs opacity-30 hidden md:block">𓀭</div>
+                  <div className="absolute top-2 right-2 text-xs opacity-30 hidden md:block">𓂀</div>
+                  <div className="absolute bottom-2 left-2 text-xs opacity-30 hidden md:block">𓊖</div>
+                  <div className="absolute bottom-2 right-2 text-xs opacity-30 hidden md:block">𓇳</div>
+                   
                   {/* Title with Egyptian styling */}
-                  <h3 className={`text-xl font-bold ${colors.text} mb-3 leading-tight flex items-center gap-2`}>
-                    <span className="text-lg">𓉻</span>
+                  <h3 className={`text-lg md:text-xl font-bold ${colors.text} mb-3 leading-tight flex items-center gap-2`}>
+                    <span className="text-base md:text-lg">𓉻</span>
                     {event.title}
                   </h3>
-
+ 
                   {/* Description */}
                   <p className="text-gray-700 leading-relaxed text-sm font-medium">
-                    {event.description}
+                    {event.description.substring(0, 100)}...
                   </p>
-
+ 
                   {/* Pyramid corner elements */}
-                  <div className="absolute top-4 right-4 opacity-20">
+                  <div className="absolute top-4 right-4 opacity-20 hidden md:block">
                     <div className={`w-0 h-0 border-l-[8px] border-r-[8px] border-b-[12px] border-transparent ${colors.bg.replace('bg-', 'border-b-')}`}></div>
                   </div>
-                  
+                   
                   {/* Click indicator */}
                   <div className="absolute bottom-2 right-4 text-xs text-gray-400 flex items-center gap-1">
-                    <span>Click for details</span>
+                    <span className="text-xs md:text-sm">Click for details</span>
                     <span className="animate-pulse">↓</span>
                   </div>
                 </div>
@@ -313,17 +313,6 @@ const Timeline: React.FC = () => {
         </div>
       )}
 
-      {/* Floating action button for navigation */}
-      <div className="fixed bottom-8 right-8 z-40">
-        <div className="relative group">
-          <button className="bg-[#FE49AF] text-white w-14 h-14 rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-transform">
-            𓉻
-          </button>
-          <div className="absolute -right-2 bottom-full mb-4 bg-[#121769] text-white text-sm px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-            Explore Timeline
-          </div>
-        </div>
-      </div>
 
       {/* Custom animations */}
       <style jsx global>{`
