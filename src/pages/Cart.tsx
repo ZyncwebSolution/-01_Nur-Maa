@@ -10,7 +10,7 @@ const Cart: React.FC = () => {
   if (items.length === 0) {
     return (
       <div className="min-h-screen bg-[#EBEBD3] px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto pt-16 sm:pt-20 lg:pt-24 pb-12 sm:pb-16">
+        <div className="max-w-7xl mx-auto pt-24 sm:pt-32 lg:pt-40 pb-12 sm:pb-16">
           <div className="bg-[#FE49AF]/10 rounded-xl p-6 sm:p-8 md:p-12 text-center max-w-2xl mx-auto">
             <div className="flex justify-center">
               <svg 

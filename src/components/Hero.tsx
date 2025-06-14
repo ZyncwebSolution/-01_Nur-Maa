@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronLeft, ChevronRight, Heart, ShoppingBag } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import logo from '@/assets/images/ban1.jpg';
 
@@ -126,7 +127,7 @@ const Hero = () => {
 
   return (
     <div 
-      className="w-full h-[calc(100vh-6rem)] sm:h-screen overflow-hidden relative"
+      className="w-full h-[400px] sm:h-screen overflow-hidden relative"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       onTouchStart={handleTouchStart}
@@ -210,7 +211,7 @@ const Hero = () => {
                 transition: { staggerChildren: 0.1 }
               }
             }}
-            className="max-w-xs sm:max-w-sm md:max-w-2xl lg:max-w-4xl text-center pt-8 sm:pt-0"
+            className="max-w-xs sm:max-w-sm md:max-w-2xl lg:max-w-4xl text-center pt-[100px] sm:pt-0"
           >
             {/* Larger Title */}
             <motion.h1
@@ -236,28 +237,31 @@ const Hero = () => {
               className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
             >
               <motion.div whileHover={{ y: -2 }}>
-                <Button
-                  variant={slides[currentSlide].buttonVariant as "default" | "secondary" | "destructive" | "link" | "outline" | "ghost"}
-                  className="px-8 sm:px-10 py-4 sm:py-5 rounded-full shadow-xl font-bold text-lg sm:text-xl flex items-center justify-center gap-3"
-                  onClick={scrollToSection}
-                >
-                  <ShoppingBag className="h-5 w-5 sm:h-6 sm:w-6" />
-                  Shop Now
-                </Button>
+                <Link to="/products">
+                  <Button
+                    variant={slides[currentSlide].buttonVariant as "default" | "secondary" | "destructive" | "link" | "outline" | "ghost"}
+                    className="px-8 sm:px-10 py-4 sm:py-5 rounded-full shadow-xl font-bold text-lg sm:text-xl flex items-center justify-center gap-3"
+                  >
+                    <ShoppingBag className="h-5 w-5 sm:h-6 sm:w-6" />
+                    Shop Now
+                  </Button>
+                </Link>
               </motion.div>
               <motion.div whileHover={{ y: -2 }}>
-                <Button
-                  variant="outline"
-                  className="px-8 sm:px-10 py-4 sm:py-5 rounded-full border-3 font-bold text-lg sm:text-xl flex items-center justify-center gap-3"
-                  style={{ 
-                    borderColor: "#EBEBD3",
-                    color: "#EBEBD3",
-                    backgroundColor: "rgba(235, 235, 211, 0.1)"
-                  }}
-                >
-                  <Heart className="h-5 w-5 sm:h-6 sm:w-6" />
-                  Learn More
-                </Button>
+                <Link to="/about">
+                  <Button
+                    variant="outline"
+                    className="px-8 sm:px-10 py-4 sm:py-5 rounded-full border-3 font-bold text-lg sm:text-xl flex items-center justify-center gap-3"
+                    style={{ 
+                      borderColor: "#EBEBD3",
+                      color: "#EBEBD3",
+                      backgroundColor: "rgba(235, 235, 211, 0.1)"
+                    }}
+                  >
+                    <Heart className="h-5 w-5 sm:h-6 sm:w-6" />
+                    Learn More
+                  </Button>
+                </Link>
               </motion.div>
             </motion.div>
           </motion.div>

@@ -50,16 +50,17 @@ const CartSidebar: React.FC = () => {
               <p className="mt-1 text-[#67246A] text-sm">
                 Add some products to see them here.
               </p>
-              <button
-                onClick={toggleCart} 
-                className="mt-4 px-4 py-2 text-sm font-medium rounded-md transition-colors"
-                style={{
-                  background: 'linear-gradient(to right, #121769, #67246A)',
-                  color: '#EBEBD3'
-                }}
-              >
-                Continue Shopping
-              </button>
+              <Link
+  to="/products"
+  onClick={toggleCart} 
+  className="mt-4 px-4 py-2 text-sm font-medium rounded-md transition-colors"
+  style={{
+    background: 'linear-gradient(to right, #121769, #67246A)',
+    color: '#EBEBD3'
+  }}
+>
+  Continue Shopping
+</Link>
             </div>
           ) : (
             <div className="space-y-3">

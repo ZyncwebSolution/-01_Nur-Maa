@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import { FiInstagram, FiMail, FiPhone } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
+import logo from '@/assets/images/logo clr-01.png';
 
 const Footer: React.FC = () => {
   const controls = useAnimation();
@@ -71,13 +72,19 @@ const Footer: React.FC = () => {
         >
           {/* Brand Section */}
           <motion.div variants={itemVariants} className="md:col-span-2">
-            <Link to="/" className="flex items-center">
-              <motion.h2 
-                className="text-3xl font-bold bg-gradient-to-r from-[#EBEBD3] to-[#FE49AF] bg-clip-text text-transparent"
-                whileHover={{ scale: 1.03 }}
-              >
-                Nurmaa
-              </motion.h2>
+            <Link
+              to="/"
+              className="flex items-center"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              style={{ alignItems: 'flex-start' }}
+            >
+              <motion.img
+                src={logo}
+                alt="Nurmaa Logo"
+                className="h-20 w-auto drop-shadow-lg mb-0"
+                style={{ display: 'block' }}
+                whileHover={{ scale: 1.05 }}
+              />
             </Link>
             <motion.p 
               className="mt-3 text-[#EBEBD3]/90 text-sm md:text-base"
@@ -100,7 +107,7 @@ const Footer: React.FC = () => {
               </motion.a>
               
               <motion.a 
-                href="mailto:deepacse51@gmail.com"
+                href="mailto:nurmaa@gmail.com"
                 className="text-[#EBEBD3] hover:text-[#FE49AF] transition-colors"
                 whileHover={{ y: -3 }}
                 whileTap={{ scale: 0.95 }}
@@ -130,19 +137,27 @@ const Footer: React.FC = () => {
               Quick Links
             </motion.h3>
             <ul className="space-y-2.5 text-[#EBEBD3]/90">
-              {['Home', 'Products', 'About', 'Contact'].map((link) => (
-                <motion.li 
-                  key={link}
-                  whileHover={{ x: 3 }}
-                >
-                  <Link 
-                    to={`/${link.toLowerCase()}`} 
-                    className="text-sm md:text-base hover:text-[#FE49AF] transition-colors"
-                  >
-                    {link}
-                  </Link>
-                </motion.li>
-              ))}
+              {[
+    { label: 'Home', to: '/' },
+    { label: 'About', to: '/about' },
+    { label: 'Products', to: '/products' },
+    { label: 'Testimonials', to: '/testimonials' },
+    { label: 'Cart', to: '/cart' },
+    { label: 'Contact', to: '/contact' }
+  ].map((link) => (
+    <motion.li 
+      key={link.label}
+      whileHover={{ x: 3 }}
+    >
+      <Link 
+        to={link.to}
+        className="text-sm md:text-base hover:text-[#FE49AF] transition-colors"
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      >
+        {link.label}
+      </Link>
+    </motion.li>
+  ))}
             </ul>
           </motion.div>
 
@@ -160,14 +175,14 @@ const Footer: React.FC = () => {
                 whileHover={{ x: 3 }}
               >
                 <FiMail className="h-4 w-4 mt-1 mr-2 text-[#FE49AF] flex-shrink-0" />
-                <span className="text-sm md:text-base">deepacse51@gmail.com</span>
+                <a href='mailto:nurmaa@gmail.com' className="text-sm md:text-base">nurmaa@gmail.com</a>
               </motion.li>
               <motion.li 
                 className="flex items-start"
                 whileHover={{ x: 3 }}
               >
                 <FaWhatsapp className="h-4 w-4 mt-1 mr-2 text-[#FE49AF] flex-shrink-0" />
-                <span className="text-sm md:text-base">+91 9876543210</span>
+                <a href='https://wa.me/919876543210' className="text-sm md:text-base">+91 9876543210</a>
               </motion.li>
               <motion.li 
                 className="flex items-start"
@@ -191,6 +206,7 @@ const Footer: React.FC = () => {
           <p className="text-xs md:text-sm text-[#EBEBD3]/70">
             © {new Date().getFullYear()} Nurmaa. All rights reserved.
           </p>
+          <p className="text-xs md:text-sm text-[#EBEBD3]/70">Design and Developed by Liro Studios</p>
         </motion.div>
       </div>
     </footer>
