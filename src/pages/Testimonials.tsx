@@ -358,16 +358,16 @@ const Testimonials: React.FC = () => {
         </section>
 
         {/* Testimonials Grid Section */}
-        <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <section className="py-16 px-4 sm:px-10 lg:px-8 bg-white">
           <div className="max-w-7xl mx-auto">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16"
+              className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16 mt-8"
             >
-              More <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FE49AF] to-[#67246a]">Testimonials</span>
+              More <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FE49AF] to-[#67246a] ">Testimonials</span>
             </motion.h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -508,7 +508,7 @@ const Testimonials: React.FC = () => {
                     <span className="relative z-10">Contact Us</span>
                     <span className="absolute inset-0 bg-gradient-to-r from-[#67246a] to-[#FE49AF] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                   </motion.a>
-                  <motion.a
+                  {/* <motion.a
                     href="/portfolio"
                     className="px-8 py-4 rounded-full bg-white text-[#67246a] font-medium border-2 border-[#EBEBD3] hover:bg-[#EBEBD3] transition-all relative overflow-hidden group"
                     whileHover={{ scale: 1.02 }}
@@ -516,7 +516,7 @@ const Testimonials: React.FC = () => {
                   >
                     <span className="relative z-10">View Our Work</span>
                     <span className="absolute inset-0 bg-[#EBEBD3] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                  </motion.a>
+                  </motion.a> */}
                 </div>
               </div>
             </motion.div>

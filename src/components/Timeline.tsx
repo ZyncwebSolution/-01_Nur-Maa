@@ -10,19 +10,18 @@ interface TimelineEvent {
   date: string;
   title: string;
   description: string;
-  type?: TimelineEventType; // Optional type for future use
+  type?: TimelineEventType;
 }
 
 interface MarioTimelineProps {
-  events?: TimelineEvent[]; // Optional custom events
+  events?: TimelineEvent[];
   theme?: {
     primaryColor?: string;
     secondaryColor?: string;
     textColor?: string;
-  }; // Optional theme customization
+  };
 }
 
-// Default events data
 const defaultEvents: TimelineEvent[] = [
   {
     id: 1,
@@ -65,128 +64,62 @@ const MarioTimeline: React.FC<MarioTimelineProps> = ({
   events = defaultEvents,
   theme = {}
 }) => {
-  // Destructure theme with defaults
   const {
     primaryColor = '#9251ac',
     secondaryColor = '#f6a4ec',
     textColor = '#525f7f'
   } = theme;
 
-  // Responsive: detect mobile
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
-  // Container styles
+  // Color constants
+  const color1 = '#FE49AF';
+  const color2 = '#67246a';
+  const color4 = '#121769';
+
+  // Helper functions for TypeScript
+  const asPosition = (val: string) => val as React.CSSProperties['position'];
+  const asTextTransform = (val: string) => val as React.CSSProperties['textTransform'];
+
+  // Base styles
   const containerStyle: React.CSSProperties = {
-    boxSizing: 'border-box',
     background: '#f6f9fc',
     fontFamily: '"Open Sans", sans-serif',
     color: textColor,
-    padding: '20px',
+    padding: isMobile ? '16px' : '20px',
     maxWidth: '1200px',
     margin: '0 auto'
   };
 
-  // Title styles
   const titleStyle: React.CSSProperties = {
-    margin: '5%',
+    margin: isMobile ? '10px 0' : '5%',
     textAlign: 'center',
-    fontSize: '4rem',
-    fontWeight: 100,
-    color: primaryColor
+    fontSize: isMobile ? '2rem' : '4.5rem',
+    fontWeight: 700,
+    letterSpacing: '1px',
+    color: color1,
+    animation: 'fadeInDown 1.2s cubic-bezier(0.23, 1, 0.32, 1)'
   };
 
   const subtitleStyle: React.CSSProperties = {
-    margin: '4%',
+    margin: isMobile ? '0 0 20px' : '0 0 3%',
     textAlign: 'center',
-    fontSize: '2rem',
-    fontWeight: 100
+    fontSize: isMobile ? '1.2rem' : '2.2rem',
+    fontWeight: 400,
+    color: color2,
+    animation: 'fadeIn 2s cubic-bezier(0.23, 1, 0.32, 1)'
   };
 
-  // Timeline styles
   const timelineStyle: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
-    margin: '20px auto',
-    position: 'relative'
-  };
-
-  // Event styles
-  const eventBaseStyle: React.CSSProperties = {
-    marginBottom: '20px',
     position: 'relative',
-    display: 'flex',
-    margin: '20px 0',
-    borderRadius: '6px',
-    alignSelf: 'center',
-    width: '50vw'
+    margin: isMobile ? '10px auto' : '20px auto',
+    maxWidth: '1300px'
   };
-
-  const eventReversedStyle: React.CSSProperties = {
-    ...eventBaseStyle,
-    flexDirection: 'row-reverse'
-  };
-
-  // Animation keyframes as inline style string
-  const keyframesStyle = `
-    @keyframes fillLeft {
-      100% { right: 100%; }
-    }
-    @keyframes fillTop {
-      100% { top: 100%; }
-    }
-    @keyframes fillLeftOdd {
-      100% { left: 100%; }
-    }
-  `;
-
-  // Helper to get event type class
-  const getEventTypeClass = (type?: TimelineEventType) => {
-    if (type === 'landmark') return 'timeline__event timeline__event--type2';
-    if (type === 'remake') return 'timeline__event timeline__event--type3';
-    return 'timeline__event';
-  };
-
-  // Color palette for the site
-  const color1 = '#FE49AF'; // main purple
-  const color2 = '#67246a'; // secondary pink
-  const color3 = '#EBEBD3'; // blue
-  const color4 = '#121769'; // dark blue
-
-  // Helper to convert string values to correct CSSProperties types
-  function asFlexDirection(val: string) {
-    return val as React.CSSProperties['flexDirection'];
-  }
-  function asPosition(val: string) {
-    return val as React.CSSProperties['position'];
-  }
-  function asTextTransform(val: string) {
-    return val as React.CSSProperties['textTransform'];
-  }
 
   return (
     <div style={containerStyle}>
-      <style>{keyframesStyle}</style>
-      <h2 style={{
-        ...titleStyle,
-        color: color1,
-        fontSize: '4.5rem',
-        fontWeight: 700,
-        letterSpacing: '2px',
-        margin: '2% 0 1% 0',
-        animation: 'fadeInDown 1.2s cubic-bezier(0.23, 1, 0.32, 1)'
-      }}>
-        Our Journey: The Nurmaa Story
-      </h2>
-      <h3 style={{
-        ...subtitleStyle,
-        color: color2,
-        fontSize: '2.2rem',
-        fontWeight: 400,
-        margin: '0 0 3% 0',
-        animation: 'fadeIn 2s cubic-bezier(0.23, 1, 0.32, 1)'
-      }}>
-        Milestones and Achievements That Define Us
-      </h3>
       <style>{`
         @keyframes fadeInDown {
           0% { opacity: 0; transform: translateY(-40px); }
@@ -200,123 +133,224 @@ const MarioTimeline: React.FC<MarioTimelineProps> = ({
           0% { opacity: 0; transform: translateY(40px); }
           100% { opacity: 1; transform: translateY(0); }
         }
+        @keyframes fillLeft {
+          100% { right: 100%; }
+        }
+        @keyframes fillTop {
+          100% { top: 100%; }
+        }
+        @keyframes fillLeftOdd {
+          100% { left: 100%; }
+        }
       `}</style>
-      <div className="timeline" style={{...timelineStyle, maxWidth: '1300px'}}>
-        {events.map((event, index) => {
-          const isReversed = index % 2 === 0;
-          const eventTypeClass = getEventTypeClass(event.type);
-          let eventColors = { primary: color4, secondary: color1 };
-          if (event.type === 'landmark') eventColors = { primary: color4, secondary: color1 };
-          if (event.type === 'remake') eventColors = { primary: color4, secondary: color1 };
 
-          const eventStyle: React.CSSProperties = {
-            marginBottom: isMobile ? 16 : 32,
-            position: asPosition('relative'),
-            display: 'flex',
-            margin: isMobile ? '16px 0' : '32px 0',
-            borderRadius: 8,
-            alignSelf: 'center',
-            width: isMobile ? '90vw' : '60vw',
-            flexDirection: asFlexDirection(isMobile ? 'column' : (isReversed ? 'row-reverse' : 'row')),
-            opacity: 0,
-            transform: 'translateY(40px)',
-            animation: `fadeInUp 1.2s ${0.3 + index * 0.2}s cubic-bezier(0.23, 1, 0.32, 1) forwards`,
+      <h2 style={titleStyle}>Our Journey: The Nurmaa Story</h2>
+      <h3 style={subtitleStyle}>Milestones and Achievements That Define Us</h3>
+
+      <div style={timelineStyle}>
+        {events.map((event, index) => {
+          const eventColors = {
+            primary: color4,
+            secondary: color1,
+            ...(event.type === 'landmark' && { secondary: color1 }),
+            ...(event.type === 'remake' && { secondary: color1 })
           };
-          const dateBoxStyle: React.CSSProperties = {
-            color: eventColors.secondary,
-            fontSize: isMobile ? '1.5rem' : '2rem',
-            fontWeight: 700,
-            background: eventColors.primary,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            whiteSpace: 'nowrap',
-            padding: isMobile ? '0 16px' : '0 32px',
-            borderRadius: isMobile ? '8px 8px 0 0' : (isReversed ? '0 8px 8px 0' : '8px 0 0 8px'),
-            minWidth: isMobile ? 120 : 180,
-            minHeight: isMobile ? 40 : 70,
-            boxShadow: '0 4px 24px 0 rgba(0,0,0,0.08)',
-            width: isMobile ? '100%' : undefined,
-          };
-          const contentBoxStyle: React.CSSProperties = {
-            padding: isMobile ? 16 : 32,
-            boxShadow: '0 30px 60px -12px rgba(50, 50, 93, 0.18), 0 18px 36px -18px rgba(0, 0, 0, 0.18), 0 -12px 36px -8px rgba(0, 0, 0, 0.025)',
-            background: '#fff',
-            width: isMobile ? '100%' : 'calc(50vw - 84px)',
-            borderRadius: isMobile ? '0 0 8px 8px' : (isReversed ? '8px 0 0 8px' : '0 8px 8px 0'),
-            minHeight: isMobile ? 60 : 120,
-          };
-          const iconStyle: React.CSSProperties = {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: eventColors.primary,
-            padding: 28,
-            alignSelf: 'center',
-            margin: '0 32px',
-            background: eventColors.secondary,
-            borderRadius: '100%',
-            width: 60,
-            boxShadow: '0 30px 60px -12px rgba(50, 50, 93, 0.18), 0 18px 36px -18px rgba(0, 0, 0, 0.18), 0 -12px 36px -8px rgba(0, 0, 0, 0.025)',
-            height: 60,
-            position: asPosition('relative'),
-            fontSize: '2rem',
-          };
-          // Animation lines
-          const iconBeforeStyle: React.CSSProperties = {
-            content: '""',
-            width: 2,
-            height: '100%',
-            background: eventColors.secondary,
-            position: asPosition('absolute'),
-            top: '0%',
-            zIndex: -1,
-            left: '50%',
-            transform: 'translateX(-50%)',
-            animation: 'fillTop 2s forwards 0.5s ease-in-out',
-            display: index === events.length - 1 ? 'none' : undefined,
-          };
-          const iconAfterStyle: React.CSSProperties = {
-            content: '""',
-            width: '100%',
-            height: 2,
-            background: eventColors.secondary,
-            position: asPosition('absolute'),
-            left: isReversed ? undefined : 0,
-            right: isReversed ? 0 : undefined,
-            zIndex: -1,
-            top: '50%',
-            transform: 'translateY(-50%)',
-            animation: isReversed ? 'fillLeft 2s forwards 0.5s ease-in-out' : 'fillLeftOdd 2s forwards 0.5s ease-in-out',
-            display: index === events.length - 1 ? 'none' : undefined,
-          };
-          const titleTextStyle: React.CSSProperties = {
-            fontSize: '1.5rem',
-            lineHeight: 1.4,
-            textTransform: asTextTransform('uppercase'),
-            fontWeight: 700,
-            color: eventColors.primary,
-            letterSpacing: '2px',
-            marginBottom: 8,
-          };
-          const descriptionStyle: React.CSSProperties = {
-            flexBasis: '100%',
-            color: textColor,
-            fontSize: '1.1rem',
-            marginTop: 8,
-          };
+
+          // Mobile-specific layout
+          if (isMobile) {
+            return (
+              <div key={event.id} style={{
+                position: 'relative',
+                marginBottom: '30px',
+                opacity: 0,
+                animation: `fadeInUp 1.2s ${0.3 + index * 0.2}s forwards`
+              }}>
+                {/* Date box - top */}
+                <div style={{
+                  background: eventColors.primary,
+                  color: eventColors.secondary,
+                  padding: '8px 12px',
+                  borderRadius: '8px 8px 0 0',
+                  fontWeight: 700,
+                  fontSize: '1.1rem',
+                  textAlign: 'center'
+                }}>
+                  {event.date}
+                </div>
+
+                {/* Content box */}
+                <div style={{
+                  background: '#fff',
+                  padding: '16px',
+                  borderRadius: '0 0 8px 8px',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                }}>
+                  <h3 style={{
+                    fontSize: '1.1rem',
+                    fontWeight: 700,
+                    color: eventColors.primary,
+                    margin: '0 0 8px 0',
+                    textTransform: 'uppercase' as const,
+                    letterSpacing: '1px'
+                  }}>
+                    {event.title}
+                  </h3>
+                  
+                  <p style={{
+                    fontSize: '0.9rem',
+                    lineHeight: '1.5',
+                    color: textColor,
+                    margin: 0
+                  }}>
+                    {event.description}
+                  </p>
+                </div>
+
+                {/* Connector line (except last item) */}
+                {index < events.length - 1 && (
+                  <div style={{
+                    position: 'absolute',
+                    bottom: '-20px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    height: '20px',
+                    width: '2px',
+                    background: eventColors.secondary,
+                    animation: 'fillTop 1s forwards 0.5s'
+                  }} />
+                )}
+              </div>
+            );
+          }
+
+          // Desktop layout
           return (
-            <div key={event.id} className={eventTypeClass} style={eventStyle}>
-              <div style={iconStyle}>
+            <div key={event.id} style={{
+              display: 'flex',
+              position: 'relative',
+              margin: '30px 0',
+              alignItems: 'center',
+              opacity: 0,
+              animation: `fadeInUp 1.2s ${0.3 + index * 0.2}s forwards`
+            }}>
+              {/* Left side (date) */}
+              <div style={{
+                flex: 1,
+                display: 'flex',
+                justifyContent: index % 2 === 0 ? 'flex-end' : 'flex-start',
+                padding: index % 2 === 0 ? '0 30px 0 0' : '0 0 0 30px'
+              }}>
+                {index % 2 === 0 && (
+                  <div style={{
+                    background: eventColors.primary,
+                    color: eventColors.secondary,
+                    padding: '12px 24px',
+                    borderRadius: '8px 0 0 8px',
+                    fontWeight: 700,
+                    fontSize: '1.2rem',
+                    textAlign: 'center'
+                  }}>
+                    {event.date}
+                  </div>
+                )}
+              </div>
+
+              {/* Center icon */}
+              <div style={{
+                position: 'relative',
+                background: eventColors.secondary,
+                width: '60px',
+                height: '60px',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: eventColors.primary,
+                boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                flexShrink: 0,
+                zIndex: 2
+              }}>
                 <FontAwesomeIcon icon={faGamepad} />
-                <div style={iconBeforeStyle} />
-                <div style={iconAfterStyle} />
               </div>
-              <div style={dateBoxStyle}>{event.date}</div>
-              <div style={contentBoxStyle}>
-                <div style={titleTextStyle}>{event.title}</div>
-                <div style={descriptionStyle}><p>{event.description}</p></div>
+
+              {/* Right side (content) */}
+              <div style={{
+                flex: 1,
+                display: 'flex',
+                justifyContent: index % 2 === 0 ? 'flex-start' : 'flex-end',
+                padding: index % 2 === 0 ? '0 0 0 30px' : '0 30px 0 0'
+              }}>
+                {index % 2 !== 0 && (
+                  <div style={{
+                    background: eventColors.primary,
+                    color: eventColors.secondary,
+                    padding: '12px 24px',
+                    borderRadius: '0 8px 8px 0',
+                    fontWeight: 700,
+                    fontSize: '1.2rem',
+                    textAlign: 'center'
+                  }}>
+                    {event.date}
+                  </div>
+                )}
               </div>
+
+              {/* Content box (alternating sides) */}
+              <div style={{
+                position: 'absolute',
+                [index % 2 === 0 ? 'left' : 'right']: 'calc(50% + 50px)',
+                width: 'calc(50% - 90px)',
+                background: '#fff',
+                padding: '20px',
+                borderRadius: '8px',
+                boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
+                top: '50%',
+                transform: 'translateY(-50%)'
+              }}>
+                <h3 style={{
+                  fontSize: '1.3rem',
+                  fontWeight: 700,
+                  color: eventColors.primary,
+                  margin: '0 0 10px 0',
+                  textTransform: 'uppercase' as const,
+                  letterSpacing: '1px'
+                }}>
+                  {event.title}
+                </h3>
+                <p style={{
+                  fontSize: '1rem',
+                  lineHeight: '1.5',
+                  color: textColor,
+                  margin: 0
+                }}>
+                  {event.description}
+                </p>
+              </div>
+
+              {/* Connector lines */}
+              <div style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                width: '100%',
+                height: '2px',
+                background: eventColors.secondary,
+                transform: 'translateY(-50%)',
+                zIndex: 1,
+                animation: index % 2 === 0 ? 'fillLeft 1s forwards 0.5s' : 'fillLeftOdd 1s forwards 0.5s'
+              }} />
+              {index < events.length - 1 && (
+                <div style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: '50%',
+                  width: '2px',
+                  height: '30px',
+                  background: eventColors.secondary,
+                  transform: 'translateX(-50%)',
+                  animation: 'fillTop 1s forwards 0.5s'
+                }} />
+              )}
             </div>
           );
         })}
