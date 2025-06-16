@@ -30,15 +30,9 @@ const ProductCard: React.FC<{
   };
 
   return (
-<<<<<<< HEAD
     <Link 
       to={`/product/${product.id}`} 
       className="block h-full product-card-mobile-mx md:mx-0"
-=======
-    <Link
-      to={`/product/${product.id}`}
-      className={`block h-full ${viewType === 'list' ? 'flex' : ''}`}
->>>>>>> dc5a74c48e906fade16ace0c1697d8010b1c8e19
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

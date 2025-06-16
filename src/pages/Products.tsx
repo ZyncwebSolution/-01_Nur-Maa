@@ -384,11 +384,7 @@ const Products: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeView, setActiveView] = useState<'grid' | 'list'>('grid');
   const [hoveredSymbol, setHoveredSymbol] = useState<string | null>(null);
-<<<<<<< HEAD
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
-=======
-  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
->>>>>>> dc5a74c48e906fade16ace0c1697d8010b1c8e19
   
   // Filter and sort products
   useEffect(() => {
@@ -474,7 +470,6 @@ const Products: React.FC = () => {
         </div>
       </div>
       
-<<<<<<< HEAD
       {/* Main Content */}
       <div className="container mx-auto px-2 sm:px-6 py-6 sm:py-12">
         {/* Mobile Filters Button */}
@@ -582,69 +577,9 @@ const Products: React.FC = () => {
                 <div className="mb-2 flex justify-between text-[#121769]">
                   <span className="text-sm">₹ {priceRange[0]}</span>
                   <span className="text-sm">₹ {priceRange[1]}</span>
-=======
-      {/* Main Content - Improved Layout */}
-      <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 sm:gap-8">
-          {/* Filters Sidebar - Mobile Friendly */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-lg border border-[#EBEBD3] mb-6 lg:mb-0 lg:sticky lg:top-4">
-              {/* Mobile Filter Toggle */}
-              <div className="lg:hidden p-4 border-b border-[#EBEBD3]">
-                <button
-                  onClick={() => setIsMobileFiltersOpen(!isMobileFiltersOpen)}
-                  className="w-full flex items-center justify-between text-[#121769] font-medium"
-                >
-                  <span>Filters</span>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-              </div>
-
-              {/* Filters Content */}
-              <div className={`${isMobileFiltersOpen ? 'block' : 'hidden'} lg:block p-4 sm:p-6 space-y-6`}>
-                {/* Categories */}
-                <div className="space-y-4">
-                  <h3 className="font-semibold text-lg text-[#121769]">Categories</h3>
-                  {categories.map((cat) => (
-                    <button
-                      key={cat.id}
-                      onClick={() => setActiveCategory(cat.id as ProductCategory | 'all')}
-                      className={`flex items-center w-full text-left px-3 py-2 rounded-lg text-sm sm:text-base ${
-                        activeCategory === cat.id 
-                          ? 'bg-[#67246A] text-white' 
-                          : 'text-[#121769] hover:bg-[#EBEBD3]'
-                      }`}
-                    >
-                      <span className="mr-2">{cat.symbol}</span>
-                      {cat.name}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Price Range - Mobile Friendly Slider */}
-                <div className="space-y-4">
-                  <h3 className="font-semibold text-lg text-[#121769]">Price Range</h3>
-                  <div className="px-2">
-                    <input
-                      type="range"
-                      className="w-full accent-[#FE49AF]"
-                      min="0"
-                      max="5000"
-                      value={priceRange[1]}
-                      onChange={(e) => setPriceRange([0, parseInt(e.target.value)])}
-                    />
-                    <div className="flex justify-between text-sm text-[#121769] mt-2">
-                      <span>₹0</span>
-                      <span>₹{priceRange[1]}</span>
-                    </div>
-                  </div>
->>>>>>> dc5a74c48e906fade16ace0c1697d8010b1c8e19
                 </div>
               </div>
             </div>
-<<<<<<< HEAD
             {/* Sort Options */}
             <div className="bg-white p-6 rounded-lg shadow-lg border border-[#EBEBD3]">
               <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">
@@ -664,12 +599,6 @@ const Products: React.FC = () => {
           </div>
           {/* Product Display Area */}
           <div className="md:col-span-3">
-=======
-          </div>
-
-          {/* Products Grid/List - Responsive */}
-          <div className="lg:col-span-3">
->>>>>>> dc5a74c48e906fade16ace0c1697d8010b1c8e19
             {/* Results Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#121769] p-4 rounded-lg shadow-lg mb-6">
               <p className="text-[#EBEBD3] text-sm sm:text-base">
