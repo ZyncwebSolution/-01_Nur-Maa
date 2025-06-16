@@ -666,7 +666,7 @@ body {
   left: 22px;
   background: #fe49af;
   box-shadow: 0 0 5px rgba(254, 73, 175, 0.8);
-on: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .auto-slide-toggle::after {
