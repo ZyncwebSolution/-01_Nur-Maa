@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { toast } from '@/hooks/use-toast';
 import Head from 'next/head';
@@ -32,8 +33,7 @@ const Contact: React.FC = () => {
         body: JSON.stringify({
           to: 'diyweboffi@gmail.com',
           subject: `New Contact Form Submission: ${formData.subject}`,
-          text: `\nName: ${formData.name}\nEmail: ${formData.email}\nSubject: ${formData.subject}\nMessage: ${formData.message}\n`,
-          // Add a 'from' field for reply-to
+          text: `Name: ${formData.name}\nEmail: ${formData.email}\nSubject: ${formData.subject}\nMessage: ${formData.message}`,
           from: formData.email
         }),
       });
@@ -46,12 +46,7 @@ const Contact: React.FC = () => {
         duration: 5000,
       });
 
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      });
+      setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
       toast({
         title: "Delivery Failed",
@@ -197,7 +192,6 @@ const Contact: React.FC = () => {
 
             {/* Contact Info & FAQ */}
             <div className="space-y-8">
-              {/* Contact Information */}
               <motion.div
                 initial={{ x: 50, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
@@ -242,7 +236,7 @@ const Contact: React.FC = () => {
                 </div>
               </motion.div>
 
-              {/* FAQ Section */}
+              {/* FAQ */}
               <motion.div
                 initial={{ y: 50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
