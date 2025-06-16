@@ -28,6 +28,22 @@ const fadeInUp = {
   })
 };
 
+const colors = {
+  gold: '#fe49af',
+  blue: '#121769',
+  beige: '#ebebd3',
+  purple: '#67246a',
+  white: '#fff',
+};
+
+const fadeInUp = {
+  animation: 'fadeInUp 1s ease both',
+};
+
+const fadeIn = {
+  animation: 'fadeIn 1.2s ease both',
+};
+
 const About: React.FC = () => {
   return (
     <motion.div
