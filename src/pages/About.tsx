@@ -9,12 +9,12 @@ const colors = {
   white: '#fff',
 };
 
+// Animation style objects for inline usage
 const fadeInUp = {
   animation: 'fadeInUp 1s ease both',
 };
-
 const fadeIn = {
-  animation: 'fadeIn 1.2s ease both',
+  animation: 'fadeIn 1s ease both',
 };
 
 const About: React.FC = () => {

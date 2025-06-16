@@ -3,22 +3,17 @@ import { useSearchParams } from 'react-router-dom';
 import ProductCard from '@/components/ProductCard';
 import QuickPurchaseModal from '@/components/QuickPurchaseModal';
 import { Product as BaseProduct, ProductCategory } from '@/lib/types';
-
-type Product = BaseProduct & { 
-  formattedPrice: string;
-  ingredients?: string[];
-  stock: number;
-};
-import { Product as BaseProduct, ProductCategory } from '@/lib/types';
-
-type Product = BaseProduct & { 
-  formattedPrice: string;
-  ingredients?: string[];
-  stock: number;
-};
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 import product2 from '@/assets/images/product2.png';
 import product3 from '@/assets/images/product3.png';
 import { GridIcon, ListIcon } from 'lucide-react';
+
+type Product = BaseProduct & { 
+  formattedPrice: string;
+  ingredients?: string[];
+  stock: number;
+};
 
 // Format price with ₹ symbol
 const formatPrice = (price: number) => {
@@ -305,7 +300,7 @@ const Products: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeView, setActiveView] = useState<'grid' | 'list'>('grid');
   const [hoveredSymbol, setHoveredSymbol] = useState<string | null>(null);
-  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
+  const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
   
   // Filter and sort products
   useEffect(() => {
@@ -391,70 +386,135 @@ const Products: React.FC = () => {
         </div>
       </div>
       
-      {/* Main Content - Improved Layout */}
-      <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 sm:gap-8">
-          {/* Filters Sidebar - Mobile Friendly */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-lg border border-[#EBEBD3] mb-6 lg:mb-0 lg:sticky lg:top-4">
-              {/* Mobile Filter Toggle */}
-              <div className="lg:hidden p-4 border-b border-[#EBEBD3]">
-                <button
-                  onClick={() => setIsMobileFiltersOpen(!isMobileFiltersOpen)}
-                  className="w-full flex items-center justify-between text-[#121769] font-medium"
-                >
-                  <span>Filters</span>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-              </div>
-
-              {/* Filters Content */}
-              <div className={`${isMobileFiltersOpen ? 'block' : 'hidden'} lg:block p-4 sm:p-6 space-y-6`}>
-                {/* Categories */}
-                <div className="space-y-4">
-                  <h3 className="font-semibold text-lg text-[#121769]">Categories</h3>
+      {/* Main Content */}
+      <div className="container mx-auto px-2 sm:px-6 py-6 sm:py-12">
+        {/* Mobile Filters Button */}
+        <div className="md:hidden flex justify-end mb-4">
+          <Button
+            className="bg-[#67246A] text-white px-4 py-2 rounded-lg shadow-lg"
+            onClick={() => setMobileFilterOpen(true)}
+          >
+            <svg className="inline-block w-5 h-5 mr-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707l-6.414 6.414A1 1 0 0013 13.414V19a1 1 0 01-1.447.894l-4-2A1 1 0 017 17v-3.586a1 1 0 00-.293-.707L3.293 6.707A1 1 0 013 6V4z" /></svg>
+            Filters
+          </Button>
+        </div>
+        {/* Mobile Filter Drawer/Modal */}
+        <Dialog open={mobileFilterOpen} onOpenChange={setMobileFilterOpen}>
+          <DialogContent className="md:hidden w-full max-w-sm mx-auto p-0 rounded-lg overflow-hidden">
+            <div className="bg-white p-6 space-y-6">
+              {/* Categories */}
+              <div>
+                <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">Categories</h3>
+                <div className="space-y-2">
                   {categories.map((cat) => (
                     <button
                       key={cat.id}
-                      onClick={() => setActiveCategory(cat.id as ProductCategory | 'all')}
-                      className={`flex items-center w-full text-left px-3 py-2 rounded-lg text-sm sm:text-base ${
-                        activeCategory === cat.id 
-                          ? 'bg-[#67246A] text-white' 
-                          : 'text-[#121769] hover:bg-[#EBEBD3]'
-                      }`}
+                      onClick={() => { setActiveCategory(cat.id as ProductCategory | 'all'); setMobileFilterOpen(false); }}
+                      className={`flex items-center w-full text-left px-4 py-3 rounded-lg transition-all ${activeCategory === cat.id ? 'bg-[#67246A] text-white shadow-inner' : 'text-[#121769] hover:bg-[#EBEBD3] hover:text-[#67246A]'}`}
                     >
-                      <span className="mr-2">{cat.symbol}</span>
+                      <span className="text-xl mr-2">{cat.symbol}</span>
                       {cat.name}
                     </button>
                   ))}
                 </div>
-
-                {/* Price Range - Mobile Friendly Slider */}
-                <div className="space-y-4">
-                  <h3 className="font-semibold text-lg text-[#121769]">Price Range</h3>
-                  <div className="px-2">
-                    <input
-                      type="range"
-                      className="w-full accent-[#FE49AF]"
-                      min="0"
-                      max="5000"
-                      value={priceRange[1]}
-                      onChange={(e) => setPriceRange([0, parseInt(e.target.value)])}
-                    />
-                    <div className="flex justify-between text-sm text-[#121769] mt-2">
-                      <span>₹0</span>
-                      <span>₹{priceRange[1]}</span>
-                    </div>
+              </div>
+              {/* Price Range */}
+              <div>
+                <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">Price Range</h3>
+                <div className="px-2">
+                  <div className="mb-2 flex justify-between text-[#121769]">
+                    <span className="text-sm">₹ {priceRange[0]}</span>
+                    <span className="text-sm">₹ {priceRange[1]}</span>
                   </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="5000"
+                    step="500"
+                    value={priceRange[1]}
+                    onChange={(e) => setPriceRange([0, parseFloat(e.target.value)])}
+                    className="w-full h-2 bg-[#EBEBD3] rounded-lg appearance-none cursor-pointer accent-[#FE49AF]"
+                  />
+                </div>
+              </div>
+              {/* Sort Options */}
+              <div>
+                <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">Sort By</h3>
+                <select
+                  value={sortOption}
+                  onChange={(e) => setSortOption(e.target.value)}
+                  className="w-full px-4 py-3 border border-[#EBEBD3] rounded-lg focus:ring-2 focus:ring-[#FE49AF] focus:border-transparent text-[#121769]"
+                >
+                  <option value="">Default</option>
+                  <option value="price-low-high">Price: Low to High</option>
+                  <option value="price-high-low">Price: High to Low</option>
+                  <option value="rating">Highest Rating</option>
+                </select>
+              </div>
+              <div className="flex justify-end">
+                <Button className="bg-[#FE49AF] text-white px-4 py-2 rounded-lg" onClick={() => setMobileFilterOpen(false)}>
+                  Done
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Interactive Filters - Left Sidebar (hidden on mobile) */}
+          <div className="md:col-span-1 space-y-8 sticky top-4 h-min hidden md:block">
+            {/* Categories */}
+            <div className="bg-white p-6 rounded-lg shadow-lg border border-[#EBEBD3]">
+              <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">
+                Categories
+              </h3>
+              <div className="space-y-2">
+                {categories.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveCategory(cat.id as ProductCategory | 'all')}
+                    className={`flex items-center w-full text-left px-4 py-3 rounded-lg transition-all ${
+                      activeCategory === cat.id 
+                        ? 'bg-[#67246A] text-white shadow-inner' 
+                        : 'text-[#121769] hover:bg-[#EBEBD3] hover:text-[#67246A]'
+                    }`}
+                  >
+                    <span className="text-xl mr-2">{cat.symbol}</span>
+                    {cat.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+            {/* Price Range */}
+            <div className="bg-white p-6 rounded-lg shadow-lg border border-[#EBEBD3]">
+              <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">
+                Price Range
+              </h3>
+              <div className="px-2">
+                <div className="mb-2 flex justify-between text-[#121769]">
+                  <span className="text-sm">₹ {priceRange[0]}</span>
+                  <span className="text-sm">₹ {priceRange[1]}</span>
                 </div>
               </div>
             </div>
+            {/* Sort Options */}
+            <div className="bg-white p-6 rounded-lg shadow-lg border border-[#EBEBD3]">
+              <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">
+                Sort By
+              </h3>
+              <select
+                value={sortOption}
+                onChange={(e) => setSortOption(e.target.value)}
+                className="w-full px-4 py-3 border border-[#EBEBD3] rounded-lg focus:ring-2 focus:ring-[#FE49AF] focus:border-transparent text-[#121769]"
+              >
+                <option value="">Default</option>
+                <option value="price-low-high">Price: Low to High</option>
+                <option value="price-high-low">Price: High to Low</option>
+                <option value="rating">Highest Rating</option>
+              </select>
+            </div>
           </div>
-
-          {/* Products Grid/List - Responsive */}
-          <div className="lg:col-span-3">
+          {/* Product Display Area */}
+          <div className="md:col-span-3">
             {/* Results Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#121769] p-4 rounded-lg shadow-lg mb-6">
               <p className="text-[#EBEBD3] text-sm sm:text-base">
@@ -486,6 +546,7 @@ const Products: React.FC = () => {
                     <ProductCard
                       key={product.id} 
                       product={product} 
+                      viewType="grid"
                       onQuickPurchase={handleQuickPurchase}
                     />
                   ))}
