@@ -19,11 +19,12 @@ const Header: React.FC = () => {
 
   const navLinks = [
     { label: 'Home', path: '/' },
+      { label: 'About', path: '/about' },
     { label: 'Products', path: '/products' },
-    { label: 'About', path: '/about' },
+  { label: 'Testimonials', path: '/testimonials' },
     { label: 'Cart', path: '/cart' },
     { label: 'Contact', path: '/contact' },
-    { label: 'Testimonials', path: '/testimonials' },
+    
   ];
 
   return (
@@ -49,6 +50,7 @@ const Header: React.FC = () => {
               className={`relative font-medium text-lg transition-colors duration-300 ${
                 location.pathname === path ? 'text-[#67246a] font-bold' : 'text-[#121769] hover:text-[#FE49AF]'
               } group`}
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             >
               {label}
               <span 
@@ -162,7 +164,7 @@ const Header: React.FC = () => {
                 <Link
                   key={path}
                   to={path}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={() => { setIsMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                   className={`text-lg font-medium py-2 transition-colors ${
                     location.pathname === path 
                       ? 'text-[#67246a] font-bold border-l-4 border-[#FE49AF] pl-3' 

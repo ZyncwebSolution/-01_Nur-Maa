@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronLeft, ChevronRight, Heart, ShoppingBag } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import logo from '@/assets/images/ban1.jpg';
 
@@ -126,7 +127,7 @@ const Hero = () => {
 
   return (
     <div 
-      className="w-full h-screen overflow-hidden relative"
+      className="w-full h-[400px] sm:h-screen overflow-hidden relative"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       onTouchStart={handleTouchStart}
@@ -141,52 +142,45 @@ const Hero = () => {
           animate="center"
           exit="exit"
           transition={{ type: "tween", ease: "easeInOut", duration: 0.8 }}
-          className="absolute inset-0 z-0"
+          className="absolute inset-0 w-full h-full z-0"
         >
           <img
             src={slides[currentSlide].image}
             alt="Slide Background"
             className="absolute inset-0 w-full h-full object-cover"
             style={{
-              filter: "brightness(0.7) contrast(1.1)",
-              mixBlendMode: "multiply"
-            }}
-          />
-          <div 
-            className="absolute inset-0"
-            style={{ 
-              backgroundColor: slides[currentSlide].color,
-              opacity: 0.3,
-              mixBlendMode: "overlay"
+              filter: "brightness(0.65)",
             }}
           />
         </motion.div>
       </AnimatePresence>
 
-      <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-20">
+      {/* Navigation Buttons - Hide on small screens */}
+      <div className="hidden sm:block absolute top-1/2 left-2 sm:left-4 lg:left-8 transform -translate-y-1/2 z-20">
         <motion.button
           onClick={goToPrevSlide}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="bg-[#EBEBD3] bg-opacity-80 hover:bg-opacity-100 p-3 rounded-full shadow-lg"
+          className="bg-[#EBEBD3] bg-opacity-80 hover:bg-opacity-100 p-3 sm:p-4 rounded-full shadow-xl"
           style={{ color: slides[currentSlide].color }}
         >
-          <ChevronLeft size={28} strokeWidth={2.5} />
+          <ChevronLeft className="h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9" strokeWidth={2.5} />
         </motion.button>
       </div>
-      <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-20">
+      <div className="hidden sm:block absolute top-1/2 right-2 sm:right-4 lg:right-8 transform -translate-y-1/2 z-20">
         <motion.button
           onClick={goToNextSlide}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="bg-[#EBEBD3] bg-opacity-80 hover:bg-opacity-100 p-3 rounded-full shadow-lg"
+          className="bg-[#EBEBD3] bg-opacity-80 hover:bg-opacity-100 p-2 sm:p-3 rounded-full shadow-lg"
           style={{ color: slides[currentSlide].color }}
         >
-          <ChevronRight size={28} strokeWidth={2.5} />
+          <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7" strokeWidth={2.5} />
         </motion.button>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex gap-3">
+      {/* Slide Indicators */}
+      <div className="absolute bottom-2 sm:bottom-6 lg:bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex gap-1 sm:gap-3">
         {slides.map((_, index) => (
           <motion.button
             key={index}
@@ -204,7 +198,8 @@ const Hero = () => {
         ))}
       </div>
 
-      <div className="relative z-10 flex flex-col justify-center items-start h-full px-6 md:px-20 lg:px-32">
+      {/* Content Section */}
+      <div className="relative z-10 flex items-center justify-center h-full px-4 sm:px-6 md:px-8">
         <AnimatePresence mode="wait">
           <motion.div
             key={`content-${currentSlide}`}
@@ -216,58 +211,65 @@ const Hero = () => {
                 transition: { staggerChildren: 0.1 }
               }
             }}
-            className="max-w-2xl"
+            className="max-w-xs sm:max-w-sm md:max-w-2xl lg:max-w-4xl text-center pt-[100px] sm:pt-0"
           >
+            {/* Larger Title */}
             <motion.h1
               variants={textVariants}
-              className="text-4xl md:text-6xl font-bold mb-4 leading-tight"
+              className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-5 md:mb-7 leading-tight"
               style={{ color: "#EBEBD3", textShadow: "2px 2px 4px rgba(0,0,0,0.3)" }}
             >
               {slides[currentSlide].title}
             </motion.h1>
 
+            {/* Larger Description */}
             <motion.p
               variants={textVariants}
-              className="text-xl md:text-2xl mb-8 font-medium"
+              className="text-base sm:text-xl md:text-2xl lg:text-3xl mb-6 sm:mb-8 md:mb-10 font-medium"
               style={{ color: "#EBEBD3", textShadow: "1px 1px 2px rgba(0,0,0,0.3)" }}
             >
               {slides[currentSlide].description}
             </motion.p>
 
+            {/* Larger Buttons */}
             <motion.div
               variants={textVariants}
-              className="flex gap-4 flex-wrap"
+              className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
             >
               <motion.div whileHover={{ y: -2 }}>
-                <Button
-                  variant={slides[currentSlide].buttonVariant as "default" | "secondary" | "destructive" | "link" | "outline" | "ghost"}
-                  className="px-8 py-6 rounded-full shadow-lg font-semibold text-lg flex items-center gap-2"
-                  onClick={scrollToSection}
-                >
-                  <ShoppingBag className="h-5 w-5" />
-                  Shop Now
-                </Button>
+                <Link to="/products">
+                  <Button
+                    variant={slides[currentSlide].buttonVariant as "default" | "secondary" | "destructive" | "link" | "outline" | "ghost"}
+                    className="px-8 sm:px-10 py-4 sm:py-5 rounded-full shadow-xl font-bold text-lg sm:text-xl flex items-center justify-center gap-3"
+                  >
+                    <ShoppingBag className="h-5 w-5 sm:h-6 sm:w-6" />
+                    Shop Now
+                  </Button>
+                </Link>
               </motion.div>
               <motion.div whileHover={{ y: -2 }}>
-                <Button
-                  variant="outline"
-                  className="px-8 py-6 rounded-full border-2 font-semibold text-lg flex items-center gap-2"
-                  style={{ 
-                    borderColor: "#EBEBD3",
-                    color: "#EBEBD3",
-                    backgroundColor: "rgba(235, 235, 211, 0.1)"
-                  }}
-                >
-                  <Heart className="h-5 w-5" />
-                  Learn More
-                </Button>
+                <Link to="/about">
+                  <Button
+                    variant="outline"
+                    className="px-8 sm:px-10 py-4 sm:py-5 rounded-full border-3 font-bold text-lg sm:text-xl flex items-center justify-center gap-3"
+                    style={{ 
+                      borderColor: "#EBEBD3",
+                      color: "#EBEBD3",
+                      backgroundColor: "rgba(235, 235, 211, 0.1)"
+                    }}
+                  >
+                    <Heart className="h-5 w-5 sm:h-6 sm:w-6" />
+                    Learn More
+                  </Button>
+                </Link>
               </motion.div>
             </motion.div>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      <div className="absolute bottom-4 right-4 z-20">
+      {/* Scroll Indicator - Hide on small screens */}
+      <div className="hidden sm:block absolute bottom-4 right-4 z-20">
         <motion.div
           animate={{ 
             y: [0, -10, 0],

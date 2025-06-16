@@ -1,13 +1,25 @@
-
 import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { toast } from '@/hooks/use-toast';
+import WAConnect from '@wppconnect/wa-js';
+
+// EmailJS configuration
+const EMAILJS_SERVICE_ID = 'service_7k8d5pd';
+const EMAILJS_TEMPLATE_ID = 'template_cpoou7s';
+const EMAILJS_PUBLIC_KEY = 'FEPtogQBClrAWw3I1';
+
+// WhatsApp business number
+const WHATSAPP_NUMBER = '918667212177'; // Replace with your business number
+
+// Init EmailJS
+emailjs.init(EMAILJS_PUBLIC_KEY);
 
 const Checkout: React.FC = () => {
   const { items, totalPrice, clearCart } = useCart();
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,117 +27,118 @@ const Checkout: React.FC = () => {
     address: '',
     message: ''
   });
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (items.length === 0) {
-      toast({
-        title: "Cart is empty",
-        description: "Please add some items to your cart before checkout.",
-        variant: "destructive",
-      });
-      return;
-    }
-    
     setIsSubmitting(true);
-    
-    // Create order details with formatted items for better email readability
-    const orderDetails = {
-      customer: formData,
-      orderDate: new Date().toLocaleString(),
-      items: items.map(item => ({
-        product: item.product.name,
-        quantity: item.quantity,
-        price: item.product.price.toFixed(2),
-        subtotal: (item.quantity * item.product.price).toFixed(2)
-      })),
-      totalPrice: totalPrice.toFixed(2)
-    };
-    
+
     try {
-      // Format the email content for better readability
-      const emailContent = `
-        New Order from Nurmaa Website:
-        
-        Customer Information:
-        ---------------------
-        Name: ${formData.name}
-        Email: ${formData.email}
-        Phone: ${formData.phone}
-        Address: ${formData.address}
-        ${formData.message ? `Message: ${formData.message}` : ''}
-        
-        Order Details:
-        -------------
-        Date: ${orderDetails.orderDate}
-        
-        Items:
-        ${items.map(item => `- ${item.product.name} (x${item.quantity}) - $${(item.product.price * item.quantity).toFixed(2)}`).join('\n        ')}
-        
-        Total: $${totalPrice.toFixed(2)}
+      // Basic validation
+      if (!formData.name || !formData.email || !formData.phone || !formData.address) {
+        throw new Error('Please fill in all required fields');
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        throw new Error('Please enter a valid email address');
+      }
+
+      const phoneRegex = /^[6-9]\d{9}$/;
+      if (!phoneRegex.test(formData.phone)) {
+        throw new Error('Please enter a valid 10-digit phone number');
+      }
+
+      // Format order details for both email and WhatsApp
+      const orderItems = items.map(item => 
+        `${item.product.name} (₹${item.product.price.toFixed(2)} x ${item.quantity})`
+      ).join('\n');
+
+      const orderSummary = `
+*New Order from ${formData.name}*
+------------------
+*Order ID:* NM-${Date.now()}
+*Customer Details:*
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Address: ${formData.address}
+
+*Order Items:*
+${orderItems}
+
+*Total Amount:* ₹${totalPrice.toFixed(2)}
+
+*Additional Notes:*
+${formData.message || 'No additional notes'}
       `;
+
+      // Send email
+      const emailResponse = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          user_name: formData.name,
+          user_email: formData.email,
+          user_phone: formData.phone,
+          delivery_address: formData.address,
+          customer_notes: formData.message || 'No additional notes',
+          order_items: orderItems,
+          order_total: `₹${totalPrice.toFixed(2)}`,
+          order_id: `NM-${Date.now()}`,
+          store_email: 'diyweboffi@gmail.com'
+        }
+      );
+
+      // Send WhatsApp message
+      const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(orderSummary)}`;
       
-      // In a real app, you would send this to your backend or email service
-      // For now, we'll just simulate a network request
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // For demonstration purposes, log the email content to console
-      console.log("Email content that would be sent:", emailContent);
-      console.log("Email recipient: deepacse51@gmail.com");
-      
-      // Clear cart after successful order
-      clearCart();
-      
-      toast({
-        title: "Order Submitted Successfully!",
-        description: "Your order has been sent to deepacse51@gmail.com",
-      });
-      
-      navigate("/checkout/success");
+      if (emailResponse.status === 200) {
+        clearCart();
+        toast({
+          title: "Order Placed Successfully!",
+          description: "Check your email for order confirmation.",
+        });
+
+        // Open WhatsApp in new window
+        window.open(whatsappUrl, '_blank');
+        
+        navigate("/checkout/success");
+      } else {
+        throw new Error('Failed to send order confirmation');
+      }
     } catch (error) {
       console.error("Error placing order:", error);
       toast({
         title: "Error",
-        description: "There was a problem submitting your order. Please try again.",
+        description: error instanceof Error 
+          ? error.message 
+          : "Failed to place order. Please try again.",
         variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
     }
   };
-  
+
   if (items.length === 0) {
     return (
-      <div className="pt-24 pb-16 nurmaa-container">
-        <div className="text-center py-12">
-          <svg 
-            className="mx-auto h-16 w-16 text-gray-400"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              strokeWidth={1.5} 
-              d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" 
-            />
+      <div className="min-h-screen bg-[#EBEBD3] flex items-center justify-center px-4">
+        <div className="text-center bg-[#FE49AF]/10 p-10 rounded-2xl max-w-md">
+          <svg className="mx-auto h-16 w-16 text-[#67246A]" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
           </svg>
-          <h2 className="mt-6 text-2xl font-semibold">Your cart is empty</h2>
-          <p className="mt-4 text-gray-600">
-            Add some products to your cart before proceeding to checkout.
-          </p>
+          <h2 className="text-2xl font-bold text-[#121769] mt-4">Your cart is empty</h2>
+          <p className="text-[#67246A] mt-2">Add some products before checking out.</p>
           <button
             onClick={() => navigate('/products')}
-            className="btn-primary mt-6 animate-scale-in-out hover:animate-none"
+            className="mt-6 px-6 py-3 bg-[#FE49AF] text-[#EBEBD3] rounded-xl shadow-md hover:shadow-lg"
           >
             Browse Products
           </button>
@@ -133,205 +146,110 @@ const Checkout: React.FC = () => {
       </div>
     );
   }
-  
+
   return (
-    <div className="pt-24 pb-16 lotus-bg">
-      <div className="nurmaa-container">
-        <h1 className="text-3xl font-bold text-center mb-8">Checkout</h1>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Customer Information Form */}
-          <div>
-            <h2 className="text-xl font-semibold mb-6">Your Information</h2>
-            <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-xl shadow-sm">
-              <div>
-                <label htmlFor="name" className="block font-medium mb-2">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="input-field"
-                  placeholder="Your full name"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="email" className="block font-medium mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="input-field"
-                  placeholder="your.email@example.com"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="phone" className="block font-medium mb-2">
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                  className="input-field"
-                  placeholder="Your phone number"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="address" className="block font-medium mb-2">
-                  Delivery Address
-                </label>
-                <textarea
-                  id="address"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleChange}
-                  required
-                  rows={3}
-                  className="input-field resize-none"
-                  placeholder="Your full address"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="message" className="block font-medium mb-2">
-                  Additional Notes (optional)
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={3}
-                  className="input-field resize-none"
-                  placeholder="Any special instructions or requests?"
-                />
-              </div>
-              
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="btn-primary w-full flex items-center justify-center hover:scale-105 transition-transform"
-              >
-                {isSubmitting ? (
-                  <>
-                    <svg 
-                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      fill="none" 
-                      viewBox="0 0 24 24"
-                    >
-                      <circle 
-                        className="opacity-25" 
-                        cx="12" 
-                        cy="12" 
-                        r="10" 
-                        stroke="currentColor" 
-                        strokeWidth="4"
+    <div className="min-h-screen bg-[#EBEBD3] px-4 pt-20 pb-12 sm:px-6 lg:px-8 sm:pt-24 lg:pt-28">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-4xl font-bold text-center text-[#121769] mb-12">Checkout</h1>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          {/* Form */}
+          <div className="lg:col-span-7">
+            <div className="bg-white p-8 rounded-2xl shadow-md">
+              <h2 className="text-xl font-semibold text-[#121769] mb-6">Your Information</h2>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                {['name', 'email', 'phone', 'address'].map(field => (
+                  <div key={field}>
+                    <label htmlFor={field} className="block text-sm font-medium text-[#67246A] mb-2 capitalize">{field === 'phone' ? 'Phone Number' : field.replace('_', ' ')}</label>
+                    {field !== 'address' ? (
+                      <input
+                        type={field === 'email' ? 'email' : 'text'}
+                        id={field}
+                        name={field}
+                        value={formData[field as keyof typeof formData]}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 rounded-xl border-2 border-[#EBEBD3] bg-[#EBEBD3] text-[#121769] focus:border-[#FE49AF] focus:ring-2 focus:ring-[#FE49AF]/30 outline-none transition-all"
+                        required
                       />
-                      <path 
-                        className="opacity-75" 
-                        fill="currentColor" 
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ) : (
+                      <textarea
+                        id="address"
+                        name="address"
+                        rows={3}
+                        value={formData.address}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 rounded-xl border-2 border-[#EBEBD3] bg-[#EBEBD3] text-[#121769] focus:border-[#FE49AF] focus:ring-2 focus:ring-[#FE49AF]/30 outline-none transition-all resize-none"
+                        required
                       />
-                    </svg>
-                    Processing Order...
-                  </>
-                ) : (
-                  'Place Order'
-                )}
-              </button>
-            </form>
+                    )}
+                  </div>
+                ))}
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-[#67246A] mb-2">Additional Notes</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={3}
+                    value={formData.message}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-xl border-2 border-[#EBEBD3] bg-[#EBEBD3] text-[#121769] focus:border-[#FE49AF] focus:ring-2 focus:ring-[#FE49AF]/30 outline-none transition-all resize-none"
+                    placeholder="Any special instructions?"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-4 rounded-xl text-white font-semibold transition-all hover:shadow-lg disabled:opacity-70"
+                  style={{ backgroundColor: isSubmitting ? '#67246A' : '#FE49AF' }}
+                >
+                  {isSubmitting ? 'Processing...' : 'Place Order'}
+                </button>
+              </form>
+            </div>
           </div>
-          
+
           {/* Order Summary */}
-          <div>
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-semibold mb-6 text-nurmaa-purple">Order Summary</h2>
-              
-              <div className="divide-y">
+          <div className="lg:col-span-5 space-y-6">
+            <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-md">
+              <h2 className="text-xl font-semibold text-[#121769] mb-6">Order Summary</h2>
+              <div className="space-y-4">
                 {items.map(item => (
-                  <div key={item.product.id} className="py-4 flex items-center group transition-all hover:bg-gray-50 rounded-lg px-2">
-                    <div className="w-16 h-16 flex-shrink-0 bg-white rounded-lg overflow-hidden border border-gray-100">
-                      <img 
-                        src={item.product.image} 
-                        alt={item.product.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                    </div>
-                    <div className="ml-4 flex-grow">
-                      <h4 className="font-medium">{item.product.name}</h4>
-                      <div className="flex justify-between mt-1 text-sm text-gray-600">
-                        <span>{item.quantity} × ${item.product.price.toFixed(2)}</span>
-                        <span className="font-semibold">${(item.product.price * item.quantity).toFixed(2)}</span>
+                  <div key={item.product.id} className="flex items-center gap-4 bg-[#FE49AF]/5 p-3 rounded-xl">
+                    <img src={item.product.image} alt={item.product.name} className="w-20 h-20 object-cover rounded-xl border-2 border-[#EBEBD3]" />
+                    <div className="flex-1">
+                      <h4 className="font-medium text-[#121769]">{item.product.name}</h4>
+                      <div className="flex justify-between text-sm mt-1">
+                        <span className="text-[#67246A]">{item.quantity} × ₹{item.product.price.toFixed(2)}</span>
+                        <span className="font-semibold text-[#121769]">₹{(item.product.price * item.quantity).toFixed(2)}</span>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
-              
-              <div className="border-t border-dashed border-gray-200 mt-6 pt-6 space-y-3">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Subtotal</span>
-                  <span>${totalPrice.toFixed(2)}</span>
+              <div className="border-t border-dashed border-[#EBEBD3] mt-6 pt-6">
+                <div className="flex justify-between text-sm mb-2">
+                  <span className="text-[#67246A]">Subtotal</span>
+                  <span className="text-[#121769] font-medium">₹{totalPrice.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Shipping</span>
-                  <span>Free</span>
+                <div className="flex justify-between text-sm mb-2">
+                  <span className="text-[#67246A]">Shipping</span>
+                  <span className="text-[#121769] font-medium">Free</span>
                 </div>
-                <div className="flex justify-between font-semibold text-lg">
-                  <span>Total</span>
-                  <span className="text-nurmaa-purple">${totalPrice.toFixed(2)}</span>
+                <div className="flex justify-between text-lg font-semibold border-t border-[#EBEBD3] pt-3 mt-3">
+                  <span className="text-[#121769]">Total</span>
+                  <span className="text-[#FE49AF]">₹{totalPrice.toFixed(2)}</span>
                 </div>
               </div>
             </div>
-            
-            <div className="mt-8 bg-nurmaa-purple bg-opacity-10 rounded-xl p-5 border border-nurmaa-purple/20">
-              <div className="flex">
-                <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-nurmaa-purple/20">
-                  <svg 
-                    className="h-5 w-5 text-nurmaa-purple" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    stroke="currentColor"
-                  >
-                    <path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      strokeWidth={2} 
-                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" 
-                    />
-                  </svg>
-                </div>
-                <div className="ml-4">
-                  <h3 className="font-medium text-nurmaa-dark">Order Information</h3>
-                  <p className="mt-2 text-sm text-gray-600">
-                    After placing your order, a confirmation email will be sent to Nurmaa's team at 
-                    <span className="font-medium text-nurmaa-purple"> deepacse51@gmail.com</span>. 
-                    They will contact you to confirm delivery details.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="mt-4 bg-white p-3 rounded-lg border border-dashed border-nurmaa-purple/20">
-                <p className="text-sm text-gray-600 italic">
-                  "Thank you for choosing Nurmaa's natural products. We appreciate your support for our handcrafted items."
-                </p>
+
+            <div className="p-6 rounded-2xl bg-[#FE49AF]/10 border border-[#FE49AF]/20">
+              <h3 className="text-[#121769] font-semibold mb-2">Order Information</h3>
+              <p className="text-sm text-[#67246A]">
+                A confirmation email will be sent to 
+                <span className="font-medium text-[#FE49AF]"> diyweboffi@gmail.com</span>.<br />
+                We will contact you soon to confirm delivery.
+              </p>
+              <div className="mt-4 p-3 bg-white border border-dashed rounded-lg text-sm italic text-[#67246A]">
+                "Thank you for choosing Nurmaa's natural products. We appreciate your support."
               </div>
             </div>
           </div>

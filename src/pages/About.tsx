@@ -353,10 +353,20 @@ const About: React.FC = () => {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
 export default About;
+
+/* Nurmaa orb pulse animation (add to your global CSS if not present):
+@keyframes nurmaaPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(254,73,175,0.18), 0 0 0 0 rgba(103,36,106,0.15);}
+  50% { box-shadow: 0 0 32px 12px rgba(254,73,175,0.22), 0 0 24px 8px rgba(103,36,106,0.18);}
+}
+.animate-nurmaaPulse {
+  animation: nurmaaPulse 2.8s cubic-bezier(0.4,0,0.2,1) infinite;
+}
+*/

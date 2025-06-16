@@ -94,6 +94,7 @@ const FeaturedProducts: React.FC<{ onQuickPurchase?: (product: Product) => void 
             <ProductCard 
               key={product.id}
               product={product} 
+              viewType="grid"
               onQuickPurchase={onQuickPurchase}
             />
           ))}
