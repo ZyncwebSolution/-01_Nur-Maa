@@ -204,7 +204,7 @@ const Testimonials: React.FC = () => {
               {/* Navigation Arrows - Enhanced */}
               <button 
                 onClick={prevTestimonial}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center text-[#67246a] hover:bg-[#EBEBD3] transition-all duration-300 hidden md:flex group"
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center text-[#67246a] hover:bg-[#EBEBD3] transition-all duration-300 md:flex group"
                 aria-label="Previous testimonial"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -214,7 +214,7 @@ const Testimonials: React.FC = () => {
               
               <button 
                 onClick={nextTestimonial}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center text-[#67246a] hover:bg-[#EBEBD3] transition-all duration-300 hidden md:flex group"
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center text-[#67246a] hover:bg-[#EBEBD3] transition-all duration-300 md:flex group"
                 aria-label="Next testimonial"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">

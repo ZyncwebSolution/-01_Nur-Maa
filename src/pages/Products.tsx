@@ -5,15 +5,15 @@ import QuickPurchaseModal from '@/components/QuickPurchaseModal';
 import { Product as BaseProduct, ProductCategory } from '@/lib/types';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import product2 from '@/assets/images/product2.png';
+import product3 from '@/assets/images/product3.png';
+import { GridIcon, ListIcon } from 'lucide-react';
 
 type Product = BaseProduct & { 
   formattedPrice: string;
   ingredients?: string[];
   stock: number;
 };
-import product2 from '@/assets/images/product2.png';
-import product3 from '@/assets/images/product3.png';
-import { GridIcon, ListIcon } from 'lucide-react';
 
 // Format price with ₹ symbol
 const formatPrice = (price: number) => {
@@ -28,11 +28,11 @@ const formatPrice = (price: number) => {
 const allProducts: Product[] = [
   {
     id: '1',
-    name: 'Granola',
-    category: 'food' as ProductCategory,
-    description: 'Fuel your day with our handcrafted Granola, a delicious and nutritious mix of roasted nuts, seeds, oats, and natural jaggery—lightly toasted in pure cold-pressed coconut oil. ',
-    price: 195, // Direct INR price
-    image:'https://cookieandkate.com/images/2015/10/healthy-granola-recipe-1-1.jpg',
+    name: 'Sacred Ankh Oil',
+    category: 'skincare' as ProductCategory,
+    description: 'A luxurious blend of ancient Egyptian oils for skin rejuvenation, inspired by Cleopatra\'s beauty secrets. Contains rare botanicals from the Nile delta.',
+    price: 34.99,
+    image: product2,
     rating: 4.9,
     featured: true,
     stock: 15,
@@ -41,11 +41,11 @@ const allProducts: Product[] = [
    },
   {
     id: '2',
-    name: 'Sprouted Ragi Powder',
+    name: 'Nile Delta Honey',
     category: 'food' as ProductCategory,
-    description: 'Sprouted Ragi Powder – Naturally Nutritious & Wholesome Carefully prepared from 100% whole ragi grains, our Sprouted Ragi Powder is a powerhouse of nutrition. The grains are traditionally sprouted to enhance bioavailability, gently dried, and finely milled to preserve their natural goodness. Rich in calcium, iron, and dietary fiber, sprouted ragi supports strong bones, aids digestion, and helps maintain healthy blood sugar levels.',
-    price: 80, // Direct INR price
-    image:'https://ucarecdn.com/b32a6e19-4629-463b-83f4-7ea72be864bd/-/format/auto/',
+    description: 'Pure honey harvested from the banks of the Nile, used by pharaohs for its healing properties. Unprocessed and raw with natural enzymes intact.',
+    price: 22.99,
+    image: product3,
     rating: 5.0,
     featured: true,
     stock: 8,
@@ -54,12 +54,12 @@ const allProducts: Product[] = [
    
   },
   {
-    id: '14',
-    name: 'Natural Herbal Eye Shadow',
+    id: '3',
+    name: 'Eye of Horus Cream',
     category: 'skincare' as ProductCategory,
-    description: 'Enhance your eyes with the gentle power of nature. Our 100% Natural Eye Shadow',
-    price: 400, // Direct INR price
-    image: 'https://bodyofangels.com/cdn/shop/files/City_of_Angels_natural_herbal_eyeshadow_palette.jpg?v=1735496331&width=1445',
+    description: 'A restorative eye cream based on ancient temple recipes, formulated to reduce puffiness and dark circles like the protective eye of Horus.',
+    price: 42.50,
+    // image: product4,
     rating: 4.7,
     featured: false,
     stock: 12,
@@ -68,12 +68,12 @@ const allProducts: Product[] = [
     
   },
   {
-    id: '23',
-    name: 'Lip Scrub',
-    category: 'skincare' as ProductCategory,
-    description: 'Give your lips the care they deserve with our 100% Natural Lip Scrub, thoughtfully crafted with mango butter, sugar, almond oil, and lavender oil. This luxurious scrub gently buffs away dead skin cells while deeply moisturizing your lips, leaving them soft, smooth, and naturally radiant.Perfect as a pre-lip care routine or before applying lip tint or lipstick for a flawless finish.',
-    price: 260, // Direct INR price
-    image: 'https://wholenewmom.com/wp-content/uploads/2016/12/Lip-Scrub-V-720x1105.jpg',
+    id: '4',
+    name: 'Pharaoh\'s Incense Set',
+    category: 'wellness' as ProductCategory,
+    description: 'Authentic resin incense blends used in Egyptian temples for meditation and spiritual connection. Comes with hand-carved brass holder.',
+    price: 29.99,
+    // image: product5,
     rating: 4.8,
     featured: true,
     stock: 5,
@@ -81,12 +81,12 @@ const allProducts: Product[] = [
     benefits: ['Exfoliates Dead Skin', 'Deeply Moisturizing', 'Soothing Aroma','Smooth Base for Lipstick']
   },
   {
-    id: '3',
-    name: 'Kambu Puttu Mix',
-    category: 'food' as ProductCategory,
-    description: 'Rekindle the flavors of your grandmother’s kitchen with our Kambu Puttu Mix, made from premium pearl millet (kambu) blended with a touch of cardamom and natural salt. This wholesome puttu mix is stone-ground and prepared in small batches to retain its natural aroma, fiber, and nutritional richness.',
-    price: 110, // Direct INR price
-    image: 'https://c7.staticflickr.com/9/8637/29774838446_3e7f7ccc79_o.jpg',
+    id: '5',
+    name: 'Nefertiti Hair Serum',
+    category: 'skincare' as ProductCategory,
+    description: 'Royal hair treatment inspired by Queen Nefertiti\'s legendary locks. Promotes growth and shine with ancient oil blends.',
+    price: 38.75,
+    // image: product6,
     rating: 4.9,
     featured: true,
     stock: 10,
@@ -94,12 +94,12 @@ const allProducts: Product[] = [
     benefits: ['High in Iron & Calcium ', 'Gut-Friendly Grain', 'Helps Control Diabetes','Heart Health Support','Naturally Gluten-Free','Light & Cooling']
   },
   {
-    id: '4',
-    name: 'Karupu kauvini kanji mix',
+    id: '6',
+    name: 'Sacred Papyrus Tea',
     category: 'food' as ProductCategory,
-    description: 'Cherished by Tamil royalty and once known as the “Forbidden Rice,” Karuppu Kavuni (Black Rice) is a rare and powerful grain packed with nutrients and antioxidants. Our Karuppu Kavuni Kanji Mix is made from handpicked black rice, carefully cleaned, slow-roasted, and stone-ground to retain its rich color, nutty aroma, and nutritional integrity.',
-    price: 135, // Direct INR price
-    image:'https://www.kandharam.co.in/image/cache/catalog/Products/Food%20Products/Rice/Karuppu%20Kavuni%20Rice-min-500x500.png',
+    description: 'Rare herbal tea blend made from Nile papyrus and other sacred plants used by Egyptian healers for mental clarity and digestion.',
+    price: 18.99,
+    // image: product7,
     rating: 4.5,
     featured: false,
     stock: 20,
@@ -107,12 +107,12 @@ const allProducts: Product[] = [
     benefits: ['Rich in Antioxidants ', 'Supports Heart Health', 'Diabetic-Friendly','Improves Digestion','Iron-Rich','Weight Management ','Gluten-Free']
   },
   {
-    id: '15',
-    name: 'Ceramide Moisturizer',
+    id: '7',
+    name: 'Golden Sand Scrub',
     category: 'skincare' as ProductCategory,
-    description: 'EOur Ceramide Moisturizer is expertly formulated with ceramides, shea butter, and skin-loving emulsifiers to restore your skin natural barrier.',
-    price: 320, // Direct INR price
-    image: 'https://m.media-amazon.com/images/I/61UzNreguKL._SL1500_.jpg',
+    description: 'Exfoliating body scrub with fine golden sand from the Red Sea and nourishing oils used by ancient Egyptian beauties.',
+    price: 32.00,
+    // image: product8,
     rating: 4.6,
     featured: true,
     stock: 7,
@@ -159,97 +159,12 @@ const allProducts: Product[] = [
     benefits: ['Rich in Antioxidants', 'Calming & Stress-Relieving ', 'Aids Digestion','Natural Detox','Good for Eyes & Hair','Caffeine-Free']
   },
   {
-    id: '13',
-    name: 'Eye Kajol',
+    id: '8',
+    name: 'Osiris Body Oil',
     category: 'skincare' as ProductCategory,
-    description: 'Made using time-honored ayurvedic ingredients like almond dust, castor oil, beeswax, and ghee, our Eye Kajol is a 100% natural and chemical-free formula designed to soothe, protect, and enhance your eyes.',
-    price: 160, // Direct INR price
-   image: 'https://images-static.nykaa.com/media/catalog/product/tr:h-800,w-800,cm-pad_resize/a/a/aa14787AYAXX00000061_1.jpg',
-    rating: 4.8,
-    featured: true,
-    stock: 9,   ingredients: ['Almond Dust', 'Castor Oil','Beeswax','Ghee'],
-    benefits: ['Cools and Soothes Eyes', 'Promotes Eyelash Growth ', 'No Irritation or Chemicals','Traditional & Herbal ','Deep Black Finish']
-  },
-  {
-    id: '17',
-    name: ' Anti-Dandruff Hair Oil',
-    category: 'skincare' as ProductCategory,
-    description: 'Free from harmful chemicals and safe for all hair types, including sensitive scalps.',
-    price: 280, // Direct INR price
-    image: 'https://cdn.shopify.com/s/files/1/0272/4714/9155/products/HOLEUHEN4TBJQNZT_2_2048x2048.jpg?v=1622096182',
-    rating: 4.8,
-    featured: true,
-    stock: 9, ingredients: ['Carrier Oils:Coconut Oil,Sesame Oil', 'Herbs: Amla, Neem, Curry Leaves, Aloe Vera, Henna, Avarampoo, Moringa Leaves, Karunjeeragam, Hibiscus, Rose Petals','Special Additive: Neem Oil for anti-fungal and antibacterial protection'],
-    benefits: ['Fights Dandruff Naturally', 'Soothes and Cools the Scalp', 'Reduces Hair Fall','Moisturizes Dry Scalp','100% Herbal & Chemical-Free']
-  },
-  {
-    id: '5',
-    name: 'Millet waffle mix',
-    category: 'food' as ProductCategory,
-    description: 'mix, pour, and cook in your waffle maker—or even in a dosa pan for thin, crispy treats!Just.',
-    price: 210, // Direct INR price
-     image: 'https://m.media-amazon.com/images/I/710i7PyUigL._SX679_.jpg',
-    rating: 4.8,
-    featured: true,
-    stock: 9,
-   ingredients: ['Wheat Flour', 'Millet Flour', 'Rice Flour','Salt','Jaggery'],
-    benefits: ['Rich in Fiber & Nutrients', 'Natural Sweetness ', 'Sustained Energy','Good for Kids & Adults','No Chemicals or Preservatives ','Versatile & Delicious'] },
-  {
-    id: '6',
-    name: 'Sola Paniyaram',
-    category: 'food' as ProductCategory,
-    description: 'Perfect for soft, fluffy paniyaram with a slightly nutty and earthy flavor—enjoy it with chutney or sambar for a comforting and filling meal.',
-    price: 145, // Direct INR price
-    image: 'https://b2958125.smushcdn.com/2958125/wp-content/uploads/Masala-Sola-Paniyaram5-768x1024.jpg?lossy=1&strip=1&webp=1',
-     rating: 4.8,
-    featured: true,
-    stock: 9,
-     ingredients: ['Sivapu solam', ' Vellai solam', 'Urad dal','Fenugreek seeds'],
-    benefits: ['Gluten-Free Grain', 'Supports Digestion', 'High in Fiber','Iron & Protein Boost','Heart-Friendly','Diabetic-Friendly']
-  },
-  {
-    id: '18',
-    name: 'Herbal Hair Butter',
-    category: 'skincare' as ProductCategory,
-    description: 'perfect leave-in for dry, curly, or damaged hair and an excellent alternative to chemical-based styling gels or serums.',
-    price: 330, // Direct INR price
-    image: 'https://i.etsystatic.com/26665376/r/il/d4f007/2980851434/il_fullxfull.2980851434_nzdl.jpg',
-    rating: 4.8,
-    featured: true,
-    stock: 9,ingredients: ['Cocoa Butter', 'Flax Seed Extract ','Almond Oil','Propylene Glycol (plant-based)- (used in minimal safe quantity)'],
-    benefits: ['Deep Conditioning', 'Natural Styling Aid', 'Reduces Frizz & Split Ends','Lightweight & Non-Greasy','100% Herbal & Chemical-Free']
-  },
-  {
-     id: '20',
-    name: 'Foot Scrub',
-    category: 'skincare' as ProductCategory,
-    description: 'Ideal for regular use, it leaves your feet feeling refreshed, smooth, and beautifully cared for.',
-    price: 240, // Direct INR price
-    image: 'https://beautycrafter.com/wp-content/uploads/2023/12/foot-scrub-applied-683x1024.webp',
-    rating: 4.8,
-    featured: true,
-    stock: 9,
-    
-    ingredients: ['Shea Butter', 'Coconut Oil','Walnut Powder','Eucalyptus Oil','Sea Salt'],
-    benefits: ['Gentle Exfoliation', 'Deep Moisturization', 'Soothing & Refreshing','Natural & Chemical-Free','Improves Skin Texture']
-  },
-     { id: '7',
-    name: 'Millet Payiru Adai',
-    category: 'food' as ProductCategory,
-    description: 'Ideal for breakfast, brunch, or dinner—just mix with water and cook like a dosa or thick pancake. Serve hot with chutney or butter.',
-    price: 160, // Direct INR price
-    image: 'https://farm1.staticflickr.com/696/23069594022_a8d61cd4e8_o.jpg',
-    rating: 4.8,
-    featured: true,
-    stock: 9, ingredients: ['Green Gram', 'Moong Dal', 'Chana Dal','Toor Dal','Red Chilli','Garlic','Ginger','Asafoetida','Varagu (Kodo Millet)', 'Thinai (Foxtail Millet)', 'Kuthiraivali (Barnyard Millet)'],
-    benefits: ['Rich in Plant-Based Protein', 'Millet Powered', 'Good for Digestion','Diabetic-Friendly','Weight Management','Balanced Spice ']
-  },
-     { id: '8',
-    name: 'Kollu idly podi',
-    category: 'food' as ProductCategory,
-    description: 'Kollu idly ready mix is stone-ground in small batches, free from preservatives, and perfect for soft, fluffy idlies that are light on the stomach and rich in nutrients. Just mix, ferment, and steam',
-    price: 145, // Direct INR price
-    image: 'https://nankatrathu.in/cdn/shop/files/KolluIdlyPowder1.jpg?v=1724833607&width=1445',
+    description: 'Ritual anointing oil blend said to be used in the resurrection myth of Osiris. Deeply nourishing for dry skin.',
+    price: 45.99,
+    // image: product4,
     rating: 4.8,
     featured: true,
     stock: 9,
@@ -370,6 +285,7 @@ const allProducts: Product[] = [
   }
 ].map(product => ({
   ...product,
+  image: product.image ?? product2, // Use product2 as a placeholder if image is missing
   formattedPrice: formatPrice(product.price)
 }));
 
@@ -621,22 +537,86 @@ const Products: React.FC = () => {
                 </button>
               </div>
             </div>
-
-            {/* Products Grid */}
-            <div className={
-              activeView === 'grid' 
-                ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6'
-                : 'space-y-4 sm:space-y-6'
-            }>
-              {filteredProducts.map(product => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  viewType={activeView}
-                  onQuickPurchase={handleQuickPurchase}
-                />
-              ))}
-            </div>
+            
+            {/* Products Grid/List */}
+            {filteredProducts.length > 0 ? (
+              activeView === 'grid' ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filteredProducts.map(product => (
+                    <ProductCard
+                      key={product.id} 
+                      product={product} 
+                      viewType="grid"
+                      onQuickPurchase={handleQuickPurchase}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  {filteredProducts.map(product => (
+                    <div key={product.id} className="bg-white p-6 rounded-lg shadow-md border border-[#EBEBD3] hover:shadow-lg transition-shadow flex flex-col sm:flex-row gap-6">
+                      <div className="w-full sm:w-1/3 h-48 bg-gray-100 rounded-lg overflow-hidden">
+                        <img 
+                          src={product.image} 
+                          alt={product.name} 
+                          className="w-full h-full object-cover hover:scale-105 transition-transform"
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex justify-between items-start">
+                          <h3 className="text-xl font-bold text-[#121769]">{product.name}</h3>
+                          <span className="text-[#FE49AF] font-bold">{product.formattedPrice}</span>
+                        </div>
+                        <p className="text-[#67246A] mt-2">{product.description}</p>
+                        
+                        {/* Ingredients and Benefits */}
+                        <div className="mt-4 flex flex-wrap gap-2">
+                          {(product.ingredients || []).slice(0, 3).map(ingredient => (
+                            <span key={ingredient} className="px-2 py-1 bg-[#EBEBD3] text-[#67246A] text-xs rounded">
+                              {ingredient}
+                            </span>
+                          ))}
+                        </div>
+                        
+                        <div className="mt-4 flex items-center justify-between">
+                          <div className="flex items-center">
+                            <span className="text-yellow-500 mr-1">★</span>
+                            <span className="text-[#67246A]">{product.rating}</span>
+                            <span className="ml-4 px-2 py-1 bg-[#EBEBD3] text-[#67246A] text-xs rounded">
+                              {product.stock} in stock
+                            </span>
+                          </div>
+                          <button 
+                            onClick={() => handleQuickPurchase(product)}
+                            className="px-4 py-2 bg-[#67246A] text-white rounded-lg hover:bg-[#121769] transition-colors"
+                          >
+                            Quick Purchase
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )
+            ) : (
+              <div className="text-center py-16 bg-white rounded-lg shadow-lg border border-[#EBEBD3]">
+                <div className="mx-auto h-24 w-24 text-[#FE49AF] mb-6 animate-bounce">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-medium text-[#121769] mb-2">No sacred artifacts found</h3>
+                <p className="text-[#67246A] max-w-md mx-auto">
+                  The sands have shifted and hidden what you seek. Try different filters.
+                </p>
+                <button 
+                  onClick={resetFilters}
+                  className="mt-6 px-6 py-2 bg-[#FE49AF] text-white rounded-lg hover:bg-[#67246A] transition-colors"
+                >
+                  Reset All Filters
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
