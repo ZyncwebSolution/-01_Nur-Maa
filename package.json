@@ -44,11 +44,7 @@
     "@radix-ui/react-toggle-group": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.4",
     "@tanstack/react-query": "^5.56.2",
-<<<<<<< HEAD
-    "@types/next": "^8.0.7",
-=======
     "@wppconnect/wa-js": "^3.17.7",
->>>>>>> dc5a74c48e906fade16ace0c1697d8010b1c8e19
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
