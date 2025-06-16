@@ -2,9 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ProductCard from '@/components/ProductCard';
 import QuickPurchaseModal from '@/components/QuickPurchaseModal';
-import { Product, ProductCategory } from '@/lib/types';
+import { Product as BaseProduct, ProductCategory } from '@/lib/types';
+
+type Product = BaseProduct & { 
+  formattedPrice: string;
+  ingredients?: string[];
+  stock: number;
+};
 import product2 from '@/assets/images/product2.png';
 import product3 from '@/assets/images/product3.png';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 // Format price with ₹ symbol
 const formatPrice = (price: number) => {
@@ -20,7 +28,7 @@ const allProducts: Product[] = [
   {
     id: '1',
     name: 'Sacred Ankh Oil',
-    category: 'skincare',
+    category: 'skincare' as ProductCategory,
     description: 'A luxurious blend of ancient Egyptian oils for skin rejuvenation, inspired by Cleopatra\'s beauty secrets. Contains rare botanicals from the Nile delta.',
     price: 34.99,
     image: product2,
@@ -33,7 +41,7 @@ const allProducts: Product[] = [
   {
     id: '2',
     name: 'Nile Delta Honey',
-    category: 'food',
+    category: 'food' as ProductCategory,
     description: 'Pure honey harvested from the banks of the Nile, used by pharaohs for its healing properties. Unprocessed and raw with natural enzymes intact.',
     price: 22.99,
     image: product3,
@@ -47,7 +55,7 @@ const allProducts: Product[] = [
   {
     id: '3',
     name: 'Eye of Horus Cream',
-    category: 'skincare',
+    category: 'skincare' as ProductCategory,
     description: 'A restorative eye cream based on ancient temple recipes, formulated to reduce puffiness and dark circles like the protective eye of Horus.',
     price: 42.50,
     // image: product4,
@@ -61,7 +69,7 @@ const allProducts: Product[] = [
   {
     id: '4',
     name: 'Pharaoh\'s Incense Set',
-    category: 'wellness',
+    category: 'wellness' as ProductCategory,
     description: 'Authentic resin incense blends used in Egyptian temples for meditation and spiritual connection. Comes with hand-carved brass holder.',
     price: 29.99,
     // image: product5,
@@ -74,7 +82,7 @@ const allProducts: Product[] = [
   {
     id: '5',
     name: 'Nefertiti Hair Serum',
-    category: 'skincare',
+    category: 'skincare' as ProductCategory,
     description: 'Royal hair treatment inspired by Queen Nefertiti\'s legendary locks. Promotes growth and shine with ancient oil blends.',
     price: 38.75,
     // image: product6,
@@ -86,7 +94,7 @@ const allProducts: Product[] = [
   {
     id: '6',
     name: 'Sacred Papyrus Tea',
-    category: 'food',
+    category: 'food' as ProductCategory,
     description: 'Rare herbal tea blend made from Nile papyrus and other sacred plants used by Egyptian healers for mental clarity and digestion.',
     price: 18.99,
     // image: product7,
@@ -99,7 +107,7 @@ const allProducts: Product[] = [
   {
     id: '7',
     name: 'Golden Sand Scrub',
-    category: 'skincare',
+    category: 'skincare' as ProductCategory,
     description: 'Exfoliating body scrub with fine golden sand from the Red Sea and nourishing oils used by ancient Egyptian beauties.',
     price: 32.00,
     // image: product8,
@@ -110,12 +118,12 @@ const allProducts: Product[] = [
     benefits: ['Rebuilds Skin Barrier – Restores moisture and smoothness', 'Calms Sensitivity – Reduces irritation and inflammation', 'Rich but Lightweight – Hydrates without clogging pores','Dermatologist-Recommended Actives ']
   },
   {
-    id: '16',
-    name: 'Herbal Hair Oil',
+    id: '8',
+    name: 'Osiris Body Oil',
     category: 'skincare' as ProductCategory,
-    description: 'Each bottle is infused with coconut oil, sesame oil, almond oil,olive oil, and a powerful combination of traditional herbs like amla, neem, hibiscus, curry leaves, aloe vera, and more—steeped slowly to extract their full benefits.This potent oil helps control hair fall, moisturize the scalp, and reduce body heat,',
-    price: 350, // Direct INR price
-    image: 'https://i.etsystatic.com/20646311/r/il/5df4e6/2102154302/il_794xN.2102154302_qxhq.jpg',
+    description: 'Ritual anointing oil blend said to be used in the resurrection myth of Osiris. Deeply nourishing for dry skin.',
+    price: 45.99,
+    // image: product4,
     rating: 4.8,
     featured: true,
     stock: 9,
@@ -149,12 +157,97 @@ const allProducts: Product[] = [
     benefits: ['Rich in Antioxidants', 'Calming & Stress-Relieving ', 'Aids Digestion','Natural Detox','Good for Eyes & Hair','Caffeine-Free']
   },
   {
-    id: '8',
-    name: 'Osiris Body Oil',
-    category: 'skincare',
-    description: 'Ritual anointing oil blend said to be used in the resurrection myth of Osiris. Deeply nourishing for dry skin.',
-    price: 45.99,
-    // image: product4,
+    id: '13',
+    name: 'Eye Kajol',
+    category: 'skincare' as ProductCategory,
+    description: 'Made using time-honored ayurvedic ingredients like almond dust, castor oil, beeswax, and ghee, our Eye Kajol is a 100% natural and chemical-free formula designed to soothe, protect, and enhance your eyes.',
+    price: 160, // Direct INR price
+   image: 'https://images-static.nykaa.com/media/catalog/product/tr:h-800,w-800,cm-pad_resize/a/a/aa14787AYAXX00000061_1.jpg',
+    rating: 4.8,
+    featured: true,
+    stock: 9,   ingredients: ['Almond Dust', 'Castor Oil','Beeswax','Ghee'],
+    benefits: ['Cools and Soothes Eyes', 'Promotes Eyelash Growth ', 'No Irritation or Chemicals','Traditional & Herbal ','Deep Black Finish']
+  },
+  {
+    id: '17',
+    name: ' Anti-Dandruff Hair Oil',
+    category: 'skincare' as ProductCategory,
+    description: 'Free from harmful chemicals and safe for all hair types, including sensitive scalps.',
+    price: 280, // Direct INR price
+    image: 'https://cdn.shopify.com/s/files/1/0272/4714/9155/products/HOLEUHEN4TBJQNZT_2_2048x2048.jpg?v=1622096182',
+    rating: 4.8,
+    featured: true,
+    stock: 9, ingredients: ['Carrier Oils:Coconut Oil,Sesame Oil', 'Herbs: Amla, Neem, Curry Leaves, Aloe Vera, Henna, Avarampoo, Moringa Leaves, Karunjeeragam, Hibiscus, Rose Petals','Special Additive: Neem Oil for anti-fungal and antibacterial protection'],
+    benefits: ['Fights Dandruff Naturally', 'Soothes and Cools the Scalp', 'Reduces Hair Fall','Moisturizes Dry Scalp','100% Herbal & Chemical-Free']
+  },
+  {
+    id: '5',
+    name: 'Millet waffle mix',
+    category: 'food' as ProductCategory,
+    description: 'mix, pour, and cook in your waffle maker—or even in a dosa pan for thin, crispy treats!Just.',
+    price: 210, // Direct INR price
+     image: 'https://m.media-amazon.com/images/I/710i7PyUigL._SX679_.jpg',
+    rating: 4.8,
+    featured: true,
+    stock: 9,
+   ingredients: ['Wheat Flour', 'Millet Flour', 'Rice Flour','Salt','Jaggery'],
+    benefits: ['Rich in Fiber & Nutrients', 'Natural Sweetness ', 'Sustained Energy','Good for Kids & Adults','No Chemicals or Preservatives ','Versatile & Delicious'] },
+  {
+    id: '6',
+    name: 'Sola Paniyaram',
+    category: 'food' as ProductCategory,
+    description: 'Perfect for soft, fluffy paniyaram with a slightly nutty and earthy flavor—enjoy it with chutney or sambar for a comforting and filling meal.',
+    price: 145, // Direct INR price
+    image: 'https://b2958125.smushcdn.com/2958125/wp-content/uploads/Masala-Sola-Paniyaram5-768x1024.jpg?lossy=1&strip=1&webp=1',
+     rating: 4.8,
+    featured: true,
+    stock: 9,
+     ingredients: ['Sivapu solam', ' Vellai solam', 'Urad dal','Fenugreek seeds'],
+    benefits: ['Gluten-Free Grain', 'Supports Digestion', 'High in Fiber','Iron & Protein Boost','Heart-Friendly','Diabetic-Friendly']
+  },
+  {
+    id: '18',
+    name: 'Herbal Hair Butter',
+    category: 'skincare' as ProductCategory,
+    description: 'perfect leave-in for dry, curly, or damaged hair and an excellent alternative to chemical-based styling gels or serums.',
+    price: 330, // Direct INR price
+    image: 'https://i.etsystatic.com/26665376/r/il/d4f007/2980851434/il_fullxfull.2980851434_nzdl.jpg',
+    rating: 4.8,
+    featured: true,
+    stock: 9,ingredients: ['Cocoa Butter', 'Flax Seed Extract ','Almond Oil','Propylene Glycol (plant-based)- (used in minimal safe quantity)'],
+    benefits: ['Deep Conditioning', 'Natural Styling Aid', 'Reduces Frizz & Split Ends','Lightweight & Non-Greasy','100% Herbal & Chemical-Free']
+  },
+  {
+     id: '20',
+    name: 'Foot Scrub',
+    category: 'skincare' as ProductCategory,
+    description: 'Ideal for regular use, it leaves your feet feeling refreshed, smooth, and beautifully cared for.',
+    price: 240, // Direct INR price
+    image: 'https://beautycrafter.com/wp-content/uploads/2023/12/foot-scrub-applied-683x1024.webp',
+    rating: 4.8,
+    featured: true,
+    stock: 9,
+    
+    ingredients: ['Shea Butter', 'Coconut Oil','Walnut Powder','Eucalyptus Oil','Sea Salt'],
+    benefits: ['Gentle Exfoliation', 'Deep Moisturization', 'Soothing & Refreshing','Natural & Chemical-Free','Improves Skin Texture']
+  },
+     { id: '7',
+    name: 'Millet Payiru Adai',
+    category: 'food' as ProductCategory,
+    description: 'Ideal for breakfast, brunch, or dinner—just mix with water and cook like a dosa or thick pancake. Serve hot with chutney or butter.',
+    price: 160, // Direct INR price
+    image: 'https://farm1.staticflickr.com/696/23069594022_a8d61cd4e8_o.jpg',
+    rating: 4.8,
+    featured: true,
+    stock: 9, ingredients: ['Green Gram', 'Moong Dal', 'Chana Dal','Toor Dal','Red Chilli','Garlic','Ginger','Asafoetida','Varagu (Kodo Millet)', 'Thinai (Foxtail Millet)', 'Kuthiraivali (Barnyard Millet)'],
+    benefits: ['Rich in Plant-Based Protein', 'Millet Powered', 'Good for Digestion','Diabetic-Friendly','Weight Management','Balanced Spice ']
+  },
+     { id: '8',
+    name: 'Kollu idly podi',
+    category: 'food' as ProductCategory,
+    description: 'Kollu idly ready mix is stone-ground in small batches, free from preservatives, and perfect for soft, fluffy idlies that are light on the stomach and rich in nutrients. Just mix, ferment, and steam',
+    price: 145, // Direct INR price
+    image: 'https://nankatrathu.in/cdn/shop/files/KolluIdlyPowder1.jpg?v=1724833607&width=1445',
     rating: 4.8,
     featured: true,
     stock: 9,

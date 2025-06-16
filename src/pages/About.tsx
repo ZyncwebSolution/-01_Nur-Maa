@@ -36,13 +36,6 @@ const colors = {
   white: '#fff',
 };
 
-const fadeInUp = {
-  animation: 'fadeInUp 1s ease both',
-};
-
-const fadeIn = {
-  animation: 'fadeIn 1.2s ease both',
-};
 
 const About: React.FC = () => {
   return (
