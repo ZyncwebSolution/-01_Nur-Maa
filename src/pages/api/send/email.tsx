@@ -1,89 +1,39 @@
 // pages/api/send-email.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
+import nodemailer from 'nodemailer';
 
-interface CartItem {
-  product: {
-    id: string;
-    name: string;
-    price: number;
-    image: string;
-  };
-  quantity: number;
-}
-
-const TEMPLATE_ID = 'template_cpoou7s'; // Replace with your real template ID
-const SERVICE_ID = process.env.EMAILJS_SERVICE_ID;
-const PUBLIC_KEY = process.env.EMAILJS_PUBLIC_KEY;
-
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method not allowed' });
+    return res.status(405).json({ message: 'Method Not Allowed' });
   }
 
   try {
-    const { formData, items, totalPrice } = req.body;
+    const { name, email, subject, message } = req.body;
 
-    const orderSummary = items
-      .map((item: CartItem) => 
-        `Product: ${item.product.name}
-Quantity: ${item.quantity}
-Price: ₹${item.product.price}
-Subtotal: ₹${(item.product.price * item.quantity).toFixed(2)}`
-      )
-      .join('\n\n');
-
-    const templateParams = {
-      to_name: formData.name,
-      from_name: 'Nur-Maa Store',
-      to_email: formData.email,
-      phone: formData.phone,
-      address: formData.address,
-      message: formData.message || 'No additional notes',
-      order_summary: orderSummary,
-      total_amount: `₹${totalPrice.toFixed(2)}`,
-      order_id: `ORDER-${Date.now()}`,
-      order_date: new Date().toLocaleString('en-IN', {
-        timeZone: 'Asia/Kolkata',
-        dateStyle: 'full',
-        timeStyle: 'short'
-      })
-    };
-
-    const emailResponse = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
-      body: JSON.stringify({
-        service_id: SERVICE_ID,
-        template_id: TEMPLATE_ID,
-        user_id: PUBLIC_KEY,
-        template_params: templateParams
-      })
     });
 
-    if (!emailResponse.ok) {
-      const errorData = await emailResponse.json();
-      throw new Error(errorData?.error || 'Failed to send email');
-    }
-
-    const emailResult = await emailResponse.json();
-
-    return res.status(200).json({
-      success: true,
-      message: 'Order confirmation email sent successfully',
-      emailResponse: emailResult
+    await transporter.sendMail({
+      from: `"${name}" <${email}>`,
+      to: process.env.EMAIL_USER,
+      subject: `New message from ${name}: ${subject}`,
+      html: `
+        <h2>New Contact Form Submission</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Subject:</strong> ${subject}</p>
+        <p><strong>Message:</strong><br/>${message.replace(/\n/g, '<br/>')}</p>
+      `,
     });
 
-  } catch (error) {
+    return res.status(200).json({ success: true, message: 'Message sent successfully' });
+  } catch (error: any) {
     console.error('Email error:', error);
-    return res.status(500).json({
-      success: false,
-      message: error instanceof Error ? error.message : 'Failed to send order confirmation email',
-      error: error instanceof Error ? error.message : 'Unknown error'
-    });
+    return res.status(500).json({ success: false, message: 'Failed to send message' });
   }
 }
