@@ -87,6 +87,7 @@ const FeaturedProducts: React.FC<{ onQuickPurchase?: (product: Product) => void 
           style={{ background: 'linear-gradient(to right, #1b024b, #4a0124)' }}
         ></div>
         
+<<<<<<< HEAD
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-[#EBEBD3] mb-4 featured-header">
@@ -106,6 +107,17 @@ const FeaturedProducts: React.FC<{ onQuickPurchase?: (product: Product) => void 
               />
             ))}
           </div>
+=======
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {featuredProducts.map((product) => (
+            <ProductCard 
+              key={product.id}
+              product={product} 
+              viewType="grid"
+              onQuickPurchase={onQuickPurchase}
+            />
+          ))}
+>>>>>>> dc5a74c48e906fade16ace0c1697d8010b1c8e19
         </div>
       </motion.section>
     </>
