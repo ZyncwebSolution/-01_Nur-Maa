@@ -3,6 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 import ProductCard from '@/components/ProductCard';
 import QuickPurchaseModal from '@/components/QuickPurchaseModal';
 import { Product as BaseProduct, ProductCategory } from '@/lib/types';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 
 type Product = BaseProduct & { 
   formattedPrice: string;
@@ -380,6 +382,7 @@ const Products: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeView, setActiveView] = useState<'grid' | 'list'>('grid');
   const [hoveredSymbol, setHoveredSymbol] = useState<string | null>(null);
+  const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
   
   // Filter and sort products
   useEffect(() => {
@@ -471,10 +474,81 @@ const Products: React.FC = () => {
       </div>
       
       {/* Main Content */}
-      <div className="container mx-auto px-6 py-12">
+      <div className="container mx-auto px-2 sm:px-6 py-6 sm:py-12">
+        {/* Mobile Filters Button */}
+        <div className="md:hidden flex justify-end mb-4">
+          <Button
+            className="bg-[#67246A] text-white px-4 py-2 rounded-lg shadow-lg"
+            onClick={() => setMobileFilterOpen(true)}
+          >
+            <svg className="inline-block w-5 h-5 mr-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707l-6.414 6.414A1 1 0 0013 13.414V19a1 1 0 01-1.447.894l-4-2A1 1 0 017 17v-3.586a1 1 0 00-.293-.707L3.293 6.707A1 1 0 013 6V4z" /></svg>
+            Filters
+          </Button>
+        </div>
+        {/* Mobile Filter Drawer/Modal */}
+        <Dialog open={mobileFilterOpen} onOpenChange={setMobileFilterOpen}>
+          <DialogContent className="md:hidden w-full max-w-sm mx-auto p-0 rounded-lg overflow-hidden">
+            <div className="bg-white p-6 space-y-6">
+              {/* Categories */}
+              <div>
+                <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">Categories</h3>
+                <div className="space-y-2">
+                  {categories.map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => { setActiveCategory(cat.id as ProductCategory | 'all'); setMobileFilterOpen(false); }}
+                      className={`flex items-center w-full text-left px-4 py-3 rounded-lg transition-all ${activeCategory === cat.id ? 'bg-[#67246A] text-white shadow-inner' : 'text-[#121769] hover:bg-[#EBEBD3] hover:text-[#67246A]'}`}
+                    >
+                      <span className="text-xl mr-2">{cat.symbol}</span>
+                      {cat.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {/* Price Range */}
+              <div>
+                <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">Price Range</h3>
+                <div className="px-2">
+                  <div className="mb-2 flex justify-between text-[#121769]">
+                    <span className="text-sm">₹ {priceRange[0]}</span>
+                    <span className="text-sm">₹ {priceRange[1]}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="5000"
+                    step="500"
+                    value={priceRange[1]}
+                    onChange={(e) => setPriceRange([0, parseFloat(e.target.value)])}
+                    className="w-full h-2 bg-[#EBEBD3] rounded-lg appearance-none cursor-pointer accent-[#FE49AF]"
+                  />
+                </div>
+              </div>
+              {/* Sort Options */}
+              <div>
+                <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">Sort By</h3>
+                <select
+                  value={sortOption}
+                  onChange={(e) => setSortOption(e.target.value)}
+                  className="w-full px-4 py-3 border border-[#EBEBD3] rounded-lg focus:ring-2 focus:ring-[#FE49AF] focus:border-transparent text-[#121769]"
+                >
+                  <option value="">Default</option>
+                  <option value="price-low-high">Price: Low to High</option>
+                  <option value="price-high-low">Price: High to Low</option>
+                  <option value="rating">Highest Rating</option>
+                </select>
+              </div>
+              <div className="flex justify-end">
+                <Button className="bg-[#FE49AF] text-white px-4 py-2 rounded-lg" onClick={() => setMobileFilterOpen(false)}>
+                  Done
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Interactive Filters - Left Sidebar */}
-          <div className="md:col-span-1 space-y-8 sticky top-4 h-min">
+          {/* Interactive Filters - Left Sidebar (hidden on mobile) */}
+          <div className="md:col-span-1 space-y-8 sticky top-4 h-min hidden md:block">
             {/* Categories */}
             <div className="bg-white p-6 rounded-lg shadow-lg border border-[#EBEBD3]">
               <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">
@@ -497,7 +571,6 @@ const Products: React.FC = () => {
                 ))}
               </div>
             </div>
-            
             {/* Price Range */}
             <div className="bg-white p-6 rounded-lg shadow-lg border border-[#EBEBD3]">
               <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">
@@ -519,7 +592,6 @@ const Products: React.FC = () => {
                 />
               </div>
             </div>
-            
             {/* Sort Options */}
             <div className="bg-white p-6 rounded-lg shadow-lg border border-[#EBEBD3]">
               <h3 className="font-semibold text-lg mb-4 text-[#121769] border-b pb-2 border-[#67246A]">
@@ -537,7 +609,6 @@ const Products: React.FC = () => {
               </select>
             </div>
           </div>
-          
           {/* Product Display Area */}
           <div className="md:col-span-3">
             {/* Results Header */}

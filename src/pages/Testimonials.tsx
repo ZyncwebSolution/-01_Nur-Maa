@@ -163,11 +163,33 @@ const Testimonials: React.FC = () => {
           </div>
         </section>
 
+        {/* Mobile Filter Bar */}
+        <div className="md:hidden flex justify-center items-center gap-2 py-4 px-2 sticky top-0 z-20 bg-white/90 backdrop-blur border-b border-[#EBEBD3]">
+          <button
+            className={`px-3 py-2 rounded-full text-xs font-semibold transition-all ${activeCategory === 'all' ? 'bg-[#FE49AF] text-white' : 'bg-[#EBEBD3] text-[#67246a]'}`}
+            onClick={() => { setActiveCategory('all'); setCurrentTestimonial(0); }}
+          >
+            All
+          </button>
+          <button
+            className={`px-3 py-2 rounded-full text-xs font-semibold transition-all ${activeCategory === 'clients' ? 'bg-[#FE49AF] text-white' : 'bg-[#EBEBD3] text-[#67246a]'}`}
+            onClick={() => { setActiveCategory('clients'); setCurrentTestimonial(0); }}
+          >
+            Clients
+          </button>
+          <button
+            className={`px-3 py-2 rounded-full text-xs font-semibold transition-all ${activeCategory === 'partners' ? 'bg-[#FE49AF] text-white' : 'bg-[#EBEBD3] text-[#67246a]'}`}
+            onClick={() => { setActiveCategory('partners'); setCurrentTestimonial(0); }}
+          >
+            Partners
+          </button>
+        </div>
+
         {/* Enhanced Testimonials Carousel */}
-        <section className="py-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-4 sm:py-8">
+          <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
             <div className="relative">
-              {/* Navigation Arrows - Enhanced */}
+              {/* Navigation Arrows - Enhanced (hidden on mobile) */}
               <button 
                 onClick={prevTestimonial}
                 className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center text-[#67246a] hover:bg-[#EBEBD3] transition-all duration-300 hidden md:flex group"
@@ -188,8 +210,8 @@ const Testimonials: React.FC = () => {
                 </svg>
               </button>
 
-              {/* Auto-slide toggle */}
-              <div className="flex justify-center mb-6">
+              {/* Auto-slide toggle (hidden on mobile) */}
+              <div className="justify-center mb-6 hidden md:flex">
                 <button
                   onClick={() => setAutoSlide(!autoSlide)}
                   className="flex items-center gap-1 text-sm text-[#67246a] hover:text-[#121769] transition-colors"
@@ -203,7 +225,7 @@ const Testimonials: React.FC = () => {
 
               {/* Enhanced Testimonial Cards */}
               <div 
-                className="relative h-[500px] md:h-[400px]"
+                className="relative h-[420px] sm:h-[500px] md:h-[400px]"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
@@ -218,10 +240,10 @@ const Testimonials: React.FC = () => {
                         transition={{ duration: 0.5 }}
                         className="absolute inset-0"
                       >
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12 items-center px-2 md:px-0">
                           {/* Enhanced Testimonial Content */}
                           <div className="order-2 md:order-1">
-                            <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl relative overflow-hidden group">
+                            <div className="bg-white p-4 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl shadow-xl relative overflow-hidden group">
                               {/* Decorative corner accent */}
                               <div className="absolute top-0 right-0 w-24 h-24 bg-[#FE49AF] opacity-5 rounded-bl-full transform translate-x-12 -translate-y-12"></div>
                               
@@ -231,23 +253,23 @@ const Testimonials: React.FC = () => {
                                 </svg>
                               </div>
                               
-                              <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed relative">
-                                <span className="absolute -left-2 -top-4 text-5xl text-[#EBEBD3] font-serif">"</span>
+                              <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-6 sm:mb-8 leading-relaxed relative">
+                                <span className="absolute -left-2 -top-4 text-4xl sm:text-5xl text-[#EBEBD3] font-serif">"</span>
                                 {testimonial.content}
                               </p>
                               
-                              <div className="flex items-center justify-between">
+                              <div className="flex items-center justify-between flex-wrap gap-2">
                                 <div>
-                                  <h3 className="text-xl font-bold text-gray-900">{testimonial.name}</h3>
-                                  <p className="text-[#67246a]">{testimonial.role}</p>
+                                  <h3 className="text-base sm:text-xl font-bold text-gray-900">{testimonial.name}</h3>
+                                  <p className="text-xs sm:text-[#67246a]">{testimonial.role}</p>
                                 </div>
                                 <div className="flex items-center">
-                                  <div className="flex mr-4">
+                                  <div className="flex mr-2 sm:mr-4">
                                     {[...Array(5)].map((_, i) => (
                                       <svg
                                         key={i}
                                         xmlns="http://www.w3.org/2000/svg"
-                                        className={`h-5 w-5 ${i < testimonial.rating ? 'text-amber-400' : 'text-gray-300'}`}
+                                        className={`h-4 w-4 sm:h-5 sm:w-5 ${i < testimonial.rating ? 'text-amber-400' : 'text-gray-300'}`}
                                         viewBox="0 0 20 20"
                                         fill="currentColor"
                                       >
@@ -255,7 +277,7 @@ const Testimonials: React.FC = () => {
                                       </svg>
                                     ))}
                                   </div>
-                                  <span className="px-3 py-1 rounded-full bg-[#EBEBD3] text-[#67246a] text-xs font-medium">
+                                  <span className="px-2 sm:px-3 py-1 rounded-full bg-[#EBEBD3] text-[#67246a] text-xs font-medium">
                                     {testimonial.highlight}
                                   </span>
                                 </div>
@@ -271,7 +293,7 @@ const Testimonials: React.FC = () => {
                             className="order-1 md:order-2 flex justify-center"
                           >
                             <div className="relative group">
-                              <div className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-2xl relative">
+                              <div className="w-32 h-32 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-2xl relative">
                                 {testimonial.image === client ? (
                                   // Show imported client.png for id:1
                                   <img
@@ -289,7 +311,7 @@ const Testimonials: React.FC = () => {
                                 )}
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                               </div>
-                              <div className="absolute -bottom-6 -right-6 bg-gradient-to-r from-[#FE49AF] to-[#67246a] text-white px-4 py-2 rounded-full shadow-lg group-hover:scale-105 transition-transform duration-300">
+                              <div className="absolute -bottom-4 sm:-bottom-6 -right-4 sm:-right-6 bg-gradient-to-r from-[#FE49AF] to-[#67246a] text-white px-3 sm:px-4 py-1 sm:py-2 rounded-full shadow-lg group-hover:scale-105 transition-transform duration-300 text-xs sm:text-base">
                                 {testimonial.category === 'clients' ? 'Client' : 'Partner'}
                               </div>
                             </div>
@@ -301,8 +323,8 @@ const Testimonials: React.FC = () => {
                 </AnimatePresence>
               </div>
 
-              {/* Enhanced Mobile Navigation Dots */}
-              <div className="flex justify-center mt-12 space-x-2 md:hidden">
+              {/* Mobile Navigation Dots */}
+              <div className="flex justify-center mt-0 sm:mt-0 space-x-2 md:hidden">
                 {filteredTestimonials.map((_, index) => (
                   <button
                     key={index}
@@ -328,19 +350,19 @@ const Testimonials: React.FC = () => {
         </section>
 
         {/* Testimonials Grid Section */}
-        <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <section className="py-10 sm:py-16 px-5 sm:px-6 lg:px-8 bg-white">
           <div className="max-w-7xl mx-auto">
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16"
+              className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-gray-900 mb-10 sm:mb-16"
             >
               More <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FE49AF] to-[#67246a]">Testimonials</span>
             </motion.h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
               {testimonials.map((testimonial, index) => (
                 <motion.div
                   key={testimonial.id}
@@ -350,35 +372,33 @@ const Testimonials: React.FC = () => {
                   viewport={{ once: true }}
                   className="group"
                 >
-                  <div className={`h-full p-6 rounded-2xl shadow-md transition-all duration-300 hover:shadow-xl ${
+                  <div className={`h-full p-4 sm:p-6 rounded-2xl shadow-md transition-all duration-300 hover:shadow-xl ${
                     index % 3 === 0 ? 'bg-gradient-to-br from-[#EBEBD3] to-white' : 
                     index % 3 === 1 ? 'bg-gradient-to-br from-[#EBEBD3]/50 to-white' : 
                     'bg-gradient-to-br from-[#EBEBD3]/30 to-white'
                   }`}>
                     <div className="flex items-center mb-4">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FE49AF] to-[#67246a] flex items-center justify-center text-white font-bold mr-4">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-[#FE49AF] to-[#67246a] flex items-center justify-center text-white font-bold mr-4">
                         {testimonial.name.charAt(0)}
                       </div>
                       <div>
-                        <h3 className="font-bold text-gray-900">{testimonial.name}</h3>
-                        <p className="text-sm text-[#67246a]">{testimonial.role}</p>
+                        <h3 className="font-bold text-gray-900 text-sm sm:text-base">{testimonial.name}</h3>
+                        <p className="text-xs sm:text-sm text-[#67246a]">{testimonial.role}</p>
                       </div>
                     </div>
-                    
-                    <p className="text-gray-700 mb-4 relative">
-                      <span className="absolute -left-2 -top-2 text-3xl text-[#EBEBD3] font-serif">"</span>
+                    <p className="text-gray-700 mb-4 relative text-xs sm:text-base">
+                      <span className="absolute -left-2 -top-2 text-2xl sm:text-3xl text-[#EBEBD3] font-serif">"</span>
                       {testimonial.content.length > 120 
                         ? `${testimonial.content.substring(0, 120)}...` 
                         : testimonial.content}
                     </p>
-                    
                     <div className="flex items-center justify-between mt-4">
                       <div className="flex">
                         {[...Array(5)].map((_, i) => (
                           <svg
                             key={i}
                             xmlns="http://www.w3.org/2000/svg"
-                            className={`h-5 w-5 ${i < testimonial.rating ? 'text-amber-400' : 'text-gray-300'}`}
+                            className={`h-4 w-4 sm:h-5 sm:w-5 ${i < testimonial.rating ? 'text-amber-400' : 'text-gray-300'}`}
                             viewBox="0 0 20 20"
                             fill="currentColor"
                           >
@@ -394,9 +414,8 @@ const Testimonials: React.FC = () => {
                         {testimonial.category === 'clients' ? 'Client' : 'Partner'}
                       </span>
                     </div>
-                    
                     <div className="mt-4 pt-4 border-t border-gray-200">
-                      <span className="text-sm font-medium text-[#FE49AF]">
+                      <span className="text-xs sm:text-sm font-medium text-[#FE49AF]">
                         {testimonial.highlight}
                       </span>
                     </div>
@@ -408,73 +427,95 @@ const Testimonials: React.FC = () => {
         </section>
 
         {/* Enhanced Stats Section */}
-        <section className="py-16 bg-gradient-to-r from-[#67246a] via-[#FE49AF] to-[#121769] text-white relative overflow-hidden">
+        <section className="py-10 sm:py-16 bg-gradient-to-r from-[#67246a] via-[#FE49AF] to-[#121769] text-white relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0 bg-[url('/images/dot-pattern.png')]"></div>
+            <div className="absolute inset-0 bg-[url('/images/dot-pattern.png')]" />
           </div>
-          
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 text-center">
               {[
-                { value: '98%', label: 'Client Satisfaction', description: 'Based on post-project surveys' },
-                { value: '150+', label: 'Projects Completed', description: 'Across various industries' },
-                { value: '5.0', label: 'Average Rating', description: 'From all client reviews' }
-              ].map((stat, index) => (
-                <motion.div 
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="p-6"
-                >
-                  <motion.div
-                    className="text-4xl md:text-5xl font-bold mb-4"
-                    animate={{
-                      scale: [1, 1.05, 1],
-                    }}
-                    transition={{
-                      duration: 5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: index * 0.3
-                    }}
-                  >
-                    {stat.value}
-                  </motion.div>
-                  <h3 className="text-xl font-medium">{stat.label}</h3>
-                  <p className="text-[#EBEBD3] mt-2">{stat.description}</p>
-                </motion.div>
-              ))}
+          { value: 98, suffix: '%', label: 'Client Satisfaction', description: 'Based on post-project surveys', decimals: 0 },
+          { value: 150, suffix: '+', label: 'Projects Completed', description: 'Across various industries', decimals: 0 },
+          { value: 5.0, suffix: '', label: 'Average Rating', description: 'From all client reviews', decimals: 1 }
+              ].map((stat, index) => {
+          const [count, setCount] = React.useState(0);
+          React.useEffect(() => {
+            let start = 0;
+            const end = stat.value;
+            const duration = 1200;
+            const increment = end / (duration / 16);
+            let raf: number;
+            function animate() {
+              start += increment;
+              if (start < end) {
+                setCount(Number(start.toFixed(stat.decimals)));
+                raf = requestAnimationFrame(animate);
+              } else {
+                setCount(end);
+              }
+            }
+            animate();
+            return () => cancelAnimationFrame(raf);
+            // eslint-disable-next-line
+          }, []);
+          return (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="p-4 sm:p-6 flex flex-col items-center"
+            >
+              <motion.div
+                className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 sm:mb-4"
+                animate={{
+            scale: [1, 1.05, 1],
+                }}
+                transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: index * 0.3
+                }}
+              >
+                {count}
+                {stat.suffix}
+              </motion.div>
+              <h3 className="text-base sm:text-xl font-medium">{stat.label}</h3>
+              <p className="text-[#EBEBD3] mt-1 sm:mt-2 text-xs sm:text-base">{stat.description}</p>
+            </motion.div>
+          );
+              })}
             </div>
           </div>
         </section>
 
         {/* Enhanced CTA Section */}
-        <section className="py-24 px-4 sm:px-6 lg:px-8">
+        <section className="py-16 sm:py-24 px-2 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="bg-white p-8 md:p-12 rounded-3xl shadow-xl relative overflow-hidden"
+              className="bg-white p-6 sm:p-8 md:p-12 rounded-2xl sm:rounded-3xl shadow-xl relative overflow-hidden"
             >
               {/* Decorative elements */}
               <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-[#EBEBD3] opacity-20 blur-3xl"></div>
               <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-[#121769]/20 blur-3xl"></div>
               
               <div className="relative z-10 text-center">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
                   Ready to join our happy clients?
                 </h2>
-                <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+                <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto">
                   Let's create something amazing together. Get in touch with our team today to discuss your project.
                 </p>
                 <div className="flex flex-col sm:flex-row justify-center gap-4">
                   <motion.a
                     href="/contact"
-                    className="px-8 py-4 rounded-full bg-gradient-to-r from-[#67246a] to-[#121769] text-white font-medium shadow-lg hover:shadow-xl transition-all relative overflow-hidden group"
+                    className="px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-gradient-to-r from-[#67246a] to-[#121769] text-white font-medium shadow-lg hover:shadow-xl transition-all relative overflow-hidden group"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -483,7 +524,7 @@ const Testimonials: React.FC = () => {
                   </motion.a>
                   <motion.a
                     href="/portfolio"
-                    className="px-8 py-4 rounded-full bg-white text-[#67246a] font-medium border-2 border-[#EBEBD3] hover:bg-[#EBEBD3] transition-all relative overflow-hidden group"
+                    className="px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-white text-[#67246a] font-medium border-2 border-[#EBEBD3] hover:bg-[#EBEBD3] transition-all relative overflow-hidden group"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -496,7 +537,6 @@ const Testimonials: React.FC = () => {
           </div>
         </section>
       </div>
-
       <style>
         {`
           @keyframes blob {

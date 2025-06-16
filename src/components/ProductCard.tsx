@@ -27,7 +27,7 @@ const ProductCard: React.FC<{ product: Product; onQuickPurchase?: (product: Prod
   return (
     <Link 
       to={`/product/${product.id}`} 
-      className="block h-full"
+      className="block h-full product-card-mobile-mx md:mx-0"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -236,3 +236,22 @@ const ProductCard: React.FC<{ product: Product; onQuickPurchase?: (product: Prod
 };
 
 export default ProductCard;
+
+// Add at the end of the file for mobile responsiveness
+// Add margin left and right 20px in mobile view
+// Tailwind: mx-[20px] for mobile, mx-0 for md+
+// If not using Tailwind for this, fallback to a style block
+
+// Add a style block for extra safety
+if (typeof window !== 'undefined') {
+  const style = document.createElement('style');
+  style.innerHTML = `
+    @media (max-width: 767px) {
+      .product-card-mobile-mx {
+        margin-left: 20px !important;
+        margin-right: 20px !important;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}

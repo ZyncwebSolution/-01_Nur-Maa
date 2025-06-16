@@ -14,7 +14,7 @@ export default async function handler(
     return res.status(405).json({ message: `Method ${req.method} Not Allowed` });
   }
 
-  const { to, subject, text, from } = req.body;
+  const { to, subject, text } = req.body;
 
   if (!to || !subject || !text) {
     return res.status(400).json({ message: 'Missing required fields' });
@@ -35,11 +35,10 @@ export default async function handler(
     console.log('SMTP connection verified.');
 
     await transporter.sendMail({
-      from: from ? `${req.body.name || 'Website User'} <${from}>` : `Nurmaa Mailer <${process.env.SMTP_USER}>`,
+      from: `"Nurmaa Mailer" <${process.env.SMTP_USER}>`,
       to,
       subject,
       text,
-      replyTo: from || undefined,
     });
 
     return res.status(200).json({ message: 'Email sent successfully' });
