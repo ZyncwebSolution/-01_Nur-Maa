@@ -1,6 +1,5 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGamepad } from '@fortawesome/free-solid-svg-icons';
+import { Gamepad2 } from 'lucide-react';
 
 // Type definitions
 type TimelineEventType = 'main' | 'landmark' | 'spin-off' | 'remake';
@@ -270,7 +269,8 @@ const MarioTimeline: React.FC<MarioTimelineProps> = ({
                 flexShrink: 0,
                 zIndex: 2
               }}>
-                <FontAwesomeIcon icon={faGamepad} />
+                {/* <FontAwesomeIcon icon={faGamepad} /> */}
+                <Gamepad2 size={28} />
               </div>
 
               {/* Right side (content) */}

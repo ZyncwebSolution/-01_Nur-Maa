@@ -47,20 +47,21 @@ const CartSidebar: React.FC = () => {
                 <ShoppingCart className="h-8 w-8 text-[#67246A]" />
               </div>
               <h3 className="text-[#121769] font-medium">Your cart is empty</h3>
-              <p className="mt-1 text-[#67246A] text-sm">
+              <p className="mt-1 mb-4 text-[#67246A] text-sm">
                 Add some products to see them here.
               </p>
               <Link
-  to="/products"
-  onClick={toggleCart} 
-  className="mt-4 px-4 py-2 text-sm font-medium rounded-md transition-colors"
-  style={{
-    background: 'linear-gradient(to right, #121769, #67246A)',
-    color: '#EBEBD3'
-  }}
->
-  Continue Shopping
-</Link>
+                to="/products"
+                onClick={toggleCart}
+                className="mt-4 px-4 py-2 text-sm font-medium rounded-md transition-colors"
+                style={{
+                  background: 'linear-gradient(to right, #121769, #67246A)',
+                  color: '#EBEBD3',
+                  lineHeight: 1.75
+                }}
+              >
+                Continue Shopping
+              </Link>
             </div>
           ) : (
             <div className="space-y-3">
@@ -79,18 +80,20 @@ const CartSidebar: React.FC = () => {
             </div>
             <Link
               to="/checkout"
-              className="block w-full px-4 py-2 text-center font-medium rounded-md transition-colors mb-2"
+              className="block w-full px-4 py-2 text-center font-medium rounded-md transition-colors mb-2 mt-6"
               onClick={toggleCart}
               style={{
                 background: 'linear-gradient(to right, #121769, #67246A)',
-                color: '#EBEBD3'
+                color: '#EBEBD3',
+                lineHeight: 1.75
               }}
             >
               Proceed to Checkout
             </Link>
             <button
               onClick={toggleCart}
-              className="w-full text-center text-sm text-[#67246A] hover:text-[#121769] transition-colors"
+              className="w-full text-center text-sm text-[#67246A] hover:text-[#121769] transition-colors mt-3"
+              style={{ lineHeight: 1.75 }}
             >
               Continue Shopping
             </button>
