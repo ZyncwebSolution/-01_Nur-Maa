@@ -1,6 +1,7 @@
+
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { X, Send, CheckCircle, Pyramid } from 'lucide-react';
+import { X, Send, CheckCircle } from 'lucide-react';
 import { Product } from '@/lib/types';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -40,7 +41,9 @@ const QuickPurchaseModal: React.FC<QuickPurchaseModalProps> = ({ isOpen, onClose
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
+    
     try {
+      // Form data to send
       const formData = {
         ...data,
         productName: product?.name,
@@ -48,23 +51,44 @@ const QuickPurchaseModal: React.FC<QuickPurchaseModalProps> = ({ isOpen, onClose
         productId: product?.id,
       };
       
+      // Basic email format validation
       if (!/^\S+@\S+\.\S+$/.test(data.email)) {
-        toast({ title: "Invalid email", description: "Please enter a valid email address", variant: "destructive" });
+        toast({
+          title: "Invalid email",
+          description: "Please enter a valid email address",
+          variant: "destructive"
+        });
         setIsSubmitting(false);
         return;
       }
       
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setIsSubmitted(true);
-      toast({ title: "Purchase request sent!", description: "We'll contact you soon to confirm your order." });
+      // Send email - This is just a simulation since we don't have a backend
+      // In real implementation, you would send this to your backend
+      console.log('Sending purchase request:', formData);
       
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Show success
+      setIsSubmitted(true);
+      toast({
+        title: "Purchase request sent!",
+        description: "We'll contact you soon to confirm your order.",
+      });
+      
+      // Reset form after 3 seconds
       setTimeout(() => {
         setIsSubmitted(false);
         form.reset();
         onClose();
       }, 3000);
     } catch (error) {
-      toast({ title: "Failed to send request", description: "Please try again later", variant: "destructive" });
+      console.error('Error sending purchase request:', error);
+      toast({
+        title: "Failed to send request",
+        description: "Please try again later",
+        variant: "destructive"
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -72,159 +96,121 @@ const QuickPurchaseModal: React.FC<QuickPurchaseModalProps> = ({ isOpen, onClose
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-[500px] max-h-[80vh] overflow-y-auto" style={{ 
-        backgroundColor: '#EBEBD3',
-      }}>
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#121769] via-[#67246A] to-[#FE49AF]"></div>
-        
-        <DialogHeader className="relative pb-2">
-          <div className="flex items-center justify-center gap-2">
-            <Pyramid className="h-5 w-5 text-[#67246A]" />
-            <DialogTitle className="text-xl text-[#121769]">Quick Purchase</DialogTitle>
-          </div>
-          {/* <button onClick={onClose} className="absolute right-0 top-0">
-            <X className="h-4 w-4 text-[#67246A]" />
-          </button> */}
+      <DialogContent className="sm:max-w-[500px]">
+        <DialogHeader>
+          <DialogTitle className="text-2xl">Quick Purchase</DialogTitle>
+          <button 
+            onClick={onClose} 
+            className="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+            aria-label="Close"
+          >
+            <X className="h-4 w-4" />
+          </button>
         </DialogHeader>
         
         {isSubmitted ? (
-          <div className="py-4 flex flex-col items-center text-center">
-            <CheckCircle className="h-12 w-12 text-[#67246A] mb-2" />
-            <h3 className="text-lg font-medium text-[#121769]">Request Sent!</h3>
-            <p className="text-sm text-[#67246A]">We'll contact you shortly.</p>
+          <div className="py-10 flex flex-col items-center text-center">
+            <CheckCircle className="h-16 w-16 text-green-500 mb-4" />
+            <h3 className="text-xl font-medium mb-2">Request Sent!</h3>
+            <p className="text-gray-600">
+              We'll contact you shortly to confirm your order.
+            </p>
           </div>
         ) : (
           <>
             {product && (
-              <div className="flex items-center gap-3 mb-4 p-2 text-sm" style={{
-                backgroundColor: '#12176910',
-                borderLeft: '3px solid #67246A'
-              }}>
+              <div className="flex items-center gap-4 mb-6 p-3 bg-gray-50 rounded-lg">
                 <img 
                   src={product.image} 
                   alt={product.name} 
-                  className="w-12 h-12 object-cover rounded-md border border-[#12176920]"
+                  className="w-16 h-16 object-cover rounded-md"
                 />
                 <div>
-                  <h3 className="font-medium text-[#121769] line-clamp-1">{product.name}</h3>
-                  <p className="text-[#67246A]">₹{product.price.toFixed(2)}</p>
+                  <h3 className="font-medium">{product.name}</h3>
+                  <p className="text-sm text-gray-600">${product.price.toFixed(2)}</p>
                 </div>
               </div>
             )}
 
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-                <div className="grid grid-cols-2 gap-3">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-xs text-[#121769]">Full Name</FormLabel>
-                        <FormControl>
-                          <Input 
-                            placeholder="Full name" 
-                            required {...field} 
-                            className="h-8 text-xs border-[#67246A50]"
-                            style={{ backgroundColor: '#EBEBD3' }}
-                          />
-                        </FormControl>
-                        <FormMessage className="text-xs" />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-xs text-[#121769]">Email</FormLabel>
-                        <FormControl>
-                          <Input 
-                            type="email" 
-                            placeholder="Email address" 
-                            required {...field} 
-                            className="h-8 text-xs border-[#67246A50]"
-                            style={{ backgroundColor: '#EBEBD3' }}
-                          />
-                        </FormControl>
-                        <FormMessage className="text-xs" />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-xs text-[#121769]">Phone</FormLabel>
-                        <FormControl>
-                          <Input 
-                            placeholder="Phone number" 
-                            {...field} 
-                            className="h-8 text-xs border-[#67246A50]"
-                            style={{ backgroundColor: '#EBEBD3' }}
-                          />
-                        </FormControl>
-                        <FormMessage className="text-xs" />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="address"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-xs text-[#121769]">Address</FormLabel>
-                        <FormControl>
-                          <Input 
-                            placeholder="Delivery address" 
-                            required {...field} 
-                            className="h-8 text-xs border-[#67246A50]"
-                            style={{ backgroundColor: '#EBEBD3' }}
-                          />
-                        </FormControl>
-                        <FormMessage className="text-xs" />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Full Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Your full name" required {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input type="email" placeholder="Your email address" required {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone Number</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Your phone number" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <FormField
+                  control={form.control}
+                  name="address"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Delivery Address</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Your delivery address" required {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 
                 <FormField
                   control={form.control}
                   name="message"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-xs text-[#121769]">Notes</FormLabel>
+                      <FormLabel>Additional Notes</FormLabel>
                       <FormControl>
-                        <Textarea 
-                          placeholder="Special instructions" 
-                          {...field} 
-                          className="min-h-[60px] text-xs border-[#67246A50]"
-                          style={{ backgroundColor: '#EBEBD3' }}
-                        />
+                        <Textarea placeholder="Any special instructions or notes" {...field} />
                       </FormControl>
-                      <FormMessage className="text-xs" />
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
                 
                 <Button 
                   type="submit" 
-                  className="w-full h-8 text-xs" 
+                  className="w-full" 
                   disabled={isSubmitting}
-                  style={{
-                    backgroundColor: isSubmitting ? '#67246A' : '#121769',
-                    backgroundImage: isSubmitting ? 'none' : 'linear-gradient(to right, #121769, #67246A)',
-                  }}
                 >
                   {isSubmitting ? 'Sending...' : 'Complete Purchase'}
-                  <Send className="ml-1 h-3 w-3" />
+                  <Send className="ml-2 h-4 w-4" />
                 </Button>
               </form>
             </Form>

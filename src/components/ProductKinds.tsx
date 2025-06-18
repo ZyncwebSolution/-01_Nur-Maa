@@ -8,11 +8,9 @@ import foodBg from '@/assets/images/bg3.png';
 import makeupBg from '@/assets/images/fg3.png';
 
 const ProductSlider = () => {
-  const [activeSlide, setActiveSlide] = React.useState(0);
   const productCategories = [
   
     { 
-      activeSlide,
       name: "Organic Superfood", 
       category: "Food",
       description: "Nutrient-rich blend for daily wellness",
@@ -20,7 +18,7 @@ const ProductSlider = () => {
       mainImage: food,
       fgImage: foodBg
     },
-      {
+      { 
       name: "Glow Serum", 
       category: "Skincare",
       description: "Hydrating formula with hyaluronic acid",

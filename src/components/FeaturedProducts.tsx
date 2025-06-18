@@ -60,56 +60,46 @@ const FeaturedProducts: React.FC<{ onQuickPurchase?: (product: Product) => void 
   const isInView = useInView(ref, { once: false, amount: 0.1 });
 
   return (
-    <>
-      <style>{`
-        @media (max-width: 768px) {
-          .featured-section-mobile-hide {
-            display: none !important;
-          }
-        }
-      `}</style>
-      <motion.section 
-        ref={ref}
-        className="relative py-16 md:py-24 featured-section featured-section-mobile-hide"
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-        style={{
-          backgroundImage: 'url(https://i.pinimg.com/736x/89/4b/e4/894be4cc36d0e777a2c5129d6c4dd17d.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
-        {/* Semi-transparent overlay to ensure text readability */}
-        <div 
-          className="absolute inset-0 opacity-50" 
-          style={{ background: 'linear-gradient(to right, #1b024b, #4a0124)' }}
-        ></div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#EBEBD3] mb-4 featured-header">
-              Featured Products
-            </h2>
-            <p className="text-lg text-[#ffffff] max-w-2xl mx-auto featured-subheader">
-              Discover our premium selection of natural products
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 featured-grid">
-            {featuredProducts.map((product) => (
-              <ProductCard 
-                key={product.id}
-                product={product} 
-                viewType="grid"
-                onQuickPurchase={onQuickPurchase}
-              />
-            ))}
-          </div>
+    <motion.section 
+      ref={ref}
+      className="relative py-16 md:py-24"
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      style={{
+        backgroundImage: 'url(https://i.pinimg.com/736x/89/4b/e4/894be4cc36d0e777a2c5129d6c4dd17d.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Semi-transparent overlay to ensure text readability */}
+      <div 
+        className="absolute inset-0 opacity-50" 
+        style={{ background: 'linear-gradient(to right, #1b024b, #4a0124)' }}
+      ></div>
+      
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#EBEBD3] mb-4">
+            Featured Products
+          </h2>
+          <p className="text-lg text-[#ffffff] max-w-2xl mx-auto">
+            Discover our premium selection of natural products
+          </p>
         </div>
-      </motion.section>
-    </>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {featuredProducts.map((product) => (
+            <ProductCard 
+              key={product.id}
+              product={product} 
+              onQuickPurchase={onQuickPurchase}
+            />
+          ))}
+        </div>
+      </div>
+    </motion.section>
   );
 };
 

@@ -1,4 +1,3 @@
-'use client';
 import React, { useState } from 'react';
 import { toast } from '@/hooks/use-toast';
 import Head from 'next/head';
@@ -21,41 +20,37 @@ const Contact: React.FC = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Use FormSubmit (static form endpoint) or a backend endpoint
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      // Use FormSubmit.io (no backend required)
-      const response = await fetch('https://formsubmit.co/ajax/diyweboffi@gmail.com', {
+      const response = await fetch('/api/send/email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
         },
         body: JSON.stringify({
-          name: formData.name,
-          email: formData.email, // from address
-          subject: formData.subject,
-          message: formData.message,
-          _replyto: formData.email, // reply-to
+          to: 'deepacse51@gmail.com',
+          subject: `New Contact Form Submission: ${formData.subject}`,
+          text: `\nName: ${formData.name}\nEmail: ${formData.email}\nSubject: ${formData.subject}\nMessage: ${formData.message}\n`,
+          formData
         }),
       });
-      if (response.ok) {
-        toast({
-          title: "Message Received",
-          description: "Thank you for contacting us. Our team will respond within 24 hours.",
-          duration: 5000,
-        });
-        setFormData({
-          name: '',
-          email: '',
-          subject: '',
-          message: ''
-        });
-      } else {
-        throw new Error('Failed to send');
-      }
+
+      if (!response.ok) throw new Error('Failed to send message');
+
+      toast({
+        title: "Message Received",
+        description: "Thank you for contacting us. Our team will respond within 24 hours.",
+        duration: 5000,
+      });
+
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
     } catch (error) {
       toast({
         title: "Delivery Failed",
@@ -105,15 +100,15 @@ const Contact: React.FC = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className="min-h-screen bg-gradient-to-br from-[#ebebd3] to-[#fff] py-12 md:py-16 px-4 sm:px-6 lg:px-8 mt-[60px]"
+        className="min-h-screen bg-gradient-to-br from-[#ebebd3] to-[#fff] py-16 px-4 sm:px-6 lg:px-8 mt-[60px]"
       >
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12 md:mb-16">
+          <div className="text-center mb-16">
             <motion.h1
               initial={{ y: -20 }}
               animate={{ y: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#121769] mb-4"
+              className="text-4xl md:text-5xl font-bold text-[#121769] mb-4"
             >
               Get in Touch
             </motion.h1>
@@ -121,7 +116,7 @@ const Contact: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="text-base md:text-lg text-[#67246a] max-w-2xl mx-auto"
+              className="text-lg text-[#67246a] max-w-2xl mx-auto"
             >
               Have questions or want to work together? We'd love to hear from you.
             </motion.p>
@@ -136,118 +131,72 @@ const Contact: React.FC = () => {
               className="bg-white rounded-2xl shadow-xl overflow-hidden border border-[#ebebd3]"
             >
               <div className="p-8 sm:p-10">
-              <h2 className="text-2xl font-bold text-[#121769] mb-6">Send us a message</h2>
-              <form
-                onSubmit={async (e) => {
-                e.preventDefault();
-                setIsSubmitting(true);
-                try {
-                  // Use FormSubmit.io (no backend required)
-                  const response = await fetch('https://formsubmit.co/ajax/diyweboffi@gmail.com', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'Accept': 'application/json',
-                    },
-                    body: JSON.stringify({
-                      name: formData.name,
-                      email: formData.email, // from address
-                      subject: formData.subject,
-                      message: formData.message,
-                      _replyto: formData.email, // reply-to
-                    }),
-                  });
-                  if (response.ok) {
-                    toast({
-                    title: "Message Received",
-                    description: "Thank you for contacting us. Our team will respond within 24 hours.",
-                    duration: 5000,
-                    });
-
-                    setFormData({
-                    name: '',
-                    email: '',
-                    subject: '',
-                    message: ''
-                    });
-                  } else {
-                    throw new Error('Failed to send');
-                  }
-                } catch (error) {
-                  toast({
-                  title: "Delivery Failed",
-                  description: "Your message couldn't be sent. Please try again or contact us directly.",
-                  variant: "destructive",
-                  });
-                } finally {
-                  setIsSubmitting(false);
-                }
-                }}
-                className="space-y-6"
-              >
-                <div className="grid grid-cols-1 gap-6">
-                {['name', 'email', 'subject'].map((field) => (
-                  <div key={field}>
-                  <label htmlFor={field} className="block text-sm font-medium text-[#67246a] mb-1 capitalize">
-                    {field} <span className="text-[#fe49af]">*</span>
-                  </label>
-                  <input
-                    type={field === 'email' ? 'email' : 'text'}
-                    id={field}
-                    name={field}
-                    value={(formData as any)[field]}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-[#ebebd3] rounded-lg focus:ring-2 focus:ring-[#fe49af] focus:border-[#fe49af] transition text-[#121769] placeholder-[#67246a]/60 bg-[#ebebd3]/30"
-                    placeholder={`Your ${field}`}
-                  />
+                <h2 className="text-2xl font-bold text-[#121769] mb-6">Send us a message</h2>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 gap-6">
+                    {['name', 'email', 'subject'].map((field) => (
+                      <div key={field}>
+                        <label htmlFor={field} className="block text-sm font-medium text-[#67246a] mb-1 capitalize">
+                          {field} <span className="text-[#fe49af]">*</span>
+                        </label>
+                        <input
+                          type={field === 'email' ? 'email' : 'text'}
+                          id={field}
+                          name={field}
+                          value={(formData as any)[field]}
+                          onChange={handleChange}
+                          required
+                          className="w-full px-4 py-3 border border-[#ebebd3] rounded-lg focus:ring-2 focus:ring-[#fe49af] focus:border-[#fe49af] transition text-[#121769] placeholder-[#67246a]/60 bg-[#ebebd3]/30"
+                          placeholder={`Your ${field}`}
+                        />
+                      </div>
+                    ))}
                   </div>
-                ))}
-                </div>
 
-                <div>
-                <label htmlFor="message" className="block text-sm font-medium text-[#67246a] mb-1">
-                  Message <span className="text-[#fe49af]">*</span>
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={5}
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-[#ebebd3] rounded-lg focus:ring-2 focus:ring-[#fe49af] focus:border-[#fe49af] transition text-[#121769] placeholder-[#67246a]/60 bg-[#ebebd3]/30 resize-none"
-                  placeholder="How can we help you?"
-                />
-                </div>
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-[#67246a] mb-1">
+                      Message <span className="text-[#fe49af]">*</span>
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={5}
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 border border-[#ebebd3] rounded-lg focus:ring-2 focus:ring-[#fe49af] focus:border-[#fe49af] transition text-[#121769] placeholder-[#67246a]/60 bg-[#ebebd3]/30 resize-none"
+                      placeholder="How can we help you?"
+                    />
+                  </div>
 
-                <div>
-                <motion.button
-                  type="submit"
-                  disabled={isSubmitting}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full bg-gradient-to-r from-[#fe49af] to-[#121769] text-white font-bold py-3 px-6 rounded-lg hover:from-[#121769] hover:to-[#fe49af] focus:outline-none focus:ring-2 focus:ring-[#fe49af] focus:ring-offset-2 transition-transform transform hover:scale-105 disabled:opacity-70"
-                >
-                  {isSubmitting ? (
-                  <span className="flex items-center justify-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Sending...
-                  </span>
-                  ) : (
-                  'Send Message'
-                  )}
-                </motion.button>
-                </div>
-              </form>
+                  <div>
+                    <motion.button
+                      type="submit"
+                      disabled={isSubmitting}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="w-full bg-gradient-to-r from-[#fe49af] to-[#121769] text-white font-bold py-3 px-6 rounded-lg hover:from-[#121769] hover:to-[#fe49af] focus:outline-none focus:ring-2 focus:ring-[#fe49af] focus:ring-offset-2 transition-transform transform hover:scale-105 disabled:opacity-70"
+                    >
+                      {isSubmitting ? (
+                        <span className="flex items-center justify-center">
+                          <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Sending...
+                        </span>
+                      ) : (
+                        'Send Message'
+                      )}
+                    </motion.button>
+                  </div>
+                </form>
               </div>
             </motion.div>
 
             {/* Contact Info & FAQ */}
             <div className="space-y-8">
+              {/* Contact Information */}
               <motion.div
                 initial={{ x: 50, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
@@ -263,7 +212,8 @@ const Contact: React.FC = () => {
                       </div>
                       <div className="ml-4">
                         <h3 className="text-lg font-medium text-[#67246a]">Email</h3>
-                        <a href='mailto:gokulkanthgk@gmail.com' className="text-[#121769]">gokulkanthgk@gmail.com</a>
+                        <p className="text-[#121769]">support@nurmaa.com</p>
+                        <p className="text-[#121769]">sales@nurmaa.com</p>
                       </div>
                     </div>
 
@@ -273,7 +223,7 @@ const Contact: React.FC = () => {
                       </div>
                       <div className="ml-4">
                         <h3 className="text-lg font-medium text-[#67246a]">Phone</h3>
-                        <a href="tel:+918870261911" className="text-[#121769]">+91 8870261911</a>
+                        <p className="text-[#121769]">+1 (555) 123-4567</p>
                         <p className="text-[#67246a]">Mon-Fri: 9AM-5PM EST</p>
                       </div>
                     </div>
@@ -292,7 +242,7 @@ const Contact: React.FC = () => {
                 </div>
               </motion.div>
 
-              {/* FAQ */}
+              {/* FAQ Section */}
               <motion.div
                 initial={{ y: 50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}

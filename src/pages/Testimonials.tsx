@@ -17,7 +17,7 @@ const Testimonials: React.FC = () => {
       category: 'clients',
       content: 'Working with this team transformed our digital presence. Our sales increased by 140% within just three months of launching our new platform!',
       rating: 5,
-      image: client,
+      image: client, // <-- FIX: assign the imported client image here
       highlight: '140% sales growth'
     },
     {
@@ -72,18 +72,18 @@ const Testimonials: React.FC = () => {
     }
   ];
 
-  const filteredTestimonials = activeCategory === 'all'
-    ? testimonials
+  const filteredTestimonials = activeCategory === 'all' 
+    ? testimonials 
     : testimonials.filter(t => t.category === activeCategory);
 
   const nextTestimonial = () => {
-    setCurrentTestimonial((prev) =>
+    setCurrentTestimonial((prev) => 
       prev === filteredTestimonials.length - 1 ? 0 : prev + 1
     );
   };
 
   const prevTestimonial = () => {
-    setCurrentTestimonial((prev) =>
+    setCurrentTestimonial((prev) => 
       prev === 0 ? filteredTestimonials.length - 1 : prev - 1
     );
   };
@@ -107,95 +107,61 @@ const Testimonials: React.FC = () => {
       </Head>
 
       <div className="min-h-screen bg-gradient-to-b from-[#EBEBD3] to-white">
-        {/* Hero Section */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#67246a] via-[#FE49AF] to-[#121769] py-8 sm:py-12 md:py-24">
-          {/* Background image for hero banner */}
-          <div
-            className="absolute inset-0 w-full h-full z-0"
-            style={{
-              backgroundImage: "url('https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1200&q=80')",
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              opacity: 0.3,
-              pointerEvents: 'none'
-            }}
-          ></div>
+        {/* Enhanced Hero Section */}
+        <section className="relative overflow-hidden bg-gradient-to-br from-[#67246a] via-[#FE49AF] to-[#121769] py-28">
           {/* Animated gradient mesh background */}
-          <div className="absolute inset-0 opacity-20 pointer-events-none">
+          <div className="absolute inset-0 opacity-20">
             <div className="absolute inset-0 bg-[url('/images/gradient-mesh.png')] bg-cover bg-center mix-blend-overlay"></div>
-            <div className="absolute top-0 left-0 w-16 h-16 sm:w-24 sm:h-24 md:w-64 md:h-64 rounded-full bg-[#FE49AF] mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-            <div className="absolute top-0 right-0 w-16 h-16 sm:w-24 sm:h-24 md:w-64 md:h-64 rounded-full bg-[#67246a] mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-            <div className="absolute bottom-0 left-1/2 w-16 h-16 sm:w-24 sm:h-24 md:w-64 md:h-64 rounded-full bg-[#121769] mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
+            <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-[#FE49AF] mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+            <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-[#67246a] mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div className="absolute bottom-0 left-1/2 w-64 h-64 rounded-full bg-[#121769] mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
           </div>
-          {/* Centered content */}
-          <div className="relative z-10 flex items-center justify-center h-full min-h-[300px] sm:min-h-[350px] md:min-h-[400px]">
-            <div className="w-full max-w-lg sm:max-w-2xl md:max-w-4xl px-4 sm:px-6 lg:px-8 text-center mx-auto">
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#67246a] tracking-wide mb-3 sm:mb-5 md:mb-7 font-serif drop-shadow-lg"
-              >
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#EBEBD3] to-white">
-                  Voices of Trust
-                </span>
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-xs sm:text-lg md:text-2xl text-[#EBEBD3] max-w-xl mx-auto"
-              >
-                Discover what our clients and partners say about their experiences working with us.
-              </motion.p>
-              {/* Decorative elements */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6 }}
-                className="mt-6 sm:mt-8 md:mt-12 flex justify-center space-x-2 md:space-x-4"
-              >
-                {[...Array(3)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-white opacity-30"
-                    animate={{
-                      scale: [1, 1.2, 1],
-                      opacity: [0.3, 0.6, 0.3]
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: i * 0.3
-                    }}
-                  />
-                ))}
-              </motion.div>
-            </div>
+          
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight"
+            >
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#EBEBD3] to-white">
+                Voices of Trust
+              </span>
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-xl md:text-2xl text-[#EBEBD3] max-w-3xl mx-auto"
+            >
+              Discover what our clients and partners say about their experiences working with us.
+            </motion.p>
+            
+            {/* Decorative elements */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="mt-12 flex justify-center space-x-4"
+            >
+              {[...Array(3)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="w-3 h-3 rounded-full bg-white opacity-30"
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.6, 0.3]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: i * 0.3
+                  }}
+                />
+              ))}
+            </motion.div>
           </div>
         </section>
-
-        {/* Mobile Filter Bar */}
-        <div className="md:hidden flex justify-center items-center gap-2 py-4 px-2 sticky top-0 z-20 bg-white/90 backdrop-blur border-b border-[#EBEBD3]">
-          <button
-            className={`px-3 py-2 rounded-full text-xs font-semibold transition-all ${activeCategory === 'all' ? 'bg-[#FE49AF] text-white' : 'bg-[#EBEBD3] text-[#67246a]'}`}
-            onClick={() => { setActiveCategory('all'); setCurrentTestimonial(0); }}
-          >
-            All
-          </button>
-          <button
-            className={`px-3 py-2 rounded-full text-xs font-semibold transition-all ${activeCategory === 'clients' ? 'bg-[#FE49AF] text-white' : 'bg-[#EBEBD3] text-[#67246a]'}`}
-            onClick={() => { setActiveCategory('clients'); setCurrentTestimonial(0); }}
-          >
-            Clients
-          </button>
-          <button
-            className={`px-3 py-2 rounded-full text-xs font-semibold transition-all ${activeCategory === 'partners' ? 'bg-[#FE49AF] text-white' : 'bg-[#EBEBD3] text-[#67246a]'}`}
-            onClick={() => { setActiveCategory('partners'); setCurrentTestimonial(0); }}
-          >
-            Partners
-          </button>
-        </div>
 
         {/* Enhanced Testimonials Carousel */}
         <section className="py-8">
@@ -214,7 +180,7 @@ const Testimonials: React.FC = () => {
               
               <button 
                 onClick={nextTestimonial}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center text-[#67246a] hover:bg-[#EBEBD3] transition-all duration-300 md:flex group"
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 rounded-full bg-white shadow-lg items-center justify-center text-[#67246a] hover:bg-[#EBEBD3] transition-all duration-300 hidden md:flex group"
                 aria-label="Next testimonial"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -222,8 +188,8 @@ const Testimonials: React.FC = () => {
                 </svg>
               </button>
 
-              {/* Auto-slide toggle (hidden on mobile) */}
-              <div className="justify-center mb-6 hidden md:flex">
+              {/* Auto-slide toggle */}
+              <div className="flex justify-center mb-6">
                 <button
                   onClick={() => setAutoSlide(!autoSlide)}
                   className="flex items-center gap-1 text-sm text-[#67246a] hover:text-[#121769] transition-colors"
@@ -257,9 +223,10 @@ const Testimonials: React.FC = () => {
                           <div className="order-2 md:order-1">
                             <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl relative overflow-hidden group">
                               {/* Decorative corner accent */}
-                              <div className="absolute top-0 right-0 w-16 h-16 sm:w-24 sm:h-24 bg-[#FE49AF] opacity-5 rounded-bl-full transform translate-x-8 -translate-y-8 sm:translate-x-12 sm:-translate-y-12"></div>
-                              <div className="absolute -top-6 -left-6 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-[#FE49AF] to-[#67246a] flex items-center justify-center shadow-md">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <div className="absolute top-0 right-0 w-24 h-24 bg-[#FE49AF] opacity-5 rounded-bl-full transform translate-x-12 -translate-y-12"></div>
+                              
+                              <div className="absolute -top-6 -left-6 w-12 h-12 rounded-full bg-gradient-to-r from-[#FE49AF] to-[#67246a] flex items-center justify-center shadow-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                                 </svg>
                               </div>
@@ -275,12 +242,12 @@ const Testimonials: React.FC = () => {
                                   <p className="text-[#67246a]">{testimonial.role}</p>
                                 </div>
                                 <div className="flex items-center">
-                                  <div className="flex mr-2 sm:mr-4">
+                                  <div className="flex mr-4">
                                     {[...Array(5)].map((_, i) => (
                                       <svg
                                         key={i}
                                         xmlns="http://www.w3.org/2000/svg"
-                                        className={`h-4 w-4 sm:h-5 sm:w-5 ${i < testimonial.rating ? 'text-amber-400' : 'text-gray-300'}`}
+                                        className={`h-5 w-5 ${i < testimonial.rating ? 'text-amber-400' : 'text-gray-300'}`}
                                         viewBox="0 0 20 20"
                                         fill="currentColor"
                                       >
@@ -295,22 +262,25 @@ const Testimonials: React.FC = () => {
                               </div>
                             </div>
                           </div>
-                          {/* Testimonial Image */}
-                          <motion.div
+
+                          {/* Enhanced Testimonial Image */}
+                          <motion.div 
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.5, delay: 0.2 }}
-                            className="order-1 md:order-2 flex justify-center items-center"
+                            className="order-1 md:order-2 flex justify-center"
                           >
                             <div className="relative group">
                               <div className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-2xl relative">
                                 {testimonial.image === client ? (
+                                  // Show imported client.png for id:1
                                   <img
                                     src={client}
                                     alt={testimonial.name}
                                     className="w-full h-full object-cover"
                                   />
                                 ) : (
+                                  // Show string image path for others
                                   <img
                                     src={testimonial.image}
                                     alt={testimonial.name}
@@ -343,7 +313,7 @@ const Testimonials: React.FC = () => {
                     aria-label={`Go to testimonial ${index + 1}`}
                   >
                     {index === currentTestimonial && (
-                      <motion.span
+                      <motion.span 
                         className="absolute inset-0 rounded-full bg-gradient-to-r from-[#FE49AF] to-[#67246a]"
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
@@ -358,16 +328,16 @@ const Testimonials: React.FC = () => {
         </section>
 
         {/* Testimonials Grid Section */}
-        <section className="py-16 px-4 sm:px-10 lg:px-8 bg-white">
+        <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
           <div className="max-w-7xl mx-auto">
-            <motion.h2
+            <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16 mt-8"
+              className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16"
             >
-              More <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FE49AF] to-[#67246a] ">Testimonials</span>
+              More <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FE49AF] to-[#67246a]">Testimonials</span>
             </motion.h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -401,13 +371,14 @@ const Testimonials: React.FC = () => {
                         ? `${testimonial.content.substring(0, 120)}...` 
                         : testimonial.content}
                     </p>
+                    
                     <div className="flex items-center justify-between mt-4">
                       <div className="flex">
                         {[...Array(5)].map((_, i) => (
                           <svg
                             key={i}
                             xmlns="http://www.w3.org/2000/svg"
-                            className={`h-4 w-4 sm:h-5 sm:w-5 ${i < testimonial.rating ? 'text-amber-400' : 'text-gray-300'}`}
+                            className={`h-5 w-5 ${i < testimonial.rating ? 'text-amber-400' : 'text-gray-300'}`}
                             viewBox="0 0 20 20"
                             fill="currentColor"
                           >
@@ -416,15 +387,16 @@ const Testimonials: React.FC = () => {
                         ))}
                       </div>
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        testimonial.category === 'clients'
-                          ? 'bg-[#EBEBD3] text-[#67246a]'
+                        testimonial.category === 'clients' 
+                          ? 'bg-[#EBEBD3] text-[#67246a]' 
                           : 'bg-[#121769]/10 text-[#121769]'
                       }`}>
                         {testimonial.category === 'clients' ? 'Client' : 'Partner'}
                       </span>
                     </div>
+                    
                     <div className="mt-4 pt-4 border-t border-gray-200">
-                      <span className="text-xs sm:text-sm font-medium text-[#FE49AF]">
+                      <span className="text-sm font-medium text-[#FE49AF]">
                         {testimonial.highlight}
                       </span>
                     </div>
@@ -481,7 +453,7 @@ const Testimonials: React.FC = () => {
         {/* Enhanced CTA Section */}
         <section className="py-24 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <motion.div
+            <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -489,8 +461,9 @@ const Testimonials: React.FC = () => {
               className="bg-white p-8 md:p-12 rounded-3xl shadow-xl relative overflow-hidden"
             >
               {/* Decorative elements */}
-              <div className="absolute -top-20 -right-20 w-40 h-40 sm:w-64 sm:h-64 rounded-full bg-[#EBEBD3] opacity-20 blur-3xl"></div>
-              <div className="absolute -bottom-20 -left-20 w-40 h-40 sm:w-64 sm:h-64 rounded-full bg-[#121769]/20 blur-3xl"></div>
+              <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-[#EBEBD3] opacity-20 blur-3xl"></div>
+              <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-[#121769]/20 blur-3xl"></div>
+              
               <div className="relative z-10 text-center">
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
                   Ready to join our happy clients?
@@ -508,7 +481,7 @@ const Testimonials: React.FC = () => {
                     <span className="relative z-10">Contact Us</span>
                     <span className="absolute inset-0 bg-gradient-to-r from-[#67246a] to-[#FE49AF] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                   </motion.a>
-                  {/* <motion.a
+                  <motion.a
                     href="/portfolio"
                     className="px-8 py-4 rounded-full bg-white text-[#67246a] font-medium border-2 border-[#EBEBD3] hover:bg-[#EBEBD3] transition-all relative overflow-hidden group"
                     whileHover={{ scale: 1.02 }}
@@ -516,13 +489,14 @@ const Testimonials: React.FC = () => {
                   >
                     <span className="relative z-10">View Our Work</span>
                     <span className="absolute inset-0 bg-[#EBEBD3] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                  </motion.a> */}
+                  </motion.a>
                 </div>
               </div>
             </motion.div>
           </div>
         </section>
       </div>
+
       <style>
         {`
           @keyframes blob {

@@ -1,285 +1,361 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import Timeline from '../components/Timeline';
 
-// Consistent NurmaaCard for all cards on this page
-const NurmaaCard: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
-  <div
-    className={`
-      bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg border-2 border-[#FE49AF]/15
-      p-6 md:p-8
-      ${className}
-    `}
-  >
-    {children}
-  </div>
-);
+const colors = {
+  gold: '#fe49af',
+  blue: '#121769',
+  beige: '#ebebd3',
+  purple: '#67246a',
+  white: '#fff',
+};
 
-const egyptianGradient = 'bg-gradient-to-br from-[#EBEBD3] via-white to-[#FE49AF]';
-const accentBorder = 'border-4 border-[#67246a]';
-
-// Animation variants
+// Animation style objects for inline usage
 const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i = 1) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.15, duration: 0.7, type: 'spring' }
-  })
+  animation: 'fadeInUp 1.2s ease both',
+};
+const fadeIn = {
+  animation: 'fadeIn 1.2s ease both',
 };
 
 const About: React.FC = () => {
   return (
-    <motion.div
-      className="pb-16 min-h-screen bg-[#EBEBD3]"
-      initial="hidden"
-      animate="visible"
-      variants={{
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
-      }}
-    >
-      {/* Hero Section */}
-      <motion.div
-        className="relative overflow-hidden bg-gradient-to-br from-[#FE49AF]/30 via-[#EBEBD3] to-[#67246a]/10 pt-24 pb-12 sm:pt-32 sm:pb-16 md:pt-40 md:pb-20 lg:pt-48 lg:pb-28"
-        variants={fadeInUp}
-        custom={1}
+    <div className="pt-24 pb-16" style={{ background: colors.beige }}>
+      <style>
+        {`
+          @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(40px);}
+            100% { opacity: 1; transform: translateY(0);}
+          }
+          @keyframes fadeIn {
+            0% { opacity: 0;}
+            100% { opacity: 1;}
+          }
+          .hero-overlay {
+            background: linear-gradient(120deg, rgba(18,23,105,0.85) 0%, rgba(103,36,106,0.7) 100%);
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            border-radius: 0 0 2.5rem 2.5rem;
+          }
+          .hero-img {
+            filter: brightness(0.6) blur(1px);
+          }
+          .hero-text {
+            text-shadow: 0 4px 32px #121769, 0 2px 8px #fff8;
+          }
+          .bounce {
+            animation: bounce 1.2s infinite alternate;
+          }
+          @keyframes bounce {
+            0% { transform: translateY(0);}
+            100% { transform: translateY(-10px);}
+          }
+        `}
+      </style>
+      {/* Hero Banner */}
+      <div
+        className="relative w-full h-[320px] md:h-[420px] flex items-center justify-center mb-[-60px] md:mb-[-80px] z-10 overflow-hidden rounded-b-3xl"
+        style={{
+          background: `linear-gradient(120deg, ${colors.gold} 0%, ${colors.purple} 100%)`,
+        }}
       >
-        {/* Background image for hero banner */}
-        <div
-          className="absolute inset-0 w-full h-full z-0"
-          style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80')",
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            opacity: 0.18,
-            pointerEvents: 'none'
-          }}
-        ></div>
-        {/* Decorative shapes */}
-        <div className="absolute top-0 left-0 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 bg-[#FE49AF]/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 z-0"></div>
-        <div className="absolute bottom-0 right-0 w-40 h-40 sm:w-56 sm:h-56 md:w-80 md:h-80 bg-[#67246a]/10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 z-0"></div>
-        {/* Centered content */}
-            <div className="relative z-10 flex items-center justify-center min-h-[50vh] sm:min-h-[60vh] md:min-h-[70vh]">
-          <div className="w-full max-w-lg sm:max-w-2xl md:max-w-4xl px-4 sm:px-6 lg:px-8 text-center mx-auto">
-            <motion.h1
-              className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#67246a] tracking-wide mb-3 sm:mb-5 md:mb-7 font-serif drop-shadow-lg"
-              variants={fadeInUp}
-              custom={2}
+        <img
+          src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
+          alt="Egyptian landscape"
+          className="absolute inset-0 w-full h-full object-cover hero-img"
+        />
+        <div className="hero-overlay"></div>
+        <div className="relative z-10 text-center w-full px-4" style={fadeInUp}>
+          <h1
+            className="text-3xl md:text-6xl font-extrabold drop-shadow-lg tracking-tight hero-text"
+            style={{
+              color: colors.beige,
+              fontFamily: 'serif',
+              letterSpacing: '0.04em',
+            }}
+          >
+            The Nurmaa Story
+          </h1>
+          <div
+            className="mx-auto mt-6 w-16 md:w-24 h-2 rounded bounce"
+            style={{ background: colors.gold, opacity: 0.95 }}
+          />
+          <p
+            className="mx-auto mt-6 md:mt-8 max-w-xl md:max-w-2xl text-base md:text-xl font-medium hero-text"
+            style={{ color: colors.beige, textShadow: '0 2px 8px #121769' }}
+          >
+            Nurmaa was born from a passion for natural ingredients and traditional craft, inspired by the timeless wisdom of ancient Egypt.
+          </p>
+        </div>
+      </div>
+
+      <div
+        className="bg-white shadow-lg rounded-b-3xl"
+        style={{ background: colors.beige, boxShadow: `0 8px 32px ${colors.purple}22` }}
+      >
+        <div className="nurmaa-container py-10 md:py-20" />
+      </div>
+
+      <div className="nurmaa-container py-10 md:py-20 px-4 md:px-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center" style={fadeInUp}>
+          <div>
+            <h2
+              className="text-3xl md:text-4xl font-bold mb-6 md:mb-8"
+              style={{ color: colors.gold, fontFamily: 'serif' }}
             >
-              Discover the Nurmaa Story
-            </motion.h1>
-            <motion.div
-              className="w-16 sm:w-24 h-2 mx-auto bg-gradient-to-r from-[#FE49AF] to-[#67246a] rounded-full mb-4 sm:mb-6"
-              variants={fadeInUp}
-              custom={3}
-            ></motion.div>
-            <motion.p
-              className="text-sm sm:text-base md:text-lg lg:text-xl text-[#121769] font-medium mb-2 sm:mb-4"
-              variants={fadeInUp}
-              custom={4}
-            >
-              Ancient wisdom. Modern wellness. Crafted with care.
-            </motion.p>
-            <motion.p
-              className="text-xs sm:text-sm md:text-base lg:text-lg text-[#67246a] max-w-2xl mx-auto"
-              variants={fadeInUp}
-              custom={5}
-            >
-              From the heart of tradition to your hands, Nurmaa celebrates the beauty of natural ingredients and mindful living. Join us on a journey of transformation, protection, and life.
-            </motion.p>
+              Our Mission
+            </h2>
+            <div className="space-y-5 text-base md:text-lg">
+              <p style={{ color: colors.blue, ...fadeIn }}>
+                At Nurmaa, we are dedicated to creating handmade, natural products that nurture both your body and the environment.
+                We believe in the power of nature's ingredients and traditional craftsmanship, echoing the holistic practices of ancient Egypt.
+              </p>
+              <p style={{ color: colors.purple, ...fadeIn, animationDelay: '0.2s' }}>
+                Each Nurmaa product is crafted with care and attention to detail, using only the finest natural ingredients
+                sourced from trusted suppliers who share our commitment to sustainability and ethical practices.
+              </p>
+              <p style={{ color: colors.blue, ...fadeIn, animationDelay: '0.4s' }}>
+                Our mission is to bring the healing power of nature into your daily routine through simple, effective,
+                and beautifully crafted products that celebrate traditional knowledge and modern wellness.
+              </p>
+            </div>
+          </div>
+
+          <div className="relative h-60 md:h-96 flex items-center justify-center" style={fadeIn}>
+            <div
+              className="absolute top-4 right-4 w-4/5 h-4/5 rounded-3xl blur-sm -z-10 shadow-xl"
+              style={{
+                background: `${colors.gold}44`,
+                boxShadow: `0 8px 32px ${colors.purple}33`,
+              }}
+            />
+            <img
+              src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&q=80"
+              alt="Egyptian craft"
+              className="rounded-2xl shadow-2xl border-4"
+              style={{
+                borderColor: `${colors.blue}44`,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                transition: 'transform 0.3s',
+                animation: 'fadeIn 1.2s ease both',
+              }}
+            />
           </div>
         </div>
-      </motion.div>
 
-      <div className="nurmaa-container max-w-6xl mx-auto py-20">
+        <div className="mt-16 md:mt-28" style={fadeInUp}>
+          <h2
+            className="text-3xl md:text-4xl font-bold mb-10 md:mb-14 text-center"
+            style={{ color: colors.gold, fontFamily: 'serif' }}
+          >
+            Our Journey
+          </h2>
 
-        {/* Vision & Mission Section */}
-        <motion.div
-          className="relative flex flex-col gap-12 md:gap-20 mb-28"
-          variants={fadeInUp}
-          custom={5}
-        >
-          {/* Vision */}
-          <NurmaaCard className="relative overflow-hidden flex flex-col lg:flex-row items-stretch shadow-2xl border-0 p-0">
-            {/* Artistic background */}
-            <div className="absolute -top-16 -left-16 w-72 h-72 bg-[#FE49AF]/20 rounded-full blur-2xl z-0"></div>
-            <div className="flex-1 flex flex-col justify-center items-start z-10 p-8 md:p-12">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="inline-block w-2 h-10 bg-gradient-to-b from-[#FE49AF] to-[#67246a] rounded"></span>
-                <h2 className="text-3xl md:text-4xl font-extrabold text-[#FE49AF] font-serif tracking-tight drop-shadow">Our Vision</h2>
-              </div>
-              <p className="text-[#121769] text-lg md:text-xl font-semibold mb-2">
-                To inspire a world where wellness is rooted in nature, tradition, and conscious living.
-              </p>
-              <p className="text-[#67246a] text-base md:text-lg">
-                We envision a future where every home embraces the healing power of natural ingredients, and every person feels empowered to live sustainably and mindfully.
-              </p>
-            </div>
-            <div className="flex-1 flex items-center justify-center z-10 p-4 md:p-8">
-              <div className="aspect-w-16 aspect-h-9 w-full">
-                <img
-                  src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80"
-                  alt="Vision"
-                  className="rounded-2xl w-full h-full object-cover shadow-lg border-4 border-[#FE49AF]/20"
-                />
-              </div>
-            </div>
-          </NurmaaCard>
-          {/* Mission */}
-          <NurmaaCard className="relative overflow-hidden flex flex-col lg:flex-row-reverse items-stretch shadow-2xl border-0 p-0">
-            {/* Artistic background */}
-            <div className="absolute -bottom-16 -right-16 w-72 h-72 bg-[#67246a]/20 rounded-full blur-2xl z-0"></div>
-            <div className="flex-1 flex flex-col justify-center items-start z-10 p-8 md:p-12">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="inline-block w-2 h-10 bg-gradient-to-b from-[#67246a] to-[#FE49AF] rounded"></span>
-                <h2 className="text-3xl md:text-4xl font-extrabold text-[#67246a] font-serif tracking-tight drop-shadow">Our Mission</h2>
-              </div>
-              <p className="text-[#121769] text-lg md:text-xl font-semibold mb-2">
-                To craft pure, sustainable products that nurture both people and planet.
-              </p>
-              <p className="text-[#67246a] text-base md:text-lg">
-                We blend ancient wisdom with modern science, handmaking every Nurmaa product with care, transparency, and deep respect for nature.
-              </p>
-            </div>
-            <div className="flex-1 flex items-center justify-center z-10 p-4 md:p-8">
-              <div className="aspect-w-16 aspect-h-9 w-full">
-                <img
-                  src="https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&q=80"
-                  alt="Handmade products"
-                  className="rounded-2xl w-full h-full object-cover shadow-lg border-4 border-[#67246a]/20"
-                />
-              </div>
-            </div>
-          </NurmaaCard>
-        </motion.div>
-        <Timeline />
-
-       {/* Egyptian Vertical Timeline with Water Flow */}
-
-
-        {/* Founder Section */}
-        <motion.div
-          className="mt-24"
-          variants={fadeInUp}
-          custom={13}
-        >
-          <NurmaaCard className="flex flex-col md:flex-row-reverse items-center gap-10 relative overflow-hidden">
-            {/* Decorative background shapes */}
-            <div className="absolute -top-10 -right-10 w-48 h-48 bg-[#FE49AF]/20 rounded-full blur-2xl z-0"></div>
-            <div className="absolute -bottom-10 -left-10 w-56 h-56 bg-[#67246a]/10 rounded-full blur-2xl z-0"></div>
-            {/* Founder Image */}
-            <div className="relative flex-shrink-0 flex justify-center items-center w-full md:w-1/3 z-10 py-4 md:py-0">
-              <div className="w-40 h-40 sm:w-52 sm:h-52">
-                <img
-                  src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&q=80"
-                  alt="Founder"
-                  className="rounded-2xl w-full h-full object-cover border-4 border-[#FE49AF]/30 shadow-xl"
-                />
-              </div>
-            </div>
-            {/* Founder Info */}
-            <div className="flex-1 flex flex-col justify-center items-start text-left z-10 px-8 py-8">
-              <div className="mb-4 flex items-center gap-3">
-                <span className="inline-block w-2 h-8 bg-gradient-to-b from-[#FE49AF] to-[#67246a] rounded"></span>
-                <h2 className="text-3xl font-extrabold text-[#67246a] font-serif tracking-tight">Meet the Founder</h2>
-              </div>
-              <div className="mb-4">
-                <p className="font-serif text-xl italic text-[#121769] mb-4">
-                  “With a background in herbal science and a love for sustainable living, I founded Nurmaa to share the beauty of nature’s remedies with the world. Every product is a reflection of my commitment to purity, tradition, and mindful creation.”
-                </p>
-                <div className="flex flex-col md:flex-row md:items-center gap-4">
-                  <div>
-                    <div className="font-bold text-[#FE49AF] text-lg">Amina Rahman</div>
-                    <div className="text-[#121769] text-sm">Founder & Herbal Scientist</div>
-                  </div>
-                  <div className="flex gap-2 mt-2 md:mt-0">
-                    <span className="bg-[#FE49AF]/10 text-[#FE49AF] px-3 py-1 rounded-full text-xs font-medium border border-[#FE49AF]/30">#HerbalScience</span>
-                    <span className="bg-[#67246a]/10 text-[#67246a] px-3 py-1 rounded-full text-xs font-medium border border-[#67246a]/30">#EcoWellness</span>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row gap-4 w-full">
-                <NurmaaCard className="flex-1 bg-gradient-to-br from-[#FE49AF]/10 to-[#67246a]/5 border border-[#FE49AF]/10 text-[#67246a] shadow-sm p-4">
-                  <span className="font-bold">Expertise:</span> Herbal science, eco-friendly formulation, community wellness.
-                </NurmaaCard>
-                <NurmaaCard className="flex-1 bg-gradient-to-br from-[#67246a]/10 to-[#FE49AF]/5 border border-[#67246a]/10 text-[#121769] shadow-sm p-4">
-                  <span className="font-bold">Belief:</span> Nature and science together can nurture a better world.
-                </NurmaaCard>
-              </div>
-            </div>
-          </NurmaaCard>
-        </motion.div>
-
-        {/* Values Section */}
-        <motion.div className="mt-16 sm:mt-24 text-center" variants={fadeInUp} custom={14}>
-          <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-[#121769] font-serif">Our Values</h2>
-          <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-[#FE49AF] to-[#67246a] mx-auto mb-8 sm:mb-12"></div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
+          <div className="space-y-10 md:space-y-16">
             {[
               {
-                icon: '𓂀', // Eye of Horus
-                title: 'Protection',
-                description: 'We safeguard your well-being and our environment, inspired by the ancient Eye of Horus.'
+                year: '2019',
+                title: 'From Kitchen to Community',
+                description: 'Nurmaa began as a personal project in a small home kitchen, creating natural remedies for family and friends.',
+                image: 'https://images.unsplash.com/photo-1616694555130-3e5466627a3f?auto=format&fit=crop&q=80'
               },
               {
-                icon: '𓆣', // Scarab
-                title: 'Transformation',
-                description: 'Like the scarab, we believe in renewal, growth, and positive change through nature.'
+                year: '2020',
+                title: 'Growing Our Collection',
+                description: 'We expanded our product line to include a variety of skincare and food products, all made with locally sourced ingredients.',
+                image: 'https://images.unsplash.com/photo-1562158927-5359c91e4821?auto=format&fit=crop&q=80'
               },
               {
-                icon: '☥', // Ankh
-                title: 'Life',
-                description: 'The ankh symbolizes life; we honor vitality and holistic wellness in all we do.'
+                year: '2021',
+                title: 'Embracing Sustainability',
+                description: 'We committed to fully sustainable practices, from ingredient sourcing to packaging and delivery methods.',
+                image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80'
+              },
+              {
+                year: 'Today',
+                title: 'Sharing Our Passion',
+                description: 'We continue to grow while staying true to our roots, creating products that honor traditional techniques and natural ingredients.',
+                image: 'https://images.unsplash.com/photo-1599933310642-8f07bdea325a?auto=format&fit=crop&q=80'
               }
-            ].map((value, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 60, scale: 0.85, rotate: -8 + idx * 8 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{
-                  delay: 0.2 + idx * 0.18,
-                  duration: 0.8,
-                  type: 'spring',
-                  bounce: 0.35
+            ].map((step, index) => (
+              <div
+                key={index}
+                className={`flex flex-col ${
+                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                } items-center gap-6 md:gap-16`}
+                style={{
+                  ...fadeInUp,
+                  animationDelay: `${0.2 + index * 0.2}s`,
                 }}
               >
-                <NurmaaCard className="flex flex-col items-center py-8 md:py-10 group relative overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500">
-                  {/* Animated glowing background blob */}
-                  <span
-                    className={`
-                      absolute -top-10 -left-10 w-32 h-32 rounded-full
-                      ${idx === 0 ? 'bg-[#FE49AF]/20' : idx === 1 ? 'bg-[#67246a]/20' : 'bg-[#EBEBD3]/40'}
-                      blur-2xl z-0 animate-valueBlob
-                    `}
-                  ></span>
-                  {/* Icon with pulse */}
-                  <span className="relative z-10 mb-4">
-                    <motion.span
-                      initial={{ scale: 0.8, filter: 'blur(2px)' }}
-                      whileInView={{ scale: 1.1, filter: 'blur(0px)' }}
-                      transition={{
-                        repeat: Infinity,
-                        repeatType: 'reverse',
-                        duration: 2.2 + idx * 0.3,
-                        ease: 'easeInOut',
-                        delay: 0.5 + idx * 0.2
-                      }}
-                      className="inline-block"
-                    >
-                      <span className="text-5xl drop-shadow-lg">{value.icon}</span>
-                    </motion.span>
-                  </span>
-                  <h3 className="text-xl font-bold mb-2 text-[#FE49AF] z-10">{value.title}</h3>
-                  <p className="text-[#121769] z-10">{value.description}</p>
-                </NurmaaCard>
-              </motion.div>
+                <div className="w-full md:w-1/2">
+                  <div
+                    className="p-2 md:p-3 rounded-2xl shadow-xl border-2 hover:shadow-2xl transition-shadow duration-300"
+                    style={{
+                      background: colors.white,
+                      borderColor: `${colors.blue}33`,
+                      boxShadow: `0 8px 32px ${colors.purple}22`,
+                      animation: 'fadeIn 1.2s ease both',
+                      animationDelay: `${0.3 + index * 0.2}s`,
+                    }}
+                  >
+                    <img
+                      src={step.image}
+                      alt={step.title}
+                      className="w-full h-40 md:h-64 object-cover rounded-xl"
+                    />
+                  </div>
+                </div>
+
+                <div className="w-full md:w-1/2">
+                  <div
+                    className="inline-block px-4 md:px-6 py-2 rounded-full mb-2 md:mb-3 shadow-md text-base md:text-lg font-semibold tracking-wide"
+                    style={{
+                      background: colors.gold,
+                      color: colors.blue,
+                      fontFamily: 'serif',
+                    }}
+                  >
+                    {step.year}
+                  </div>
+                  <h3
+                    className="text-xl md:text-3xl font-bold mb-2 md:mb-4"
+                    style={{ color: colors.purple }}
+                  >
+                    {step.title}
+                  </h3>
+                  <p className="text-base md:text-lg" style={{ color: colors.blue }}>
+                    {step.description}
+                  </p>
+                </div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </div>
+
+        <div
+          className="mt-16 md:mt-28 rounded-3xl p-6 md:p-16 shadow-lg border"
+          style={{
+            background: colors.white,
+            borderColor: `${colors.gold}33`,
+            boxShadow: `0 8px 32px ${colors.purple}22`,
+            ...fadeInUp,
+          }}
+        >
+          <div className="text-center mb-8 md:mb-12">
+            <h2
+              className="text-3xl md:text-4xl font-bold mb-2 md:mb-4"
+              style={{ color: colors.blue, fontFamily: 'serif' }}
+            >
+              Meet the Founder
+            </h2>
+            <div
+              className="w-16 md:w-24 h-1 mx-auto rounded"
+              style={{ background: colors.gold }}
+            ></div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 items-center">
+            <div className="md:col-span-1 flex justify-center">
+              <img
+                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80"
+                alt="Founder"
+                className="rounded-full w-32 h-32 md:w-48 md:h-48 object-cover border-4 shadow-xl ring-4"
+                style={{
+                  borderColor: colors.gold,
+                  boxShadow: `0 4px 24px ${colors.purple}33`,
+                  animation: 'fadeIn 1.2s ease both',
+                }}
+              />
+            </div>
+
+            <div className="md:col-span-2">
+              <div
+                className="font-playfair text-lg md:text-2xl italic mb-6 md:mb-8"
+                style={{ color: colors.purple, ...fadeIn }}
+              >
+                "I started Nurmaa with a simple belief: that the purest ingredients, combined with traditional knowledge
+                and careful craftsmanship, can create products that truly nurture our bodies and souls."
+              </div>
+              <p className="mb-2 md:mb-4 text-base md:text-lg" style={{ color: colors.blue, ...fadeIn }}>
+                With a background in herbal medicine and a lifelong passion for natural living, our founder has dedicated
+                years to perfecting recipes that harness the power of nature while respecting traditional techniques.
+              </p>
+              <p className="text-base md:text-lg" style={{ color: colors.purple, ...fadeIn }}>
+                Every Nurmaa product reflects this dedication to quality, sustainability, and the belief that what we put
+                on our bodies and into our bodies should be as pure and natural as possible.
+              </p>
+              <div className="mt-6 md:mt-8">
+                <div
+                  className="font-semibold text-lg md:text-xl"
+                  style={{ color: colors.gold }}
+                >
+                  Maya Johnson
+                </div>
+                <div style={{ color: colors.blue }}>Founder & Formulator</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-16 md:mt-28 text-center" style={fadeInUp}>
+          <h2
+            className="text-3xl md:text-4xl font-bold mb-6 md:mb-8"
+            style={{ color: colors.blue, fontFamily: 'serif' }}
+          >
+            Our Values
+          </h2>
+          <div
+            className="w-16 md:w-24 h-1 mx-auto mb-10 md:mb-14 rounded"
+            style={{ background: colors.gold }}
+          ></div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+            {[
+              {
+                icon: '🌾',
+                title: 'Sustainability',
+                description: 'We prioritize eco-friendly practices in every step of our production process.'
+              },
+              {
+                icon: '🛕',
+                title: 'Craftsmanship',
+                description: 'Each product is handcrafted with care and attention to detail, inspired by Egyptian artisans.'
+              },
+              {
+                icon: '👁️',
+                title: 'Transparency',
+                description: 'We believe in full honesty about our ingredients and processes, as clear as the Nile.'
+              }
+            ].map((value, index) => (
+              <div
+                key={index}
+                className="p-6 md:p-8 rounded-2xl shadow-lg border-2 hover:shadow-2xl transition-shadow duration-300"
+                style={{
+                  background: colors.beige,
+                  borderColor: `${colors.purple}22`,
+                  boxShadow: `0 8px 32px ${colors.blue}11`,
+                  animation: 'fadeInUp 1s ease both',
+                  animationDelay: `${0.2 + index * 0.2}s`,
+                }}
+              >
+                <div className="text-4xl md:text-5xl mb-4 md:mb-6 bounce">{value.icon}</div>
+                <h3
+                  className="text-xl md:text-2xl font-bold mb-2 md:mb-4"
+                  style={{ color: colors.gold }}
+                >
+                  {value.title}
+                </h3>
+                <p className="text-base md:text-lg" style={{ color: colors.blue }}>
+                  {value.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
