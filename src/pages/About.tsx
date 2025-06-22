@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import Timeline from '../components/Timeline';
+// import Timeline from '../components/Timeline';
 
 // Consistent NurmaaCard for all cards on this page
 const NurmaaCard: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
@@ -60,7 +60,7 @@ const About: React.FC = () => {
         <div className="absolute top-0 left-0 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 bg-[#FE49AF]/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 z-0"></div>
         <div className="absolute bottom-0 right-0 w-40 h-40 sm:w-56 sm:h-56 md:w-80 md:h-80 bg-[#67246a]/10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 z-0"></div>
         {/* Centered content */}
-            <div className="relative z-10 flex items-center justify-center min-h-[50vh] sm:min-h-[60vh] md:min-h-[70vh]">
+            <div className="relative z-10 flex items-center justify-center min-h-[30vh] sm:min-h-[30vh] md:min-h-[20vh]">
           <div className="w-full max-w-lg sm:max-w-2xl md:max-w-4xl px-4 sm:px-6 lg:px-8 text-center mx-auto">
             <motion.h1
               className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#67246a] tracking-wide mb-3 sm:mb-5 md:mb-7 font-serif drop-shadow-lg"
@@ -153,7 +153,7 @@ const About: React.FC = () => {
             </div>
           </NurmaaCard>
         </motion.div>
-        <Timeline />
+        {/* <Timeline /> */}
 
        {/* Egyptian Vertical Timeline with Water Flow */}
 

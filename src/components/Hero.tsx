@@ -152,8 +152,8 @@ const Hero = () => {
       <style>{`
         @media (max-width: 768px) {
           .hero-slider-mobile-height {
-            height: 400px !important;
-            max-height: 500px !important;
+            height: 500px !important;
+            max-height: 550px !important;
           }
           .hero-content-mobile {
             padding-left: 1rem !important;
@@ -166,34 +166,35 @@ const Hero = () => {
             right: 0 !important;
             width: 100% !important;
           }
-          .hero-title-mobile {
-            font-size: 1.5rem !important;
-            line-height: 1.8rem !important;
+.hero-title-mobile {
+            font-size: 1.2rem !important;
+            line-height: 1.5rem !important;
             margin-bottom: 0.5rem !important;
           }
           .hero-desc-mobile {
             font-size: 1rem !important;
-            margin-bottom: 1.5rem !important;
+            margin-bottom: 1rem !important;
           }
           .hero-btns-mobile {
             flex-direction: column !important;
-            gap: 0.75rem !important;
+            gap: 0.5rem !important;
             width: 100% !important;
             
           }
-          .hero-btns-mobile button {
+.hero-btns-mobile button {
             width: 100% !important;
-            font-size: 0.95rem !important;
-            padding: 0.5rem 0 !important;
-            min-height: 1rem !important;
-            
+            font-size: 0.6rem !important;
+            padding: 0.3rem 0 !important;
+            min-height: 0.6rem !important;
+          }
+          .hero-content-mobile {
+            margin-top: -2rem !important;
           }
           .hero-nav-mobile {
             top: 95% !important;
             left: 0.5rem !important;
             right: 0.5rem !important;
             transform: none !important;
-            
           }
           .hero-dot-mobile {
             width: 0.5rem !important;
@@ -209,15 +210,18 @@ const Hero = () => {
             height: 0.5rem !important;
             display: none !important;
           }
-            a{
-            width:35% !important;
-            height: 0.5rem !important;
-            padding: 0.85rem !important;
-            flex-direction: row !important;
-            font-size: 0.55rem !important;
-            margin-bottom: 0.5rem !important;
-            }
+            // a{
+            // width:35% !important;
+            // height: 0.5rem !important;
+            // padding: 0.85rem !important;
+            // flex-direction: row !important;
+            // font-size: 0.55rem !important;
+            // margin-bottom: 0.5rem !important;
+            // }
         }
+            #hero-button {
+            width:250px;
+      }
       `}</style>
       <div className="hero-slider-mobile-height w-full h-full absolute inset-0">
         <AnimatePresence custom={direction} initial={false}>
@@ -325,7 +329,7 @@ const Hero = () => {
               className="flex gap-4 flex-wrap hero-btns-mobile"
             >
               <motion.div whileHover={{ y: -2 }} className="w-full sm:w-auto">
-                <Button
+                <Button id="hero-button"
                   asChild
                   variant={slides[currentSlide].buttonVariant as "default" | "secondary" | "destructive" | "link" | "outline" | "ghost"}
                   className="w-full sm:w-auto px-8 py-6 rounded-full shadow-lg font-semibold text-lg flex items-center gap-2"
@@ -344,6 +348,7 @@ const Hero = () => {
               </motion.div>
               <motion.div whileHover={{ y: -2 }} className="w-full sm:w-auto">
                 <Button
+                id="hero-button"
                   asChild
                   variant={slides[currentSlide].secondButtonVariant as "default" | "secondary" | "destructive" | "link" | "outline" | "ghost"}
                   className="w-full sm:w-auto px-8 py-6 rounded-full shadow-lg font-semibold text-lg flex items-center gap-2"

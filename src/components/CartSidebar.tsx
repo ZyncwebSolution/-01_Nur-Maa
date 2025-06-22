@@ -47,7 +47,7 @@ const CartSidebar: React.FC = () => {
                 <ShoppingCart className="h-8 w-8 text-[#67246A]" />
               </div>
               <h3 className="text-[#121769] font-medium">Your cart is empty</h3>
-              <p className="mt-1 text-[#67246A] text-sm">
+              <p className="mt-1 mb-4 text-[#67246A] text-sm">
                 Add some products to see them here.
               </p>
               <Link

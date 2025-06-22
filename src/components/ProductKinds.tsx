@@ -42,7 +42,7 @@ const ProductSlider = () => {
     <div className="slider-wrapper" style={{ background: 'linear-gradient(135deg, #EBEBD3 0%, #ffffff 100%)' }}>
       <div className="slider-container">
         <div className="slider-header-wrapper">
-          <h1 className="slider-header">Natural Wellness Essentials for Skin, Health & Beauty</h1>
+          <h1 className="slider-header">Natural Wellness Essentials for Health & Beauty</h1>
           <p className="slider-subheader">Discover clean, cruelty-free essentials—from organic skincare and superfoods to long-lasting natural makeup—designed for conscious, radiant living.</p>
         </div>
 
