@@ -3,7 +3,7 @@ import emailjs from '@emailjs/browser';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { toast } from '@/hooks/use-toast';
-import WAConnect from '@wppconnect/wa-js';
+
 
 // EmailJS configuration
 const EMAILJS_SERVICE_ID = 'service_7k8d5pd';
