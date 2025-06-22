@@ -18,6 +18,7 @@ import About from "@/pages/About";
 import Testimonials from "@/pages/Testimonials";
 import Contact from "@/pages/Contact";
 import NotFound from "@/pages/NotFound";
+import MarioTimeline from "@/components/Timeline";
 
 const queryClient = new QueryClient();
 

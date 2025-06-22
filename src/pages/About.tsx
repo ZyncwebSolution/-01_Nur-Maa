@@ -16,7 +16,7 @@ const NurmaaCard: React.FC<{ children: React.ReactNode; className?: string }> = 
 );
 
 const egyptianGradient = 'bg-gradient-to-br from-[#EBEBD3] via-white to-[#FE49AF]';
-const accentBorder = 'border-4 border-[#67246a]';
+const accentBorder = 'border-4 border-[#67246a]'
 
 // Animation variants
 const fadeInUp = {

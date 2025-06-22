@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ChevronLeft, ChevronRight, Heart, ShoppingBag } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Heart, ShoppingBag, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import logo from '@/assets/images/ban1.jpg';
@@ -9,27 +9,42 @@ import logo from '@/assets/images/ban1.jpg';
 const slides = [
   {
     id: 1,
-    title: "Nurtured by Nature",
-    description: "Discover ethically sourced, handcrafted products rooted in tradition and crafted with care.",
+    title: "Crafted with Purpose, Powered by People",
+    description: "Every item carries a story—from small-scale farmers to skilled artisans. Support communities while choosing skincare that truly cares",
     image: logo,
     color: "#67246A",
-    buttonVariant: "default"
+    buttonVariant: "default",
+    buttonText: "Browse the Collection",
+    buttonLink: "/products",
+    secondButtonVariant: "outline",
+    secondButtonText: "Meet the Makers",
+    secondButtonLink: "/about"
   },
   {
     id: 2,
-    title: "Pure, Simple, Organic",
-    description: "We bring you nature's best—no chemicals, no compromises. Just purity in every drop.",
+    title: "Pure, Simple & 100% Organic Skincare",
+    description: "Experience nature’s finest—free from chemicals, cruelty, and compromise. Our organic formulas nourish your skin with pure, natural ingredients sourced responsibly.",
     image: "https://i.pinimg.com/736x/cf/e9/6a/cfe96aca38b049ddbfde022d92fbeec8.jpg",
     color: "#121769",
-    buttonVariant: "secondary"
+    buttonVariant: "secondary",
+    buttonText: "Why Choose Us?",
+    buttonLink: "/about",
+    secondButtonVariant: "destructive",
+    secondButtonText: "Explore Our Collection",
+    secondButtonLink: "/products"
   },
   {
     id: 3,
-    title: "Crafted with Purpose",
-    description: "Every product tells a story—of farmers, artisans, and traditions passed through generations.",
+    title: "Nurtured by Nature, Handcrafted with Care",
+    description: "Shop ethically sourced, handmade products rooted in age-old traditions. Sustainability and skin health meet in every ingredient we use.",
     image: "https://i.pinimg.com/736x/23/1a/2d/231a2d0b342a080fd6f6ebcf55bdcf6a.jpg",
     color: "#FE49AF",
-    buttonVariant: "destructive"
+    buttonVariant: "destructive",
+    buttonText: " Shop Ethical Products",
+    buttonLink: "/about",
+    secondButtonVariant: "secondary",
+    secondButtonText: "Learn Our Story",
+    secondButtonLink: "/products"
   },
 ];
 
@@ -167,7 +182,7 @@ const Hero = () => {
             
           }
           .hero-btns-mobile button {
-            width: 50% !important;
+            width: 100% !important;
             font-size: 0.95rem !important;
             padding: 0.5rem 0 !important;
             min-height: 1rem !important;
@@ -276,103 +291,78 @@ const Hero = () => {
             />
           ))}
         </div>
-
         <div className="relative z-10 flex flex-col justify-center items-start h-full px-6 md:px-20 lg:px-32 hero-content-mobile" style={{height: '100%'}}>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`content-${currentSlide}`}
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              variants={{
-                visible: {
-                  transition: { staggerChildren: 0.1 }
-                }
-              }}
-              className="max-w-2xl w-full"
-            >
-              <motion.h1
-                variants={textVariants}
-                className="text-4xl md:text-6xl font-bold mb-4 leading-tight hero-title-mobile"
-                style={{ color: "#EBEBD3", textShadow: "2px 2px 4px rgba(0,0,0,0.3)" }}
-              >
-                {slides[currentSlide].title}
-              </motion.h1>
-
-              <motion.p
-                variants={textVariants}
-                className="text-xl md:text-2xl mb-8 font-medium hero-desc-mobile"
-                style={{ color: "#EBEBD3", textShadow: "1px 1px 2px rgba(0,0,0,0.3)" }}
-              >
-                {slides[currentSlide].description}
-              </motion.p>
-
-              <motion.div
-                variants={textVariants}
-                className="flex gap-4 flex-wrap hero-btns-mobile"
-              >
-                <motion.div whileHover={{ y: -2 }}>
-                    <Button
-                    asChild
-                    variant={slides[currentSlide].buttonVariant as "default" | "secondary" | "destructive" | "link" | "outline" | "ghost"}
-                    className="px-8 py-6 rounded-full shadow-lg font-semibold text-lg flex items-center gap-2"
-                    >
-                    <a href="/products">
-                      <ShoppingBag className="h-5 w-5" />
-                      Shop Now
-                    </a>
-                    </Button>
-                </motion.div>
-                <motion.div whileHover={{ y: -2 }}>
-                    <Button
-                    asChild
-                    variant="outline"
-                    className="px-8 py-6 rounded-full border-2 font-semibold text-lg flex items-center gap-2"
-                    style={{ 
-                      borderColor: "#EBEBD3",
-                      color: "#EBEBD3",
-                      backgroundColor: "rgba(235, 235, 211, 0.1)"
-                    }}
-                    >
-                    <a href="/about">
-                      <Heart className="h-5 w-5" />
-                      Learn More
-                    </a>
-                    </Button>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </div>
-
-      {/* Scroll Indicator - Hide on small screens */}
-      <div className="hidden sm:block absolute bottom-4 right-4 z-20">
-        <motion.div
-          animate={{ 
-            y: [0, -10, 0],
-            transition: { 
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }
-          }}
-          className="text-[#EBEBD3] text-sm font-medium flex items-center gap-1"
-        >
-          <span>Scroll Down</span>
           <motion.div
-            animate={{ 
-              y: [0, 5, 0],
-              transition: { 
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "easeInOut"
+            key={`content-${currentSlide}`}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={{
+              visible: {
+                transition: { staggerChildren: 0.1 }
               }
             }}
+            className="max-w-2xl w-full"
           >
-            <ChevronRight className="rotate-90" />
+            <motion.h1
+              variants={textVariants}
+              className="text-4xl md:text-6xl font-bold mb-4 leading-tight hero-title-mobile"
+              style={{ color: "#EBEBD3", textShadow: "2px 2px 4px rgba(0,0,0,0.3)" }}
+            >
+              {slides[currentSlide].title}
+            </motion.h1>
+
+            <motion.p
+              variants={textVariants}
+              className="text-xl md:text-2xl mb-8 font-medium hero-desc-mobile"
+              style={{ color: "#EBEBD3", textShadow: "1px 1px 2px rgba(0,0,0,0.3)" }}
+            >
+              {slides[currentSlide].description}
+            </motion.p>
+
+            <motion.div
+              variants={textVariants}
+              className="flex gap-4 flex-wrap hero-btns-mobile"
+            >
+              <motion.div whileHover={{ y: -2 }} className="w-full sm:w-auto">
+                <Button
+                  asChild
+                  variant={slides[currentSlide].buttonVariant as "default" | "secondary" | "destructive" | "link" | "outline" | "ghost"}
+                  className="w-full sm:w-auto px-8 py-6 rounded-full shadow-lg font-semibold text-lg flex items-center gap-2"
+                >
+                  <a href={slides[currentSlide].buttonLink}>
+                    {slides[currentSlide].buttonText === "Browse the Collection" || slides[currentSlide].buttonText === "Explore Our Collection" || slides[currentSlide].buttonText === "Shop Ethical Products" ? (
+                      <ShoppingBag className="h-5 w-5" />
+                    ) : slides[currentSlide].buttonText === "Meet the Makers" || slides[currentSlide].buttonText === "Why Choose Us?" || slides[currentSlide].buttonText === "Learn Our Story" ? (
+                      <Users className="h-5 w-5" />
+                    ) : (
+                      <ShoppingBag className="h-5 w-5" />
+                    )}
+                    {slides[currentSlide].buttonText}
+                  </a>
+                </Button>
+              </motion.div>
+              <motion.div whileHover={{ y: -2 }} className="w-full sm:w-auto">
+                <Button
+                  asChild
+                  variant={slides[currentSlide].secondButtonVariant as "default" | "secondary" | "destructive" | "link" | "outline" | "ghost"}
+                  className="w-full sm:w-auto px-8 py-6 rounded-full shadow-lg font-semibold text-lg flex items-center gap-2"
+                >
+                  <a href={slides[currentSlide].secondButtonLink}>
+                    {slides[currentSlide].secondButtonText === "Meet the Makers" || slides[currentSlide].secondButtonText === "Why Choose Us?" || slides[currentSlide].secondButtonText === "Learn Our Story" ? (
+                      <Users className="h-5 w-5" />
+                    ) : slides[currentSlide].secondButtonText === "Browse the Collection" || slides[currentSlide].secondButtonText === "Explore Our Collection" || slides[currentSlide].secondButtonText === "Shop Ethical Products" ? (
+                      <ShoppingBag className="h-5 w-5" />
+                    ) : (
+                      <ShoppingBag className="h-5 w-5" />
+                    )}
+                    {slides[currentSlide].secondButtonText}
+                  </a>
+                </Button>
+              </motion.div>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

@@ -6,26 +6,26 @@ const WhyChooseUs = () => {
   const features = [
     {
       icon: <GiPlantSeed className="w-8 h-8" color="#EBEBD3" />, // Skincare
-      title: "Homemade Skincare",
-      description: "Crafted with natural ingredients for radiant skin",
+      title: "Natural Skincare Solutions",
+      description: "Crafted with 100% natural ingredients to nourish, heal, and rejuvenate your skin—without toxins or harsh chemicals.",
       color: "linear-gradient(135deg, #121769 0%, #67246A 100%)" // Deep navy gradient
     },
     {
       icon: <GiFarmTractor className="w-8 h-8" color="#EBEBD3" />, // Food
-      title: "Organic Food",
-      description: "Sourced from local farms for pure nourishment",
+      title: "Farm-Fresh Organic Foods",
+      description: "Pure nourishment from locally sourced, chemical-free ingredients. Fresh, clean eating from farm to table.",
       color: "linear-gradient(135deg, #121769 0%, #67246A 100%)"  // Royal blue
     },
     {
       icon: <GiLipstick className="w-8 h-8" color="#EBEBD3" />, // Makeup
-      title: "Natural Makeup",
-      description: "Enhance your beauty with eco-friendly cosmetics",
+      title: "Eco-Friendly Makeup",
+      description: "Eco-friendly cosmetics made with safe, plant-based formulas—perfect for sensitive skin and everyday wear.",
       color: "linear-gradient(135deg, #121769 0%, #67246A 100%)"  // Gold
     },
     {
       icon: <GiTreeGrowth className="w-8 h-8" color="#EBEBD3" />, // Sustainability
-      title: "Sustainable Legacy",
-      description: "Committed to preserving nature and heritage",
+      title: "Heritage Meets Sustainability",
+      description: "We preserve ancient traditions while protecting the planet—through ethical sourcing, minimal waste, and eco-packaging.",
       color:"linear-gradient(135deg, #121769 0%, #67246A 100%)" // Ochre
     }
   ];
@@ -189,7 +189,7 @@ const WhyChooseUs = () => {
               fontWeight: 700
             }}
           >
-            <span className="block">Why Choose NUR-MAA</span>
+            <span className="block">Why NUR-MAA? Clean Beauty with Ancient Roots</span>
           </h2>
           <p 
             className="max-w-2xl mx-auto text-lg leading-relaxed why-nurmaa-subtitle"
@@ -198,7 +198,7 @@ const WhyChooseUs = () => {
               fontFamily: "'Cormorant Garamond', serif"
             }}
           >
-            Where the sacred beauty rituals of ancient Egypt meet cutting-edge cosmetic science
+            Rooted in ancient Egyptian rituals and powered by modern science, NUR-MAA delivers clean, natural skincare, organic food, and eco-conscious beauty for a healthier, sustainable lifestyle.
           </p>
         </motion.div>
 

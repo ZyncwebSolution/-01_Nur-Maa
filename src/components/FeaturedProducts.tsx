@@ -16,9 +16,9 @@ import bg3 from '@/assets/images/bg3.png';
 const featuredProducts: Product[] = [
   {
     id: '1',
-    name: 'Lavender Face Cream',
-    category: 'skincare',
-    description: 'A soothing face cream made with organic lavender essential oil and shea butter.',
+    name: 'Handcrafted Nutritious Granola',
+    category: 'food',
+    description: 'Boost your morning routine with our handmade granola—a tasty, healthy mix of roasted nuts, seeds, and whole grains for sustained energy.',
     price: 24.99,
     image: product3,
     rating: 4.8,
@@ -29,9 +29,9 @@ const featuredProducts: Product[] = [
   },
   {
     id: '2',
-    name: 'Organic Honey',
+    name: 'Sprouted Ragi Powder – Wholesome & Nutritious',
     category: 'food',
-    description: 'Pure, unfiltered honey sourced from local wildflowers and herbs.',
+    description: 'Naturally rich in calcium and fiber, our sprouted ragi powder is made from 100% whole grains to support digestion and bone health.',
     price: 12.99,
     image: product2,
     rating: 5.0,
@@ -42,9 +42,22 @@ const featuredProducts: Product[] = [
   },
   {
     id: '3',
-    name: 'Rosemary Hair Oil',
+    name: 'Natural Lip Scrub with Honey & Sugar',
     category: 'skincare',
-    description: 'Nourishing hair oil with rosemary and coconut oil for healthy, shiny hair.',
+    description: 'Exfoliate and nourish your lips with this 100% natural lip scrub made from honey, cane sugar, and essential oils for soft, smooth lips.',
+    price: 18.99,
+    image: bottle1,
+    rating: 4.6,
+    featured: true,
+    tags: ['vegan', 'bestseller'],
+    bgImage: bg3,
+    fgImage: bg3
+  },
+  {
+    id: '4',
+    name: 'Natural Herbal Eye Shadow',
+    category: 'skincare',
+    description: 'SGentle, plant-based eye shadow made with herbal pigments for bold, skin-safe color.',
     price: 18.99,
     image: bottle1,
     rating: 4.6,
@@ -90,14 +103,14 @@ const FeaturedProducts: React.FC<{ onQuickPurchase?: (product: Product) => void 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-[#EBEBD3] mb-4 featured-header">
-              Featured Products
+              Top Natural Picks for Skin, Hair & Wellness
             </h2>
             <p className="text-lg text-[#ffffff] max-w-2xl mx-auto featured-subheader">
-              Discover our premium selection of natural products
+              Browse our bestselling natural skincare and wellness products—crafted with organic, clean ingredients for a healthier lifestyle.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 featured-grid">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 featured-grid">
             {featuredProducts.map((product) => (
               <ProductCard 
                 key={product.id}
