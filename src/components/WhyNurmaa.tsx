@@ -319,15 +319,7 @@ const WhyChooseUs = () => {
             margin-right:2rem !important;
             height: 200px !important;
           }
-          .why-nurmaa-feature-title {
-            font-size: 1.2rem !important; /* Further reduced title size */
-          }
-          .why-nurmaa-feature-desc {
-            font-size: 0.85rem !important; /* Further reduced description size */
-          }
-          .why-nurmaa-feature {
-            height: 220px !important; /* Increased card height */
-          }
+          
           .mb-16 {
             margin-bottom: 1.2rem !important;
           }
