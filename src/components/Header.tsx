@@ -89,9 +89,9 @@ const Header: React.FC = () => {
         </nav>
 
         <div className="flex items-center md:hidden">
-          <button 
+<button 
             onClick={toggleCart} 
-            className="relative mr-4 group"
+            className="relative mr-4 group w-auto"
             aria-label="Open cart"
           >
             <svg

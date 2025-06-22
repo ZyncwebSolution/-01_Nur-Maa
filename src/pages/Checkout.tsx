@@ -150,11 +150,11 @@ ${formData.message || 'No additional notes'}
   return (
     <div className="min-h-screen bg-[#EBEBD3] px-4 pt-20 pb-12 sm:px-6 lg:px-8 sm:pt-24 lg:pt-28">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-center text-[#121769] mb-12">Checkout</h1>
+        <h1 className="text-4xl font-bold text-center text-[#121769] pt-10 mb-12">Checkout</h1>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           {/* Form */}
           <div className="lg:col-span-7">
-            <div className="bg-white p-8 rounded-2xl shadow-md">
+            <div className="bg-white p-5 rounded-2xl shadow-md">
               <h2 className="text-xl font-semibold text-[#121769] mb-6">Your Information</h2>
               <form onSubmit={handleSubmit} className="space-y-5">
                 {['name', 'email', 'phone', 'address'].map(field => (

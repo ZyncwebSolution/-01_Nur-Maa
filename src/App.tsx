@@ -18,6 +18,7 @@ import About from "@/pages/About";
 import Testimonials from "@/pages/Testimonials";
 import Contact from "@/pages/Contact";
 import NotFound from "@/pages/NotFound";
+import MarioTimeline from "@/components/Timeline";
 
 const queryClient = new QueryClient();
 
@@ -39,8 +40,11 @@ const App = () => (
               <Route path="/cart" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/about" element={<About />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />
               <Route path="/checkout/success" element={<CheckoutSuccess />} />
-              <Route path="/about" element={<About />} /> */}
+              <Route path="/about" element={<About />} /> 
+              <Route path="/about" element={<About />} />
               <Route path="/testimonials" element={<Testimonials />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="*" element={<NotFound />} />

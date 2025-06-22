@@ -1,6 +1,4 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGamepad } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from 'react';
 
 // Type definitions
 type TimelineEventType = 'main' | 'landmark' | 'spin-off' | 'remake';
@@ -10,318 +8,102 @@ interface TimelineEvent {
   date: string;
   title: string;
   description: string;
-  type?: TimelineEventType; // Optional type for future use
+  details: string; // New field for detailed explanation
+  image: string; // New field for image URL
 }
 
-interface MarioTimelineProps {
-  events?: TimelineEvent[]; // Optional custom events
-  theme?: {
-    primaryColor?: string;
-    secondaryColor?: string;
-    textColor?: string;
-  }; // Optional theme customization
-}
-
-// Default events data
 const defaultEvents: TimelineEvent[] = [
   {
     id: 1,
-    date: "September 1985",
-    title: "Super Mario Brothers",
-    description: "The game that started it all! Original platformer for NES that defined the genre.",
-    type: "main"
+    date: "2010",
+    title: "Kitchen Beginnings",
+    description: "The journey begins in a home kitchen.",
+    details: "Nurmaa starts her homemade food and makeup product business from her own kitchen, experimenting with recipes and ingredients.",
+    image: "https://images.unsplash.com/photo-1587370560942-1ca29e8256ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGhvbWUgY29va2luZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 2,
-    date: "June 1996",
-    title: "Super Mario 64",
-    description: "Revolutionary 3D platformer that defined 3D gaming for generations.",
-    type: "landmark"
+    date: "2013",
+    title: "Local Markets",
+    description: "Selling at local markets and fairs.",
+    details: "Nurmaa starts selling her products at local markets and fairs, gaining valuable customer feedback and building a loyal following.",
+    image: "https://images.unsplash.com/photo-1559679844-274493821490?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGxvY2FsJTIwbWFya2V0fGVufDB8fDB8fHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 3,
-    date: "November 2007",
-    title: "Super Mario Galaxy",
-    description: "Wii title with spherical gravity mechanics and orchestrated soundtrack.",
-    type: "landmark"
+    date: "2017",
+    title: "Online Store Launch",
+    description: "Taking the business online.",
+    details: "Nurmaa launches her online store, expanding her reach and making her products available to customers nationwide.",
+    image: "https://images.unsplash.com/photo-1517314067944-3525b6127945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG9ubGluZSUyMHNob3BwaW5nfGVufDB8fDB8fHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 4,
-    date: "October 2017",
-    title: "Super Mario Odyssey",
-    description: "Switch title featuring capture mechanic with Mario's hat and open-world exploration.",
-    type: "landmark"
+    date: "2020",
+    title: "First Retail Store",
+    description: "Opening the first brick-and-mortar store.",
+    details: "Nurmaa opens her first retail store, providing a physical space for customers to experience her products firsthand.",
+    image: "https://images.unsplash.com/photo-1540747903589-440c1449d0a4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHJldGFpbCUyMHN0b3JlfGVufDB8fDB8fHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 5,
-    date: "February 2021",
-    title: "Super Mario 3D World + Bowser's Fury",
-    description: "Switch port with additional content featuring an open-world style experience.",
-    type: "remake"
+    date: "2023",
+    title: "National Recognition",
+    description: "Gaining national recognition for quality and innovation.",
+    details: "Nurmaa receives national recognition for her commitment to quality, innovation, and sustainable business practices.",
+    image: "https://images.unsplash.com/photo-1542744166-e35939358c6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG5hdGlvbmFsJTIwcmVjb2duaXRpb258ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
   }
 ];
 
-const MarioTimeline: React.FC<MarioTimelineProps> = ({ 
-  events = defaultEvents,
-  theme = {}
-}) => {
-  // Destructure theme with defaults
-  const {
-    primaryColor = '#9251ac',
-    secondaryColor = '#f6a4ec',
-    textColor = '#525f7f'
-  } = theme;
+const MarioTimeline: React.FC<{ events?: TimelineEvent[] }> = ({ events = defaultEvents }) => {
+  const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(null);
 
-  // Responsive: detect mobile
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-
-  // Container styles
-  const containerStyle: React.CSSProperties = {
-    boxSizing: 'border-box',
-    background: '#f6f9fc',
-    fontFamily: '"Open Sans", sans-serif',
-    color: textColor,
-    padding: '20px',
-    maxWidth: '1200px',
-    margin: '0 auto'
+  const handleCardClick = (event: TimelineEvent) => {
+    setSelectedEvent(event);
   };
 
-  // Title styles
-  const titleStyle: React.CSSProperties = {
-    margin: '5%',
-    textAlign: 'center',
-    fontSize: '4rem',
-    fontWeight: 100,
-    color: primaryColor
+  const closeDetails = () => {
+    setSelectedEvent(null);
   };
-
-  const subtitleStyle: React.CSSProperties = {
-    margin: '4%',
-    textAlign: 'center',
-    fontSize: '2rem',
-    fontWeight: 100
-  };
-
-  // Timeline styles
-  const timelineStyle: React.CSSProperties = {
-    display: 'flex',
-    flexDirection: 'column',
-    margin: '20px auto',
-    position: 'relative'
-  };
-
-  // Event styles
-  const eventBaseStyle: React.CSSProperties = {
-    marginBottom: '20px',
-    position: 'relative',
-    display: 'flex',
-    margin: '20px 0',
-    borderRadius: '6px',
-    alignSelf: 'center',
-    width: '50vw'
-  };
-
-  const eventReversedStyle: React.CSSProperties = {
-    ...eventBaseStyle,
-    flexDirection: 'row-reverse'
-  };
-
-  // Animation keyframes as inline style string
-  const keyframesStyle = `
-    @keyframes fillLeft {
-      100% { right: 100%; }
-    }
-    @keyframes fillTop {
-      100% { top: 100%; }
-    }
-    @keyframes fillLeftOdd {
-      100% { left: 100%; }
-    }
-  `;
-
-  // Helper to get event type class
-  const getEventTypeClass = (type?: TimelineEventType) => {
-    if (type === 'landmark') return 'timeline__event timeline__event--type2';
-    if (type === 'remake') return 'timeline__event timeline__event--type3';
-    return 'timeline__event';
-  };
-
-  // Color palette for the site
-  const color1 = '#FE49AF'; // main purple
-  const color2 = '#67246a'; // secondary pink
-  const color3 = '#EBEBD3'; // blue
-  const color4 = '#121769'; // dark blue
-
-  // Helper to convert string values to correct CSSProperties types
-  function asFlexDirection(val: string) {
-    return val as React.CSSProperties['flexDirection'];
-  }
-  function asPosition(val: string) {
-    return val as React.CSSProperties['position'];
-  }
-  function asTextTransform(val: string) {
-    return val as React.CSSProperties['textTransform'];
-  }
 
   return (
-    <div style={containerStyle}>
-      <style>{keyframesStyle}</style>
-      <h2 style={{
-        ...titleStyle,
-        color: color1,
-        fontSize: '4.5rem',
-        fontWeight: 700,
-        letterSpacing: '2px',
-        margin: '2% 0 1% 0',
-        animation: 'fadeInDown 1.2s cubic-bezier(0.23, 1, 0.32, 1)'
-      }}>
-        Our Journey: The Nurmaa Story
-      </h2>
-      <h3 style={{
-        ...subtitleStyle,
-        color: color2,
-        fontSize: '2.2rem',
-        fontWeight: 400,
-        margin: '0 0 3% 0',
-        animation: 'fadeIn 2s cubic-bezier(0.23, 1, 0.32, 1)'
-      }}>
-        Milestones and Achievements That Define Us
-      </h3>
-      <style>{`
-        @keyframes fadeInDown {
-          0% { opacity: 0; transform: translateY(-40px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeIn {
-          0% { opacity: 0; }
-          100% { opacity: 1; }
-        }
-        @keyframes fadeInUp {
-          0% { opacity: 0; transform: translateY(40px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
-      <div className="timeline" style={{...timelineStyle, maxWidth: '1300px'}}>
-        {events.map((event, index) => {
-          const isReversed = index % 2 === 0;
-          const eventTypeClass = getEventTypeClass(event.type);
-          let eventColors = { primary: color4, secondary: color1 };
-          if (event.type === 'landmark') eventColors = { primary: color4, secondary: color1 };
-          if (event.type === 'remake') eventColors = { primary: color4, secondary: color1 };
+    <section id="timeline" className="p-8 bg-[#EBEBD3]">
+      <h1 className="text-4xl font-bold text-center mb-6 text-[#67246a]">A Future Timeline Design</h1>
+      <p className="text-center mb-8 text-[#121769]">Explore the milestones that shaped the Nurmaa story.</p>
 
-          const eventStyle: React.CSSProperties = {
-            marginBottom: isMobile ? 16 : 32,
-            position: asPosition('relative'),
-            display: 'flex',
-            margin: isMobile ? '16px 0' : '32px 0',
-            borderRadius: 8,
-            alignSelf: 'center',
-            width: isMobile ? '90vw' : '60vw',
-            flexDirection: asFlexDirection(isMobile ? 'column' : (isReversed ? 'row-reverse' : 'row')),
-            opacity: 0,
-            transform: 'translateY(40px)',
-            animation: `fadeInUp 1.2s ${0.3 + index * 0.2}s cubic-bezier(0.23, 1, 0.32, 1) forwards`,
-          };
-          const dateBoxStyle: React.CSSProperties = {
-            color: eventColors.secondary,
-            fontSize: isMobile ? '1.5rem' : '2rem',
-            fontWeight: 700,
-            background: eventColors.primary,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            whiteSpace: 'nowrap',
-            padding: isMobile ? '0 16px' : '0 32px',
-            borderRadius: isMobile ? '8px 8px 0 0' : (isReversed ? '0 8px 8px 0' : '8px 0 0 8px'),
-            minWidth: isMobile ? 120 : 180,
-            minHeight: isMobile ? 40 : 70,
-            boxShadow: '0 4px 24px 0 rgba(0,0,0,0.08)',
-            width: isMobile ? '100%' : undefined,
-          };
-          const contentBoxStyle: React.CSSProperties = {
-            padding: isMobile ? 16 : 32,
-            boxShadow: '0 30px 60px -12px rgba(50, 50, 93, 0.18), 0 18px 36px -18px rgba(0, 0, 0, 0.18), 0 -12px 36px -8px rgba(0, 0, 0, 0.025)',
-            background: '#fff',
-            width: isMobile ? '100%' : 'calc(50vw - 84px)',
-            borderRadius: isMobile ? '0 0 8px 8px' : (isReversed ? '8px 0 0 8px' : '0 8px 8px 0'),
-            minHeight: isMobile ? 60 : 120,
-          };
-          const iconStyle: React.CSSProperties = {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: eventColors.primary,
-            padding: 28,
-            alignSelf: 'center',
-            margin: '0 32px',
-            background: eventColors.secondary,
-            borderRadius: '100%',
-            width: 60,
-            boxShadow: '0 30px 60px -12px rgba(50, 50, 93, 0.18), 0 18px 36px -18px rgba(0, 0, 0, 0.18), 0 -12px 36px -8px rgba(0, 0, 0, 0.025)',
-            height: 60,
-            position: asPosition('relative'),
-            fontSize: '2rem',
-          };
-          // Animation lines
-          const iconBeforeStyle: React.CSSProperties = {
-            content: '""',
-            width: 2,
-            height: '100%',
-            background: eventColors.secondary,
-            position: asPosition('absolute'),
-            top: '0%',
-            zIndex: -1,
-            left: '50%',
-            transform: 'translateX(-50%)',
-            animation: 'fillTop 2s forwards 0.5s ease-in-out',
-            display: index === events.length - 1 ? 'none' : undefined,
-          };
-          const iconAfterStyle: React.CSSProperties = {
-            content: '""',
-            width: '100%',
-            height: 2,
-            background: eventColors.secondary,
-            position: asPosition('absolute'),
-            left: isReversed ? undefined : 0,
-            right: isReversed ? 0 : undefined,
-            zIndex: -1,
-            top: '50%',
-            transform: 'translateY(-50%)',
-            animation: isReversed ? 'fillLeft 2s forwards 0.5s ease-in-out' : 'fillLeftOdd 2s forwards 0.5s ease-in-out',
-            display: index === events.length - 1 ? 'none' : undefined,
-          };
-          const titleTextStyle: React.CSSProperties = {
-            fontSize: '1.5rem',
-            lineHeight: 1.4,
-            textTransform: asTextTransform('uppercase'),
-            fontWeight: 700,
-            color: eventColors.primary,
-            letterSpacing: '2px',
-            marginBottom: 8,
-          };
-          const descriptionStyle: React.CSSProperties = {
-            flexBasis: '100%',
-            color: textColor,
-            fontSize: '1.1rem',
-            marginTop: 8,
-          };
-          return (
-            <div key={event.id} className={eventTypeClass} style={eventStyle}>
-              <div style={iconStyle}>
-                <FontAwesomeIcon icon={faGamepad} />
-                <div style={iconBeforeStyle} />
-                <div style={iconAfterStyle} />
-              </div>
-              <div style={dateBoxStyle}>{event.date}</div>
-              <div style={contentBoxStyle}>
-                <div style={titleTextStyle}>{event.title}</div>
-                <div style={descriptionStyle}><p>{event.description}</p></div>
-              </div>
+      {/* Timeline Container */}
+      <div className="relative wrap overflow-hidden p-10 h-full bg-white/80 rounded-lg shadow-inner border-2 border-[#FE49AF]/15">
+        {/* Vertical Line */}
+        <div className="border-2-2 absolute border-opacity-70 border-[#FE49AF] h-full border-l-2 left-10"></div>
+
+        {events.map((event, index) => (
+          <div key={event.id} className="mb-12 flex items-center w-full">
+             {/* Event Marker */}
+             <div className="z-20 flex items-center justify-center bg-[#FE49AF] shadow-lg shadow-[#FE49AF]/50 w-8 h-8 rounded-full absolute left-6 -translate-x-1/2">
+              <span className="text-[#121769] font-bold text-sm">{index + 1}</span>
             </div>
-          );
-        })}
+            {/* Event Card */}
+            <div className="order-2 bg-white/80 text-[#121769] rounded-xl p-6 shadow-lg transition-all duration-500 transform hover:scale-105 hover:shadow-[#FE49AF]/30 cursor-pointer w-full ml-16 border-2 border-[#FE49AF]/15" onClick={() => handleCardClick(event)}>
+              <img src={event.image} alt={event.title} className="w-full h-40 object-cover rounded-t-xl mb-4" />
+              <h2 className="text-xl font-semibold text-[#121769] mb-2">{event.title}</h2>
+              <p className="text-gray-400 mb-4">{event.date}</p>
+              <p>{event.description}</p>
+            </div>
+          </div>
+        ))}
       </div>
-    </div>
+
+      {selectedEvent && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
+          <div className="bg-white/80 text-[#121769] p-8 rounded-lg shadow-xl max-w-md w-full border-2 border-[#FE49AF]/15">
+            <img src={selectedEvent.image} alt={selectedEvent.title} className="w-full h-48 object-cover rounded-t-lg mb-4" />
+            <h2 className="text-2xl font-bold mb-4 text-[#FE49AF]">{selectedEvent.title}</h2>
+            <p className="mb-6 text-[#121769]">{selectedEvent.details}</p>
+            <button className="bg-[#FE49AF] hover:bg-[#67246a] text-white px-6 py-3 rounded-lg transition-colors duration-300" onClick={closeDetails}>Close</button>
+          </div>
+        </div>
+      )}
+    </section>
   );
 };
 

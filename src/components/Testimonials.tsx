@@ -288,14 +288,15 @@ const TestimonialsGrid = () => {
           <p className="mb-6" style={{ color: COLORS.accent }}>
             Thousands of satisfied customers can't be wrong. Try our products today and experience the difference.
           </p>
-          <motion.button
+            <motion.button
             className="px-8 py-3 rounded-full font-medium shadow-md"
             style={{ background: `linear-gradient(to right, ${COLORS.highlight}, ${COLORS.accent})`, color: '#fff' }}
             whileHover={{ scale: 1.05, boxShadow: `0 5px 15px ${COLORS.highlight}66` }}
             whileTap={{ scale: 0.95 }}
-          >
+            onClick={() => window.location.href = '/products'}
+            >
             Shop Now
-          </motion.button>
+            </motion.button>
         </motion.div>
       </div>
     </section>

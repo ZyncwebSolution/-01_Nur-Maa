@@ -1,5 +1,5 @@
 // FeaturedProducts.tsx
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCard from './ProductCard';
 import { Product } from '@/lib/types';
@@ -58,6 +58,23 @@ const featuredProducts: Product[] = [
 const FeaturedProducts: React.FC<{ onQuickPurchase?: (product: Product) => void }> = ({ onQuickPurchase }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, amount: 0.1 });
+  const [mobileIndex, setMobileIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
+  // Mobile swipe handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX !== null) {
+      const diffX = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(diffX) > 40) {
+        if (diffX > 0) setMobileIndex((prev) => (prev - 1 + featuredProducts.length) % featuredProducts.length);
+        else setMobileIndex((prev) => (prev + 1) % featuredProducts.length);
+      }
+    }
+    setTouchStartX(null);
+  };
 
   return (
     <motion.section 
@@ -78,28 +95,56 @@ const FeaturedProducts: React.FC<{ onQuickPurchase?: (product: Product) => void 
         className="absolute inset-0 opacity-50" 
         style={{ background: 'linear-gradient(to right, #1b024b, #4a0124)' }}
       ></div>
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#EBEBD3] mb-4">
+      <div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+        <div className="text-center mb-8 md:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#EBEBD3] mb-3 sm:mb-4">
             Featured Products
           </h2>
-          <p className="text-lg text-[#ffffff] max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-[#ffffff] max-w-2xl mx-auto">
             Discover our premium selection of natural products
           </p>
         </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Desktop grid */}
+        <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {featuredProducts.map((product) => (
-            <ProductCard 
+             <ProductCard 
               key={product.id}
-              product={product} 
+              product={product}
               viewType="grid"
               onQuickPurchase={onQuickPurchase}
             />
           ))}
         </div>
+        {/* Mobile slider */}
+        <div className="sm:hidden w-full flex flex-col items-center">
+          <div
+            className="w-full flex justify-center items-center relative"
+            style={{ minHeight: 320 }}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            <div className="w-full max-w-xs mx-auto">
+              <ProductCard 
+                product={featuredProducts[mobileIndex]}
+                viewType="grid"
+                onQuickPurchase={onQuickPurchase}
+              />
+            </div>
+            {/* Slide dots */}
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 mt-2">
+              {featuredProducts.map((_, idx) => (
+                <button
+                  key={idx}
+                  className={`w-2 h-2 rounded-full transition-all duration-200 ${mobileIndex === idx ? 'bg-[#EBEBD3]' : 'bg-[#EBEBD3] opacity-50'}`}
+                  onClick={() => setMobileIndex(idx)}
+                  aria-label={`Go to slide ${idx+1}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
+     
     </motion.section>
   );
 };
