@@ -63,6 +63,7 @@ const ProductSlider = () => {
           ))}
         </div>
       </div>
+    
     </div>
   );
 };

@@ -511,13 +511,14 @@ body {
     font-size: 1.8rem;
   }
   
+  
   .product-container {
-    width: 260px;
+    width: 360px;
     height: 480px;
   }
   
   .product-main-image {
-    width: 160px;
+    width: 260px;
     height: 320px;
   }
   

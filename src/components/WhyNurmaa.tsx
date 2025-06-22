@@ -297,6 +297,30 @@ const WhyChooseUs = () => {
           </div>
         </motion.div>
       </div>
+
+      <style>{`
+      @media (max-width: 640px) {
+        .py-20 { padding-top: 1.1rem; padding-bottom: 1.1rem; }
+        .px-4 { padding-left: 0.7rem; padding-right: 0.7rem; }
+        .mb-16 { margin-bottom: 0.7rem; }
+        .mb-6 { margin-bottom: 0.3rem; }
+        .text-4xl { font-size: 1.2rem; }
+        .md\:text-5xl { font-size: 1.5rem; }
+        .max-w-2xl { max-width: 97vw; }
+        .text-lg { font-size: 0.95rem; }
+        .grid { gap: 0.7rem; }
+        .grid-cols-1 { grid-template-columns: 1fr; }
+        .gap-8 { gap: 0.7rem; }
+        .rounded-xl { border-radius: 0.7rem; }
+        .p-8 { padding: 0.7rem; }
+        .w-16, .h-16 { width: 2.5rem; height: 2.5rem; }
+        .mb-6 { margin-bottom: 0.3rem; }
+        .text-2xl { font-size: 1.05rem; }
+        .mb-3 { margin-bottom: 0.15rem; }
+        .mt-20 { margin-top: 1.1rem; }
+        .max-w-7xl { max-width: 99vw; margin-left: 0.4rem; margin-right: 0.4rem; }
+      }
+    `}</style>
     </section>
   );
 };
