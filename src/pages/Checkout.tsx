@@ -1,20 +1,12 @@
 import React, { useState } from 'react';
-import emailjs from '@emailjs/browser';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { toast } from '@/hooks/use-toast';
 import WAConnect from '@wppconnect/wa-js';
-
-// EmailJS configuration
-const EMAILJS_SERVICE_ID = 'service_7k8d5pd';
-const EMAILJS_TEMPLATE_ID = 'template_cpoou7s';
-const EMAILJS_PUBLIC_KEY = 'FEPtogQBClrAWw3I1';
+import Chatbot from '@/components/Chatbot';
 
 // WhatsApp business number
 const WHATSAPP_NUMBER = '918667212177'; // Replace with your business number
-
-// Init EmailJS
-emailjs.init(EMAILJS_PUBLIC_KEY);
 
 const Checkout: React.FC = () => {
   const { items, totalPrice, clearCart } = useCart();
@@ -79,36 +71,36 @@ ${orderItems}
 ${formData.message || 'No additional notes'}
       `;
 
-      // Send email
-      const emailResponse = await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          user_name: formData.name,
-          user_email: formData.email,
-          user_phone: formData.phone,
-          delivery_address: formData.address,
-          customer_notes: formData.message || 'No additional notes',
+      // Send email via FormSubmit (like Contact page)
+      const emailResponse = await fetch('https://formsubmit.co/ajax/diyweboffi@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          address: formData.address,
+          message: formData.message || 'No additional notes',
           order_items: orderItems,
           order_total: `₹${totalPrice.toFixed(2)}`,
           order_id: `NM-${Date.now()}`,
-          store_email: 'diyweboffi@gmail.com'
-        }
-      );
+          subject: `Nurmaa Order: NM-${Date.now()}`,
+        }),
+      });
 
-      // Send WhatsApp message
+      // WhatsApp message (keep as is)
       const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(orderSummary)}`;
       
-      if (emailResponse.status === 200) {
+      if (emailResponse.ok) {
         clearCart();
         toast({
           title: "Order Placed Successfully!",
           description: "Check your email for order confirmation.",
         });
-
-        // Open WhatsApp in new window
         window.open(whatsappUrl, '_blank');
-        
         navigate("/checkout/success");
       } else {
         throw new Error('Failed to send order confirmation');
@@ -255,6 +247,7 @@ ${formData.message || 'No additional notes'}
           </div>
         </div>
       </div>
+      <Chatbot />
     </div>
   );
 };
