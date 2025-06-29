@@ -117,7 +117,7 @@ const Header: React.FC = () => {
 
           <button
             onClick={toggleMobileMenu}
-            className="text-[#121769] hover:text-[#FE49AF] transition-colors"
+            className="text-[121769#] hover:text-[#FE49AF] transition-colors"
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMobileMenuOpen}
           >

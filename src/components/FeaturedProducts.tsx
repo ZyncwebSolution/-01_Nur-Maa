@@ -11,6 +11,7 @@ import bottle1 from '@/assets/images/—Pngtree—blue perfume glass bottle eleg
 import bg1 from '@/assets/images/fg3.png';
 import bg2 from '@/assets/images/bg2.png';
 import bg3 from '@/assets/images/bg3.png';
+import Background from '@/assets/images/Background.png'; // Import your background image
  // Import your light background image
 
 const featuredProducts: Product[] = [
@@ -83,24 +84,24 @@ const FeaturedProducts: React.FC<{ onQuickPurchase?: (product: Product) => void 
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       style={{
-        backgroundImage: 'url(https://i.pinimg.com/736x/89/4b/e4/894be4cc36d0e777a2c5129d6c4dd17d.jpg)',
-        backgroundSize: 'cover',
+        backgroundImage: `url(${Background})`, // Use the imported background image
+        // backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
-        backgroundRepeat: 'no-repeat'
+        // backgroundRepeat: 'no-repeat'
       }}
     >
       {/* Semi-transparent overlay to ensure text readability */}
       <div 
         className="absolute inset-0 opacity-50" 
-        style={{ background: 'linear-gradient(to right, #1b024b, #4a0124)' }}
+        style={{ background: 'linear-gradient(to right, #EBEBD3, #FE49AF)' }}
       ></div>
       <div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="text-center mb-8 md:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#EBEBD3] mb-3 sm:mb-4">
+          <h2 className="text-3xl sm:text-3xl md:text-4xl font-bold text-[#121769] mb-3 sm:mb-4">
             Featured Products
           </h2>
-          <p className="text-base sm:text-lg text-[#ffffff] max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-[#67246a] max-w-2xl mx-auto">
             Discover our premium selection of natural products
           </p>
         </div>

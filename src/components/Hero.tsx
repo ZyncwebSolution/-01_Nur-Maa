@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronLeft, ChevronRight, Heart, ShoppingBag, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import logo from '@/assets/images/ban1.jpg';
+import logo from '@/assets/images/nurmaa6.jpg';
+import slide1 from '@/assets/images/nurmaa5.jpg';
 
 const slides = [
   {
@@ -24,7 +25,7 @@ const slides = [
     id: 2,
     title: "Pure, Simple & 100% Organic Skincare",
     description: "Experience nature’s finest—free from chemicals, cruelty, and compromise. Our organic formulas nourish your skin with pure, natural ingredients sourced responsibly.",
-    image: "https://i.pinimg.com/736x/cf/e9/6a/cfe96aca38b049ddbfde022d92fbeec8.jpg",
+    image: slide1,
     color: "#121769",
     buttonVariant: "secondary",
     buttonText: "Why Choose Us?",
@@ -37,7 +38,7 @@ const slides = [
     id: 3,
     title: "Nurtured by Nature, Handcrafted with Care",
     description: "Shop ethically sourced, handmade products rooted in age-old traditions. Sustainability and skin health meet in every ingredient we use.",
-    image: "https://i.pinimg.com/736x/23/1a/2d/231a2d0b342a080fd6f6ebcf55bdcf6a.jpg",
+    image: slide1,
     color: "#FE49AF",
     buttonVariant: "destructive",
     buttonText: " Shop Ethical Products",
