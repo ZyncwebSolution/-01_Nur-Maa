@@ -508,6 +508,9 @@ body {
   }
   
   .slider-header {
+
+    font-size: 1.8rem;
+
     font-size: 1.1rem;
     margin-bottom: 0.5rem;
   }
@@ -515,7 +518,9 @@ body {
   .slider-subheader {
     font-size: 0.9rem;
     padding: 0.2rem 0.5rem;
+
   }
+  
   
   .product-container {
     width: 360px;

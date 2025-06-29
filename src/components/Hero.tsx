@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
+
 import { ArrowRight, ChevronLeft, ChevronRight, Heart, ShoppingBag, Users } from "lucide-react";
 import { Link } from "react-router-dom";
-
-import logo from '@/assets/images/nurmaa6.jpg';
-import slide1 from '@/assets/images/nurmaa5.jpg';
+import { Button } from "@/components/ui/button";
+import logo from '@/assets/images/ban1.jpg';
 
 const slides = [
   {
@@ -25,7 +24,7 @@ const slides = [
     id: 2,
     title: "Pure, Simple & 100% Organic Skincare",
     description: "Experience nature’s finest—free from chemicals, cruelty, and compromise. Our organic formulas nourish your skin with pure, natural ingredients sourced responsibly.",
-    image: slide1,
+    image: "https://i.pinimg.com/736x/cf/e9/6a/cfe96aca38b049ddbfde022d92fbeec8.jpg",
     color: "#121769",
     buttonVariant: "secondary",
     buttonText: "Why Choose Us?",
@@ -38,7 +37,7 @@ const slides = [
     id: 3,
     title: "Nurtured by Nature, Handcrafted with Care",
     description: "Shop ethically sourced, handmade products rooted in age-old traditions. Sustainability and skin health meet in every ingredient we use.",
-    image: slide1,
+    image: "https://i.pinimg.com/736x/23/1a/2d/231a2d0b342a080fd6f6ebcf55bdcf6a.jpg",
     color: "#FE49AF",
     buttonVariant: "destructive",
     buttonText: " Shop Ethical Products",
@@ -50,96 +49,97 @@ const slides = [
 ];
 
 const Hero = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [direction, setDirection] = useState(1);
-  const [isHovering, setIsHovering] = useState(false);
-  const slideInterval = useRef(null);
-  const touchStartX = useRef(null);
+	const [currentSlide, setCurrentSlide] = useState(0);
+	const [direction, setDirection] = useState(1);
+	const [isHovering, setIsHovering] = useState(false);
+	const slideInterval = useRef<any>(null);
+	const touchStartX = useRef<any>(null);
 
-  useEffect(() => {
-    if (!isHovering) {
-      startSlideTimer();
-    }
-    return () => stopSlideTimer();
-  }, [currentSlide, isHovering]);
+	useEffect(() => {
+		if (!isHovering) {
+			startSlideTimer();
+		}
+		return () => stopSlideTimer();
+	}, [currentSlide, isHovering]);
 
-  const startSlideTimer = () => {
-    stopSlideTimer();
-    slideInterval.current = setInterval(() => {
-      setDirection(1);
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 6000);
-  };
+	const startSlideTimer = () => {
+		stopSlideTimer();
+		slideInterval.current = setInterval(() => {
+			setDirection(1);
+			setCurrentSlide((prev) => (prev + 1) % slides.length);
+		}, 6000);
+	};
 
-  const stopSlideTimer = () => {
-    if (slideInterval.current) clearInterval(slideInterval.current);
-  };
+	const stopSlideTimer = () => {
+		if (slideInterval.current) clearInterval(slideInterval.current);
+	};
 
-  const scrollToSection = () => {
-    const section = document.getElementById("scroll-target");
-    if (section) section.scrollIntoView({ behavior: "smooth" });
-  };
+	const scrollToSection = () => {
+		const section = document.getElementById("scroll-target");
+		if (section) section.scrollIntoView({ behavior: "smooth" });
+	};
 
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX;
-    stopSlideTimer();
-  };
+	const handleTouchStart = (e:any) => {
+		touchStartX.current = e.touches[0].clientX;
+		stopSlideTimer();
+	};
 
-  const handleTouchEnd = (e) => {
-    if (touchStartX.current !== null) {
-      const diffX = e.changedTouches[0].clientX - touchStartX.current;
-      if (Math.abs(diffX) > 50) {
-        if (diffX > 0) {
-          setDirection(-1);
-          setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-        } else {
-          setDirection(1);
-          setCurrentSlide((prev) => (prev + 1) % slides.length);
-        }
-      }
-    }
-    touchStartX.current = null;
-    startSlideTimer();
-  };
+	const handleTouchEnd = (e:any) => {
+		if (touchStartX.current !== null) {
+			const diffX = e.changedTouches[0].clientX - touchStartX.current;
+			if (Math.abs(diffX) > 50) {
+				if (diffX > 0) {
+					setDirection(-1);
+					setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+				} else {
+					setDirection(1);
+					setCurrentSlide((prev) => (prev + 1) % slides.length);
+				}
+			}
+		}
+		touchStartX.current = null;
+		startSlideTimer();
+	};
 
-  const goToSlide = (index) => {
-    setDirection(index > currentSlide ? 1 : -1);
-    setCurrentSlide(index);
-  };
+	const goToSlide = (index:number) => {
+		setDirection(index > currentSlide ? 1 : -1);
+		setCurrentSlide(index);
+	};
 
-  const goToPrevSlide = () => {
-    setDirection(-1);
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
+	const goToPrevSlide = () => {
+		setDirection(-1);
+		setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+	};
 
-  const goToNextSlide = () => {
-    setDirection(1);
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
+	const goToNextSlide = () => {
+		setDirection(1);
+		setCurrentSlide((prev) => (prev + 1) % slides.length);
+	};
 
-  const slideVariants = {
-    enter: (direction) => ({
-      x: direction > 0 ? "100%" : "-100%",
-      opacity: 0
-    }),
-    center: {
-      x: 0,
-      opacity: 1
-    },
-    exit: (direction) => ({
-      x: direction < 0 ? "100%" : "-100%",
-      opacity: 0
-    })
-  };
+	const slideVariants = {
+		enter: (direction) => ({
+			x: direction > 0 ? "100%" : "-100%",
+			opacity: 0
+		}),
+		center: {
+			x: 0,
+			opacity: 1
+		},
+		exit: (direction) => ({
+			x: direction < 0 ? "100%" : "-100%",
+			opacity: 0
+		})
+	};
 
-  const textVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
-    }
-  };
+	const textVariants = {
+		hidden: { opacity: 0, y: 20 },
+		visible: { 
+			opacity: 1, 
+			y: 0,
+			transition: { duration: 0.6, ease: "easeOut" }
+		}
+	};
+
 
   return (
     <div 
@@ -256,29 +256,6 @@ const Hero = () => {
           </motion.div>
         </AnimatePresence>
 
-        <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-20">
-          <motion.button
-            onClick={goToPrevSlide}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="bg-[#EBEBD3] bg-opacity-80 hover:bg-opacity-100 p-3 rounded-full shadow-lg hero-arrow-btn"
-            style={{ color: slides[currentSlide].color }}
-          >
-            <ChevronLeft className="hero-arrow-icon" size={28} strokeWidth={2.5} />
-          </motion.button>
-        </div>
-        <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-20">
-          <motion.button
-            onClick={goToNextSlide}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="bg-[#EBEBD3] bg-opacity-80 hover:bg-opacity-100 p-3 rounded-full shadow-lg hero-arrow-btn"
-            style={{ color: slides[currentSlide].color }}
-          >
-            <ChevronRight className="hero-arrow-icon" size={28} strokeWidth={2.5} />
-          </motion.button>
-        </div>
-
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex gap-3 hero-nav-mobile">
           {slides.map((_, index) => (
             <motion.button
@@ -331,11 +308,11 @@ const Hero = () => {
             >
               <motion.div whileHover={{ y: -2 }} className="w-full sm:w-auto">
                 <Button id="hero-button"
-                  asChild
+                  
                   variant={slides[currentSlide].buttonVariant as "default" | "secondary" | "destructive" | "link" | "outline" | "ghost"}
                   className="w-full sm:w-auto px-8 py-6 rounded-full shadow-lg font-semibold text-lg flex items-center gap-2"
                 >
-                  <a href={slides[currentSlide].buttonLink}>
+                  <Link to={slides[currentSlide].buttonLink as string}>
                     {slides[currentSlide].buttonText === "Browse the Collection" || slides[currentSlide].buttonText === "Explore Our Collection" || slides[currentSlide].buttonText === "Shop Ethical Products" ? (
                       <ShoppingBag className="h-5 w-5" />
                     ) : slides[currentSlide].buttonText === "Meet the Makers" || slides[currentSlide].buttonText === "Why Choose Us?" || slides[currentSlide].buttonText === "Learn Our Story" ? (
@@ -344,17 +321,17 @@ const Hero = () => {
                       <ShoppingBag className="h-5 w-5" />
                     )}
                     {slides[currentSlide].buttonText}
-                  </a>
+                  </Link>
                 </Button>
               </motion.div>
               <motion.div whileHover={{ y: -2 }} className="w-full sm:w-auto">
                 <Button
                 id="hero-button"
-                  asChild
+                  
                   variant={slides[currentSlide].secondButtonVariant as "default" | "secondary" | "destructive" | "link" | "outline" | "ghost"}
                   className="w-full sm:w-auto px-8 py-6 rounded-full shadow-lg font-semibold text-lg flex items-center gap-2"
                 >
-                  <a href={slides[currentSlide].secondButtonLink}>
+                  <Link to={slides[currentSlide].secondButtonLink as string}>
                     {slides[currentSlide].secondButtonText === "Meet the Makers" || slides[currentSlide].secondButtonText === "Why Choose Us?" || slides[currentSlide].secondButtonText === "Learn Our Story" ? (
                       <Users className="h-5 w-5" />
                     ) : slides[currentSlide].secondButtonText === "Browse the Collection" || slides[currentSlide].secondButtonText === "Explore Our Collection" || slides[currentSlide].secondButtonText === "Shop Ethical Products" ? (
@@ -363,7 +340,7 @@ const Hero = () => {
                       <ShoppingBag className="h-5 w-5" />
                     )}
                     {slides[currentSlide].secondButtonText}
-                  </a>
+                  </Link>
                 </Button>
               </motion.div>
             </motion.div>

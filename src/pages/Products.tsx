@@ -561,14 +561,19 @@ const Products: React.FC = () => {
                 ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6'
                 : 'space-y-4 sm:space-y-6'
             }>
-              {filteredProducts.map(product => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  viewType={activeView}
-                  onQuickPurchase={handleQuickPurchase}
-                />
-              ))}
+              {filteredProducts.length === 0 ? (
+                <div className="col-span-full text-center text-[#121769] py-12 text-lg font-semibold">
+                  No products found.
+                </div>
+              ) : (
+                filteredProducts.map(product => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    onQuickPurchase={handleQuickPurchase}
+                  />
+                ))
+              )}
             </div>
           </div>
         </div>

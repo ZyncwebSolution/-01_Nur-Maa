@@ -1,4 +1,9 @@
+
+import React from 'react';
+import { Gamepad2 } from 'lucide-react';
+
 import React, { useState } from 'react';
+
 
 // Type definitions
 type TimelineEventType = 'main' | 'landmark' | 'spin-off' | 'remake';
@@ -67,6 +72,241 @@ const MarioTimeline: React.FC<{ events?: TimelineEvent[] }> = ({ events = defaul
   };
 
   return (
+
+    <div style={containerStyle}>
+      <style>{`
+        @keyframes fadeInDown {
+          0% { opacity: 0; transform: translateY(-40px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+          0% { opacity: 0; }
+          100% { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+          0% { opacity: 0; transform: translateY(40px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fillLeft {
+          100% { right: 100%; }
+        }
+        @keyframes fillTop {
+          100% { top: 100%; }
+        }
+        @keyframes fillLeftOdd {
+          100% { left: 100%; }
+        }
+      `}</style>
+
+      <h2 style={titleStyle}>Our Journey: The Nurmaa Story</h2>
+      <h3 style={subtitleStyle}>Milestones and Achievements That Define Us</h3>
+
+      <div style={timelineStyle}>
+        {events.map((event, index) => {
+          const eventColors = {
+            primary: color4,
+            secondary: color1,
+            ...(event.type === 'landmark' && { secondary: color1 }),
+            ...(event.type === 'remake' && { secondary: color1 })
+          };
+
+          // Mobile-specific layout
+          if (isMobile) {
+            return (
+              <div key={event.id} style={{
+                position: 'relative',
+                marginBottom: '30px',
+                opacity: 0,
+                animation: `fadeInUp 1.2s ${0.3 + index * 0.2}s forwards`
+              }}>
+                {/* Date box - top */}
+                <div style={{
+                  background: eventColors.primary,
+                  color: eventColors.secondary,
+                  padding: '8px 12px',
+                  borderRadius: '8px 8px 0 0',
+                  fontWeight: 700,
+                  fontSize: '1.1rem',
+                  textAlign: 'center'
+                }}>
+                  {event.date}
+                </div>
+
+                {/* Content box */}
+                <div style={{
+                  background: '#fff',
+                  padding: '16px',
+                  borderRadius: '0 0 8px 8px',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                }}>
+                  <h3 style={{
+                    fontSize: '1.1rem',
+                    fontWeight: 700,
+                    color: eventColors.primary,
+                    margin: '0 0 8px 0',
+                    textTransform: 'uppercase' as const,
+                    letterSpacing: '1px'
+                  }}>
+                    {event.title}
+                  </h3>
+                  
+                  <p style={{
+                    fontSize: '0.9rem',
+                    lineHeight: '1.5',
+                    color: textColor,
+                    margin: 0
+                  }}>
+                    {event.description}
+                  </p>
+                </div>
+
+                {/* Connector line (except last item) */}
+                {index < events.length - 1 && (
+                  <div style={{
+                    position: 'absolute',
+                    bottom: '-20px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    height: '20px',
+                    width: '2px',
+                    background: eventColors.secondary,
+                    animation: 'fillTop 1s forwards 0.5s'
+                  }} />
+                )}
+              </div>
+            );
+          }
+
+          // Desktop layout
+          return (
+            <div key={event.id} style={{
+              display: 'flex',
+              position: 'relative',
+              margin: '30px 0',
+              alignItems: 'center',
+              opacity: 0,
+              animation: `fadeInUp 1.2s ${0.3 + index * 0.2}s forwards`
+            }}>
+              {/* Left side (date) */}
+              <div style={{
+                flex: 1,
+                display: 'flex',
+                justifyContent: index % 2 === 0 ? 'flex-end' : 'flex-start',
+                padding: index % 2 === 0 ? '0 30px 0 0' : '0 0 0 30px'
+              }}>
+                {index % 2 === 0 && (
+                  <div style={{
+                    background: eventColors.primary,
+                    color: eventColors.secondary,
+                    padding: '12px 24px',
+                    borderRadius: '8px 0 0 8px',
+                    fontWeight: 700,
+                    fontSize: '1.2rem',
+                    textAlign: 'center'
+                  }}>
+                    {event.date}
+                  </div>
+                )}
+              </div>
+
+              {/* Center icon */}
+              <div style={{
+                position: 'relative',
+                background: eventColors.secondary,
+                width: '60px',
+                height: '60px',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: eventColors.primary,
+                boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                flexShrink: 0,
+                zIndex: 2
+              }}>
+                {/* <FontAwesomeIcon icon={faGamepad} /> */}
+                <Gamepad2 size={28} />
+              </div>
+
+              {/* Right side (content) */}
+              <div style={{
+                flex: 1,
+                display: 'flex',
+                justifyContent: index % 2 === 0 ? 'flex-start' : 'flex-end',
+                padding: index % 2 === 0 ? '0 0 0 30px' : '0 30px 0 0'
+              }}>
+                {index % 2 !== 0 && (
+                  <div style={{
+                    background: eventColors.primary,
+                    color: eventColors.secondary,
+                    padding: '12px 24px',
+                    borderRadius: '0 8px 8px 0',
+                    fontWeight: 700,
+                    fontSize: '1.2rem',
+                    textAlign: 'center'
+                  }}>
+                    {event.date}
+                  </div>
+                )}
+              </div>
+
+              {/* Content box (alternating sides) */}
+              <div style={{
+                position: 'absolute',
+                [index % 2 === 0 ? 'left' : 'right']: 'calc(50% + 50px)',
+                width: 'calc(50% - 90px)',
+                background: '#fff',
+                padding: '20px',
+                borderRadius: '8px',
+                boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
+                top: '50%',
+                transform: 'translateY(-50%)'
+              }}>
+                <h3 style={{
+                  fontSize: '1.3rem',
+                  fontWeight: 700,
+                  color: eventColors.primary,
+                  margin: '0 0 10px 0',
+                  textTransform: 'uppercase' as const,
+                  letterSpacing: '1px'
+                }}>
+                  {event.title}
+                </h3>
+                <p style={{
+                  fontSize: '1rem',
+                  lineHeight: '1.5',
+                  color: textColor,
+                  margin: 0
+                }}>
+                  {event.description}
+                </p>
+              </div>
+
+              {/* Connector lines */}
+              <div style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                width: '100%',
+                height: '2px',
+                background: eventColors.secondary,
+                transform: 'translateY(-50%)',
+                zIndex: 1,
+                animation: index % 2 === 0 ? 'fillLeft 1s forwards 0.5s' : 'fillLeftOdd 1s forwards 0.5s'
+              }} />
+              {index < events.length - 1 && (
+                <div style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: '50%',
+                  width: '2px',
+                  height: '30px',
+                  background: eventColors.secondary,
+                  transform: 'translateX(-50%)',
+                  animation: 'fillTop 1s forwards 0.5s'
+                }} />
+              )}
+
     <section id="timeline" className="p-8 bg-[#EBEBD3]">
       <h1 className="text-4xl font-bold text-center mb-6 text-[#67246a]">A Future Timeline Design</h1>
       <p className="text-center mb-8 text-[#121769]">Explore the milestones that shaped the Nurmaa story.</p>
@@ -81,6 +321,7 @@ const MarioTimeline: React.FC<{ events?: TimelineEvent[] }> = ({ events = defaul
              {/* Event Marker */}
              <div className="z-20 flex items-center justify-center bg-[#FE49AF] shadow-lg shadow-[#FE49AF]/50 w-8 h-8 rounded-full absolute left-6 -translate-x-1/2">
               <span className="text-[#121769] font-bold text-sm">{index + 1}</span>
+
             </div>
             {/* Event Card */}
             <div className="order-2 bg-white/80 text-[#121769] rounded-xl p-6 shadow-lg transition-all duration-500 transform hover:scale-105 hover:shadow-[#FE49AF]/30 cursor-pointer w-full ml-16 border-2 border-[#FE49AF]/15" onClick={() => handleCardClick(event)}>
