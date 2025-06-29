@@ -114,9 +114,9 @@ const WhyChooseUs = () => {
 
   return (
     <section 
-      className="py-20 px-4 relative overflow-hidden why-nurmaa-mobile"
+      className="py-20 px-4 relative overflow-hidden"
       style={{ 
-        backgroundColor: "#F0EDE5",
+        backgroundColor: "#F0EDE5", // Papyrus color
         backgroundImage: `
           linear-gradient(to bottom, rgba(210,180,140,0.1) 1px, transparent 1px),
           linear-gradient(to right, rgba(210,180,140,0.1) 1px, transparent 1px)
@@ -175,14 +175,14 @@ const WhyChooseUs = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Animated title section */}
         <motion.div 
-          className="text-center mb-16 why-nurmaa-title"
+          className="text-center mb-16"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
           <h2 
-            className="text-4xl md:text-5xl font-bold mb-6 tracking-tight why-nurmaa-title"
+            className="text-4xl md:text-5xl font-bold mb-6 tracking-tight"
             style={{ 
               color: '#0C1446',
               fontFamily: "'EB Garamond', serif",
@@ -191,8 +191,9 @@ const WhyChooseUs = () => {
           >
             <span className="block">Why NUR-MAA? Clean Beauty with Ancient Roots</span>
           </h2>
+          
           <p 
-            className="max-w-2xl mx-auto text-lg leading-relaxed why-nurmaa-subtitle"
+            className="max-w-2xl mx-auto text-lg leading-relaxed"
             style={{ 
               color: '#3A4E7A',
               fontFamily: "'Cormorant Garamond', serif"
@@ -204,7 +205,7 @@ const WhyChooseUs = () => {
 
         {/* Features grid */}
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 why-nurmaa-grid"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -213,7 +214,7 @@ const WhyChooseUs = () => {
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              className="relative overflow-hidden rounded-xl p-8 shadow-lg border border-opacity-20 why-nurmaa-feature"
+              className="relative overflow-hidden rounded-xl p-8 shadow-lg border border-opacity-20"
               style={{ 
                 backgroundImage: feature.color.startsWith('linear-gradient') ? feature.color : undefined,
                 backgroundColor: feature.color.startsWith('linear-gradient') ? undefined : feature.color,
@@ -225,11 +226,12 @@ const WhyChooseUs = () => {
             >
               {/* Cartouche shape effect */}
               <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-16 bg-[#D4AF37] rounded-full opacity-10"></div>
+              
               <motion.div
-                className="relative z-10 why-nurmaa-icon"
+                className="relative z-10"
                 variants={hoverVariants}
               >
-                <div className="flex items-center justify-center w-16 h-16 rounded-full mb-6 mx-auto why-nurmaa-icon"
+                <div className="flex items-center justify-center w-16 h-16 rounded-full mb-6 mx-auto"
                   style={{ 
                     backgroundColor: "rgba(255,255,255,0.15)",
                     border: '2px solid rgba(212, 175, 55, 0.5)'
@@ -237,8 +239,9 @@ const WhyChooseUs = () => {
                 >
                   {feature.icon}
                 </div>
+                
                 <h3 
-                  className="text-2xl font-bold mb-3 text-center why-nurmaa-feature-title"
+                  className="text-2xl font-bold mb-3 text-center"
                   style={{ 
                     color: '#F0EDE5',
                     fontFamily: "'EB Garamond', serif",
@@ -247,8 +250,9 @@ const WhyChooseUs = () => {
                 >
                   {feature.title}
                 </h3>
+                
                 <p 
-                  className="opacity-90 text-center why-nurmaa-feature-desc"
+                  className="opacity-90 text-center"
                   style={{ 
                     color: '#F0EDE5',
                     fontFamily: "'Cormorant Garamond', serif"
@@ -295,6 +299,30 @@ const WhyChooseUs = () => {
       </div>
 
       <style>{`
+
+      @media (max-width: 640px) {
+        .py-20 { padding-top: 1.1rem; padding-bottom: 1.1rem; }
+        .px-4 { padding-left: 0.7rem; padding-right: 0.7rem; }
+        .mb-16 { margin-bottom: 0.7rem; }
+        .mb-6 { margin-bottom: 0.3rem; }
+        .text-4xl { font-size: 1.2rem; }
+        .md\:text-5xl { font-size: 1.5rem; }
+        .max-w-2xl { max-width: 97vw; }
+        .text-lg { font-size: 0.95rem; }
+        .grid { gap: 0.7rem; }
+        .grid-cols-1 { grid-template-columns: 1fr; }
+        .gap-8 { gap: 0.7rem; }
+        .rounded-xl { border-radius: 0.7rem; }
+        .p-8 { padding: 0.7rem; }
+        .w-16, .h-16 { width: 2.5rem; height: 2.5rem; }
+        .mb-6 { margin-bottom: 0.3rem; }
+        .text-2xl { font-size: 1.05rem; }
+        .mb-3 { margin-bottom: 0.15rem; }
+        .mt-20 { margin-top: 1.1rem; }
+        .max-w-7xl { max-width: 99vw; margin-left: 0.4rem; margin-right: 0.4rem; }
+      }
+    `}</style>
+
         @media (max-width: 768px) {
           .why-nurmaa-mobile {
             padding-top: 1.5rem !important;
@@ -336,6 +364,7 @@ const WhyChooseUs = () => {
           }
         }
       `}</style>
+
     </section>
   );
 };

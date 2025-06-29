@@ -5,14 +5,9 @@ import { useCart } from '@/context/CartContext';
 import { ArrowRight, ShoppingCart, Leaf, Utensils } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const ProductCard: React.FC<{
-  product: Product;
-  viewType: 'grid' | 'list';
-  onQuickPurchase?: (product: Product) => void
-}> = ({
-  product,
-  viewType,
-  onQuickPurchase
+const ProductCard: React.FC<{ product: Product; onQuickPurchase?: (product: Product) => void }> = ({ 
+  product, 
+  onQuickPurchase 
 }) => {
   const { addItem } = useCart();
   const [isHovered, setIsHovered] = React.useState(false);
@@ -32,21 +27,21 @@ const ProductCard: React.FC<{
   return (
     <Link 
       to={`/product/${product.id}`} 
-      className="block h-full product-card-mobile-mx md:mx-0"
+      className="block h-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <motion.div
-        className={`${viewType === 'list' ? 'flex flex-row w-full' : 'flex flex-col'} h-full bg-[#EBEBD3] rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border-2 border-[#121769]/10 hover:border-[#121769]/30`}
-        whileHover={{ y: viewType === 'grid' ? -8 : 0 }}
+      <motion.div 
+        className="h-full flex flex-col bg-[#EBEBD3] rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border-2 border-[#121769]/10 hover:border-[#121769]/30"
+        whileHover={{ y: -8 }}
         style={{
-          background: isHovered
-            ? 'linear-gradient(145deg, #EBEBD3, #ffffff)'
+          background: isHovered 
+            ? 'linear-gradient(145deg, #EBEBD3, #ffffff)' 
             : '#EBEBD3'
         }}
       >
-        {/* Layered image composition - adjust for list view */}
-        <div className={`${viewType === 'list' ? 'w-1/3' : 'w-full'} relative aspect-square bg-white overflow-hidden`}>
+        {/* Layered image composition */}
+        <div className="relative aspect-square bg-white overflow-hidden">
           {/* Badges */}
           <div className="absolute top-3 left-3 right-3 flex justify-between z-30">
             {product.featured && (
@@ -194,13 +189,13 @@ const ProductCard: React.FC<{
           />
         </div>
         
-        {/* Product info - adjust for list view */}
-        <div className={`p-4 flex-grow flex flex-col ${viewType === 'list' ? 'w-2/3' : ''}`}>
+        {/* Product info */}
+        <div className="p-4 flex-grow flex flex-col">
           <div className="mb-4">
             <h3 className="text-lg font-bold text-[#121769] mb-2 uppercase tracking-wider">
               {product.name}
             </h3>
-            <p className={`text-sm text-[#67246A]/90 ${viewType === 'list' ? 'line-clamp-3' : 'line-clamp-2'} italic`}>
+            <p className="text-sm text-[#67246A]/90 line-clamp-2 italic">
               {product.description}
             </p>
           </div>
@@ -241,22 +236,3 @@ const ProductCard: React.FC<{
 };
 
 export default ProductCard;
-
-// Add at the end of the file for mobile responsiveness
-// Add margin left and right 20px in mobile view
-// Tailwind: mx-[20px] for mobile, mx-0 for md+
-// If not using Tailwind for this, fallback to a style block
-
-// Add a style block for extra safety
-if (typeof window !== 'undefined') {
-  const style = document.createElement('style');
-  style.innerHTML = `
-    @media (max-width: 767px) {
-      .product-card-mobile-mx {
-        margin-left: 20px !important;
-        margin-right: 20px !important;
-      }
-    }
-  `;
-  document.head.appendChild(style);
-}
