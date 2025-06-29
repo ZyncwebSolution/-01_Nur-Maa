@@ -107,9 +107,16 @@ const FeaturedProducts: React.FC<{ onQuickPurchase?: (product: Product) => void 
         {/* Desktop grid */}
         <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {featuredProducts.map((product) => (
+
             <ProductCard 
               key={product.id}
               product={product} 
+
+             <ProductCard 
+              key={product.id}
+              product={product}
+              viewType="grid"
+
               onQuickPurchase={onQuickPurchase}
             />
           ))}
@@ -124,7 +131,12 @@ const FeaturedProducts: React.FC<{ onQuickPurchase?: (product: Product) => void 
           >
             <div className="w-full max-w-xs mx-auto">
               <ProductCard 
+
                 product={featuredProducts[mobileIndex]} 
+
+                product={featuredProducts[mobileIndex]}
+                viewType="grid"
+
                 onQuickPurchase={onQuickPurchase}
               />
             </div>
