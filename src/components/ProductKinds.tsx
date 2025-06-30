@@ -11,35 +11,25 @@ const ProductSlider = () => {
   const productCategories = [
   
     { 
-
       name: "Organic Superfood", 
-
-      activeSlide,
-      name: "Organic Superfood Blend", 
-
       category: "Food",
-      description: "Boost energy, digestion, and immunity with our daily wellness superfood made from 100% organic ingredients.",
+      description: "Nutrient-rich blend for daily wellness",
       bgImage: foodBg,
       mainImage: food,
       fgImage: foodBg
     },
-
       { 
       name: "Glow Serum", 
-
-      {
-      name: "Glow Serum with Hyaluronic Acid", 
-
       category: "Skincare",
-      description: "Deeply hydrate and brighten your skin with our Vitamin C-infused serum for a smooth, radiant glow.",
+      description: "Hydrating formula with hyaluronic acid",
       bgImage: skincareBg,
       mainImage: skincare,
       fgImage: skincareBg
     },
     { 
-      name: "Long-Lasting Matte Lipstick", 
+      name: "Matte Lipstick", 
       category: "Makeup",
-      description: "Experience rich, bold color with our smudge-proof lipstick—infused with nourishing natural oils for comfort and care.",
+      description: "Long-lasting vibrant colors",
       bgImage: makeupBg,
       mainImage: makeup,
       fgImage: makeupBg
@@ -50,8 +40,8 @@ const ProductSlider = () => {
     <div className="slider-wrapper" style={{ background: 'linear-gradient(135deg, #EBEBD3 0%, #ffffff 100%)' }}>
       <div className="slider-container">
         <div className="slider-header-wrapper">
-          <h1 className="slider-header">Natural Wellness Essentials for Health & Beauty</h1>
-          <p className="slider-subheader">Discover clean, cruelty-free essentials—from organic skincare and superfoods to long-lasting natural makeup—designed for conscious, radiant living.</p>
+          <h1 className="slider-header">Premium Essentials</h1>
+          <p className="slider-subheader">Quality products for your beauty and wellness</p>
         </div>
 
         <div className="slider static-display">
