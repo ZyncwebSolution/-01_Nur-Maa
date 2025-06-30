@@ -75,7 +75,7 @@ const QuickPurchaseModal: React.FC<QuickPurchaseModalProps> = ({ isOpen, onClose
       });
 
       // 2. Send WhatsApp message (improved implementation)
-      const whatsappNumber = '918870261911'; // Remove any non-digit characters
+      const whatsappNumber = '918667212177'; // Remove any non-digit characters
       const productInfo = product ? `Product: ${product.name} (ID: ${product.id})\nPrice: ₹${product.price}\n` : '';
       
       const whatsappMessage = `Quick Purchase Request\n${productInfo}Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone}\nAddress: ${data.address}\nNotes: ${data.message}`;
