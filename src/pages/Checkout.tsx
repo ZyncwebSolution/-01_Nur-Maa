@@ -2,8 +2,17 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { toast } from '@/hooks/use-toast';
+
 import WAConnect from '@wppconnect/wa-js';
 import Chatbot from '@/components/Chatbot';
+
+
+
+// EmailJS configuration
+const EMAILJS_SERVICE_ID = 'service_7k8d5pd';
+const EMAILJS_TEMPLATE_ID = 'template_cpoou7s';
+const EMAILJS_PUBLIC_KEY = 'FEPtogQBClrAWw3I1';
+
 
 // WhatsApp business number
 const WHATSAPP_NUMBER = '918667212177'; // Replace with your business number
